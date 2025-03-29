@@ -3,24 +3,37 @@ import { resolve } from 'path';
 import fs from 'fs';
 import path from 'path';
 
-// 自定義插件，用於將 JSON 文件從 data 目錄復製到构建輸出目錄
-// 而不是放在 data 子目錄下
-function copyDataFilesPlugin() {
+// Simple copy plugin to copy data JSON files to the output directory root
+function copyJsonFilesPlugin() {
   return {
-    name: 'copy-data-files',
-    generateBundle() {
-      const dataDir = path.resolve(__dirname, 'data');
-      if (fs.existsSync(dataDir)) {
-        const files = fs.readdirSync(dataDir);
-        for (const file of files) {
-          if (file.endsWith('.json')) {
-            const filePath = path.join(dataDir, file);
-            const content = fs.readFileSync(filePath, 'utf-8');
-            this.emitFile({
-              type: 'asset',
-              fileName: file, // 移走自定義路徑，將斈件放在根目錄
-              source: content
-            });
+    name: 'copy-json-files',
+    closeBundle() {
+      // Source directories to check for JSON files
+      const sourceDirs = [
+        path.resolve(__dirname, 'data'),
+        path.resolve(__dirname, 'src/data')
+      ];
+      
+      // Destination directory (the build output)
+      const destDir = path.resolve(__dirname, 'dist');
+      
+      // Ensure destination directory exists
+      if (!fs.existsSync(destDir)) {
+        fs.mkdirSync(destDir, { recursive: true });
+      }
+      
+      // Copy JSON files from source directories
+      for (const sourceDir of sourceDirs) {
+        if (fs.existsSync(sourceDir)) {
+          const files = fs.readdirSync(sourceDir);
+          for (const file of files) {
+            if (file.endsWith('.json')) {
+              const sourcePath = path.join(sourceDir, file);
+              const destPath = path.join(destDir, file);
+              
+              console.log(`Copying ${sourcePath} to ${destPath}`);
+              fs.copyFileSync(sourcePath, destPath);
+            }
           }
         }
       }
@@ -30,9 +43,11 @@ function copyDataFilesPlugin() {
 
 export default defineConfig({
   root: 'src',
-  base: '/apple-store-scrape/',  // 添加基本路徑，與倉庫名稱一致
-  // 使用自定義處理來確保數據文件被正確地複製，而不是放在 /data/ 子目錄中
+  base: '/apple-store-scrape/', // GitHub Pages subdirectory
+  
+  // Don't use publicDir to handle data files, we'll use a plugin instead
   publicDir: false,
+  
   build: {
     outDir: '../dist',
     emptyOutDir: true,
@@ -42,8 +57,10 @@ export default defineConfig({
       },
     },
   },
+  
   server: {
-    open: true, // 自動開啟瀏覽器
+    open: true,
   },
-  plugins: [copyDataFilesPlugin()]
+  
+  plugins: [copyJsonFilesPlugin()]
 });

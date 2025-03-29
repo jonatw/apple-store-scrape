@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Test</title>
+</head>
+<body>
+  <h1>JSON Test</h1>
+  <p>This page tests if we can load JSON files correctly</p>
+  
+  <div id="result">Loading...</div>
+  
+  <script>
+    // Try to load JSON files with different paths
+    async function testJsonLoading() {
+      const resultDiv = document.getElementById('result');
+      const paths = [
+        'iphone_data.json',
+        './iphone_data.json',
+        '../iphone_data.json',
+        '/iphone_data.json',
+        'data/iphone_data.json',
+        '/data/iphone_data.json'
+      ];
+      
+      resultDiv.innerHTML = '<h3>Testing different paths:</h3>';
+      
+      for (const path of paths) {
+        try {
+          const start = performance.now();
+          const response = await fetch(path);
+          const end = performance.now();
+          
+          if (response.ok) {
+            const data = await response.json();
+            resultDiv.innerHTML += `<p style="color: green">SUCCESS: ${path} - ${data.products.length} products loaded in ${(end-start).toFixed(2)}ms</p>`;
+          } else {
+            resultDiv.innerHTML += `<p style="color: red">FAILED: ${path} - Status: ${response.status}</p>`;
+          }
+        } catch (error) {
+          resultDiv.innerHTML += `<p style="color: red">ERROR: ${path} - ${error.message}</p>`;
+        }
+      }
+    }
+    
+    // Run the test
+    testJsonLoading();
+  </script>
+</body>
+</html>
