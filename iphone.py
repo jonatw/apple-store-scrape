@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import pandas as pd
-import time  # Added for rate limiting
+import time
+import re
 
 # Disclaimer
 """
@@ -15,6 +16,51 @@ base_url = "https://www.apple.com/shop/buy-iphone"
 
 # List of iPhone models
 models = ["iphone-16-pro", "iphone-16", "iphone-15", "iphone-14", "iphone-se"]
+
+# 產品名稱標準化函數
+def standardize_product_name(name):
+    """標準化產品名稱，以便匹配相同的產品"""
+    if not name:
+        return ""
+    
+    # 移除空格，轉為小寫
+    name = name.lower()
+    
+    # 提取型號部分 (如 "iPhone 16 Pro")
+    model_match = re.search(r'iphone\s*(\d+)\s*(pro\s*max|pro|plus|se)?', name)
+    
+    # 提取容量部分 (如 "256GB")
+    storage_match = re.search(r'(\d+)\s*(gb|tb)', name)
+    
+    # 提取顏色部分
+    color_keywords = [
+        "black", "white", "blue", "purple", "yellow", "green", 
+        "pink", "red", "silver", "gold", "titanium", "starlight",
+        "ultramarine", "teal", "desert", "natural", "gray", "graphite"
+    ]
+    
+    found_color = None
+    for color in color_keywords:
+        if color in name:
+            found_color = color
+            break
+    
+    # 創建標準化鍵
+    key_parts = []
+    
+    if model_match:
+        model_num = model_match.group(1)
+        model_variant = (model_match.group(2) or "").replace(" ", "")
+        key_parts.append(f"iphone{model_num}{model_variant}")
+    
+    if storage_match:
+        key_parts.append(f"{storage_match.group(1)}{storage_match.group(2)}")
+    
+    if found_color:
+        key_parts.append(found_color)
+    
+    # 返回標準化鍵
+    return "_".join(key_parts) if key_parts else name.replace(" ", "")
 
 # Function to retrieve and extract product data from a page
 def extract_product_details(url, is_taiwan=False):
@@ -45,25 +91,21 @@ def extract_product_details(url, is_taiwan=False):
     product_details = []
     for product in products:
         sku = product.get("sku")
-        name_en = product.get("name", "")
-        name_zh = name_en if is_taiwan else ""
+        name = product.get("name", "")
         price = product.get("price", {}).get("fullPrice")
-        category = product.get("category")
-        part_number = product.get("partNumber")
+        region = "TW" if is_taiwan else "US"
         
-        # Add English and Chinese names as separate columns
-        if is_taiwan:
-            name_zh = product.get("name", "")
-            name_en = ""  # Empty for Taiwan
+        # 生成標準化名稱以匹配產品
+        std_name = standardize_product_name(name)
+        
         product_details.append({
             "SKU": sku,
-            "Part Number": part_number,
-            "Price (USD)": price if not is_taiwan else None,  # Use None instead of empty string
-            "Price (TWD)": price if is_taiwan else None,      # Use None instead of empty string
-            "Category": category,
-            "Name (English)": name_en,
-            "Name (Chinese)": name_zh
+            "Name": name,
+            "Price": price,
+            "Region": region,
+            "Standardized_Name": std_name
         })
+    
     return product_details
 
 # Initialize an empty list to store product details from all URLs
@@ -81,35 +123,43 @@ for model in models:
         all_product_details.extend(product_details)
 
 # Convert the extracted data into a DataFrame
-df_product_details = pd.DataFrame(all_product_details)
+df = pd.DataFrame(all_product_details)
 
-# Separate US and Taiwan data based on non-null price fields
-df_us = df_product_details[['SKU', 'Price (USD)', 'Name (English)']].dropna(subset=['Price (USD)'])
-df_tw = df_product_details[['SKU', 'Price (TWD)', 'Name (Chinese)']].dropna(subset=['Price (TWD)'])
+# 按地區分類數據
+df_us = df[df['Region'] == 'US'].copy()
+df_tw = df[df['Region'] == 'TW'].copy()
 
-# Ensure SKU uniqueness by dropping duplicates
-df_us = df_us.drop_duplicates(subset='SKU')
-df_tw = df_tw.drop_duplicates(subset='SKU')
+# 確保標準化名稱的唯一性
+df_us = df_us.drop_duplicates(subset='Standardized_Name')
+df_tw = df_tw.drop_duplicates(subset='Standardized_Name')
 
-# Merge US and Taiwan data on SKU
-df_merged = pd.merge(df_us, df_tw, on='SKU', how='outer')
+# 重命名列以便於合併後識別
+df_us.rename(columns={'SKU': 'SKU_US', 'Price': 'Price_US', 'Name': 'Name_US'}, inplace=True)
+df_tw.rename(columns={'SKU': 'SKU_TW', 'Price': 'Price_TW', 'Name': 'Name_TW'}, inplace=True)
 
-# Fill missing values appropriately
-df_merged['Price (USD)'] = df_merged['Price (USD)'].fillna(0)
-df_merged['Price (TWD)'] = df_merged['Price (TWD)'].fillna(0)
-df_merged['Name (English)'] = df_merged['Name (English)'].fillna('')
-df_merged['Name (Chinese)'] = df_merged['Name (Chinese)'].fillna('')
+# 使用標準化名稱進行合併
+df_merged = pd.merge(df_us, df_tw, on='Standardized_Name', how='outer', suffixes=('_US', '_TW'))
 
-# Rename columns to match desired output
-df_final = df_merged.rename(columns={
-    "Price (TWD)": "台灣價格",
-    "Price (USD)": "美國價格",
-    "Name (Chinese)": "台灣產品名",
-    "Name (English)": "美國產品名"
-})[["SKU", "台灣價格", "美國價格", "台灣產品名", "美國產品名"]]
+# 為缺失值賦予預設值
+df_merged['Price_US'] = df_merged['Price_US'].fillna(0)
+df_merged['Price_TW'] = df_merged['Price_TW'].fillna(0)
+df_merged['Name_US'] = df_merged['Name_US'].fillna('')
+df_merged['Name_TW'] = df_merged['Name_TW'].fillna('')
+df_merged['SKU_US'] = df_merged['SKU_US'].fillna('')
+df_merged['SKU_TW'] = df_merged['SKU_TW'].fillna('')
 
-# Display the final DataFrame
+# 選擇並重命名要保留的列
+df_final = df_merged[['SKU_US', 'SKU_TW', 'Price_US', 'Price_TW', 'Name_US', 'Name_TW']].rename(
+    columns={
+        'Price_TW': '台灣價格',
+        'Price_US': '美國價格',
+        'Name_TW': '台灣產品名',
+        'Name_US': '美國產品名'
+    }
+)
+
+# 顯示最終結果
 print(df_final)
 
-# Optional: Save the final DataFrame to a CSV file
+# 保存結果到 CSV 文件
 df_final.to_csv('iphone_products_merged.csv', index=False, encoding='utf-8-sig')

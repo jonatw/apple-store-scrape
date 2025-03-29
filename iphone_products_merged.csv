@@ -1,177 +1,82 @@
-﻿SKU,台灣價格,美國價格,台灣產品名,美國產品名
-MTLV3,0.0,729.0,,iPhone 15 128GB Black
-MTLW3,0.0,729.0,,iPhone 15 128GB Pink
-MTLX3,0.0,729.0,,iPhone 15 128GB Yellow
-MTLY3,0.0,729.0,,iPhone 15 128GB Blue
-MTM23,0.0,729.0,,iPhone 15 128GB Green
-MTM43,0.0,829.0,,iPhone 15 256GB Black
-MTM53,0.0,829.0,,iPhone 15 256GB Pink
-MTM63,0.0,829.0,,iPhone 15 256GB Yellow
-MTM73,0.0,829.0,,iPhone 15 256GB Blue
-MTM83,0.0,829.0,,iPhone 15 256GB Green
-MTM93,0.0,1029.0,,iPhone 15 512GB Black
-MTMA3,0.0,1029.0,,iPhone 15 512GB Pink
-MTMC3,0.0,1029.0,,iPhone 15 512GB Yellow
-MTMF3,0.0,1029.0,,iPhone 15 512GB Blue
-MTMG3,0.0,1029.0,,iPhone 15 512GB Green
-MTP03,25900.0,0.0,iPhone 15 128GB Black,
-MTP13,25900.0,0.0,iPhone 15 128GB Pink,
-MTP23,25900.0,0.0,iPhone 15 128GB Yellow,
-MTP43,25900.0,0.0,iPhone 15 128GB Blue,
-MTP53,25900.0,0.0,iPhone 15 128GB Green,
-MTP63,29400.0,0.0,iPhone 15 256GB Black,
-MTP73,29400.0,0.0,iPhone 15 256GB Pink,
-MTP83,29400.0,0.0,iPhone 15 256GB Yellow,
-MTP93,29400.0,0.0,iPhone 15 256GB Blue,
-MTPA3,29400.0,0.0,iPhone 15 256GB Green,
-MTPC3,36400.0,0.0,iPhone 15 512GB Black,
-MTPD3,36400.0,0.0,iPhone 15 512GB Pink,
-MTPF3,36400.0,0.0,iPhone 15 512GB Yellow,
-MTPG3,36400.0,0.0,iPhone 15 512GB Blue,
-MTPH3,36400.0,0.0,iPhone 15 512GB Green,
-MTXR3,0.0,829.0,,iPhone 15 Plus 128GB Black
-MTXT3,0.0,829.0,,iPhone 15 Plus 128GB Pink
-MTXU3,0.0,829.0,,iPhone 15 Plus 128GB Yellow
-MTXV3,0.0,829.0,,iPhone 15 Plus 128GB Blue
-MTXW3,0.0,829.0,,iPhone 15 Plus 128GB Green
-MTXX3,0.0,929.0,,iPhone 15 Plus 256GB Black
-MTXY3,0.0,929.0,,iPhone 15 Plus 256GB Pink
-MU003,0.0,929.0,,iPhone 15 Plus 256GB Yellow
-MU013,0.0,929.0,,iPhone 15 Plus 256GB Blue
-MU023,0.0,929.0,,iPhone 15 Plus 256GB Green
-MU033,0.0,1129.0,,iPhone 15 Plus 512GB Black
-MU043,0.0,1129.0,,iPhone 15 Plus 512GB Pink
-MU053,0.0,1129.0,,iPhone 15 Plus 512GB Yellow
-MU063,0.0,1129.0,,iPhone 15 Plus 512GB Blue
-MU073,0.0,1129.0,,iPhone 15 Plus 512GB Green
-MU0Y3,29900.0,0.0,iPhone 15 Plus 128GB Black,
-MU103,29900.0,0.0,iPhone 15 Plus 128GB Pink,
-MU123,29900.0,0.0,iPhone 15 Plus 128GB Yellow,
-MU163,29900.0,0.0,iPhone 15 Plus 128GB Blue,
-MU173,29900.0,0.0,iPhone 15 Plus 128GB Green,
-MU183,33400.0,0.0,iPhone 15 Plus 256GB Black,
-MU193,33400.0,0.0,iPhone 15 Plus 256GB Pink,
-MU1D3,33400.0,0.0,iPhone 15 Plus 256GB Yellow,
-MU1F3,33400.0,0.0,iPhone 15 Plus 256GB Blue,
-MU1G3,33400.0,0.0,iPhone 15 Plus 256GB Green,
-MU1H3,40400.0,0.0,iPhone 15 Plus 512GB Black,
-MU1J3,40400.0,0.0,iPhone 15 Plus 512GB Pink,
-MU1M3,40400.0,0.0,iPhone 15 Plus 512GB Yellow,
-MU1P3,40400.0,0.0,iPhone 15 Plus 512GB Blue,
-MU1Q3,40400.0,0.0,iPhone 15 Plus 512GB Green,
-MXUT3,0.0,929.0,,iPhone 16 Plus 128GB Black
-MXUU3,0.0,929.0,,iPhone 16 Plus 128GB White
-MXUV3,0.0,929.0,,iPhone 16 Plus 128GB Pink
-MXUW3,0.0,929.0,,iPhone 16 Plus 128GB Ultramarine
-MXUX3,0.0,929.0,,iPhone 16 Plus 128GB Teal
-MXUY3,0.0,1029.0,,iPhone 16 Plus 256GB Black
-MXV03,0.0,1029.0,,iPhone 16 Plus 256GB White
-MXV13,0.0,1029.0,,iPhone 16 Plus 256GB Pink
-MXV33,0.0,1029.0,,iPhone 16 Plus 256GB Ultramarine
-MXV43,0.0,1029.0,,iPhone 16 Plus 256GB Teal
-MXV53,0.0,1229.0,,iPhone 16 Plus 512GB Black
-MXV63,0.0,1229.0,,iPhone 16 Plus 512GB White
-MXV73,0.0,1229.0,,iPhone 16 Plus 512GB Pink
-MXV83,0.0,1229.0,,iPhone 16 Plus 512GB Ultramarine
-MXV93,0.0,1229.0,,iPhone 16 Plus 512GB Teal
-MXVU3,32900.0,0.0,iPhone 16 Plus 128GB Black,
-MXVV3,32900.0,0.0,iPhone 16 Plus 128GB White,
-MXVW3,32900.0,0.0,iPhone 16 Plus 128GB Pink,
-MXVX3,32900.0,0.0,iPhone 16 Plus 128GB Ultramarine,
-MXVY3,32900.0,0.0,iPhone 16 Plus 128GB Teal,
-MXWN3,36400.0,0.0,iPhone 16 Plus 256GB Black,
-MXWV3,36400.0,0.0,iPhone 16 Plus 256GB White,
-MXY13,36400.0,0.0,iPhone 16 Plus 256GB Pink,
-MXY23,36400.0,0.0,iPhone 16 Plus 256GB Ultramarine,
-MXY53,36400.0,0.0,iPhone 16 Plus 256GB Teal,
-MY1P3,43400.0,0.0,iPhone 16 Plus 512GB Black,
-MY1X3,43400.0,0.0,iPhone 16 Plus 512GB White,
-MY253,43400.0,0.0,iPhone 16 Plus 512GB Pink,
-MY2D3,43400.0,0.0,iPhone 16 Plus 512GB Ultramarine,
-MY2J3,43400.0,0.0,iPhone 16 Plus 512GB Teal,
-MYAP3,0.0,829.0,,iPhone 16 128GB Black
-MYAQ3,0.0,829.0,,iPhone 16 128GB White
-MYAR3,0.0,829.0,,iPhone 16 128GB Pink
-MYAT3,0.0,829.0,,iPhone 16 128GB Ultramarine
-MYAW3,0.0,829.0,,iPhone 16 128GB Teal
-MYAX3,0.0,929.0,,iPhone 16 256GB Black
-MYAY3,0.0,929.0,,iPhone 16 256GB White
-MYD03,0.0,929.0,,iPhone 16 256GB Pink
-MYD13,0.0,929.0,,iPhone 16 256GB Ultramarine
-MYD23,0.0,929.0,,iPhone 16 256GB Teal
-MYD33,0.0,1129.0,,iPhone 16 512GB Black
-MYD43,0.0,1129.0,,iPhone 16 512GB White
-MYD53,0.0,1129.0,,iPhone 16 512GB Pink
-MYD63,0.0,1129.0,,iPhone 16 512GB Ultramarine
-MYD73,0.0,1129.0,,iPhone 16 512GB Teal
-MYE73,29900.0,0.0,iPhone 16 128GB Black,
-MYE93,29900.0,0.0,iPhone 16 128GB White,
-MYEA3,29900.0,0.0,iPhone 16 128GB Pink,
-MYEC3,29900.0,0.0,iPhone 16 128GB Ultramarine,
-MYED3,29900.0,0.0,iPhone 16 128GB Teal,
-MYEE3,33400.0,0.0,iPhone 16 256GB Black,
-MYEF3,33400.0,0.0,iPhone 16 256GB White,
-MYEG3,33400.0,0.0,iPhone 16 256GB Pink,
-MYEH3,33400.0,0.0,iPhone 16 256GB Ultramarine,
-MYEJ3,33400.0,0.0,iPhone 16 256GB Teal,
-MYEK3,40400.0,0.0,iPhone 16 512GB Black,
-MYEP3,40400.0,0.0,iPhone 16 512GB White,
-MYEQ3,40400.0,0.0,iPhone 16 512GB Pink,
-MYER3,40400.0,0.0,iPhone 16 512GB Ultramarine,
-MYEU3,40400.0,0.0,iPhone 16 512GB Teal,
-MYM93,0.0,999.0,,iPhone 16 Pro 128GB Black Titanium
-MYMA3,0.0,999.0,,iPhone 16 Pro 128GB White Titanium
-MYMC3,0.0,999.0,,iPhone 16 Pro 128GB Desert Titanium
-MYMD3,0.0,999.0,,iPhone 16 Pro 128GB Natural Titanium
-MYMG3,0.0,1099.0,,iPhone 16 Pro 256GB Black Titanium
-MYMH3,0.0,1099.0,,iPhone 16 Pro 256GB White Titanium
-MYMJ3,0.0,1099.0,,iPhone 16 Pro 256GB Desert Titanium
-MYMK3,0.0,1099.0,,iPhone 16 Pro 256GB Natural Titanium
-MYML3,0.0,1299.0,,iPhone 16 Pro 512GB Black Titanium
-MYMM3,0.0,1299.0,,iPhone 16 Pro 512GB White Titanium
-MYMN3,0.0,1299.0,,iPhone 16 Pro 512GB Desert Titanium
-MYMP3,0.0,1299.0,,iPhone 16 Pro 512GB Natural Titanium
-MYMQ3,0.0,1499.0,,iPhone 16 Pro 1TB Black Titanium
-MYMR3,0.0,1499.0,,iPhone 16 Pro 1TB White Titanium
-MYMT3,0.0,1499.0,,iPhone 16 Pro 1TB Desert Titanium
-MYMU3,0.0,1499.0,,iPhone 16 Pro 1TB Natural Titanium
-MYND3,36900.0,0.0,iPhone 16 Pro 128GB Black Titanium,
-MYNE3,36900.0,0.0,iPhone 16 Pro 128GB White Titanium,
-MYNF3,36900.0,0.0,iPhone 16 Pro 128GB Desert Titanium,
-MYNG3,36900.0,0.0,iPhone 16 Pro 128GB Natural Titanium,
-MYNH3,40400.0,0.0,iPhone 16 Pro 256GB Black Titanium,
-MYNJ3,40400.0,0.0,iPhone 16 Pro 256GB White Titanium,
-MYNK3,40400.0,0.0,iPhone 16 Pro 256GB Desert Titanium,
-MYNL3,40400.0,0.0,iPhone 16 Pro 256GB Natural Titanium,
-MYNM3,47400.0,0.0,iPhone 16 Pro 512GB Black Titanium,
-MYNN3,47400.0,0.0,iPhone 16 Pro 512GB White Titanium,
-MYNP3,47400.0,0.0,iPhone 16 Pro 512GB Desert Titanium,
-MYNQ3,47400.0,0.0,iPhone 16 Pro 512GB Natural Titanium,
-MYNR3,54400.0,0.0,iPhone 16 Pro 1TB Black Titanium,
-MYNT3,54400.0,0.0,iPhone 16 Pro 1TB White Titanium,
-MYNW3,54400.0,0.0,iPhone 16 Pro 1TB Desert Titanium,
-MYNX3,54400.0,0.0,iPhone 16 Pro 1TB Natural Titanium,
-MYW33,0.0,1199.0,,iPhone 16 Pro Max 256GB Black Titanium
-MYW43,0.0,1199.0,,iPhone 16 Pro Max 256GB White Titanium
-MYW53,0.0,1199.0,,iPhone 16 Pro Max 256GB Desert Titanium
-MYW63,0.0,1199.0,,iPhone 16 Pro Max 256GB Natural Titanium
-MYW73,0.0,1399.0,,iPhone 16 Pro Max 512GB Black Titanium
-MYW83,0.0,1399.0,,iPhone 16 Pro Max 512GB White Titanium
-MYW93,0.0,1399.0,,iPhone 16 Pro Max 512GB Desert Titanium
-MYWA3,0.0,1399.0,,iPhone 16 Pro Max 512GB Natural Titanium
-MYWC3,0.0,1599.0,,iPhone 16 Pro Max 1TB Black Titanium
-MYWD3,0.0,1599.0,,iPhone 16 Pro Max 1TB White Titanium
-MYWE3,0.0,1599.0,,iPhone 16 Pro Max 1TB Desert Titanium
-MYWF3,0.0,1599.0,,iPhone 16 Pro Max 1TB Natural Titanium
-MYWV3,44900.0,0.0,iPhone 16 Pro Max 256GB Black Titanium,
-MYWW3,44900.0,0.0,iPhone 16 Pro Max 256GB White Titanium,
-MYWX3,44900.0,0.0,iPhone 16 Pro Max 256GB Desert Titanium,
-MYWY3,44900.0,0.0,iPhone 16 Pro Max 256GB Natural Titanium,
-MYX03,51900.0,0.0,iPhone 16 Pro Max 512GB Black Titanium,
-MYX13,51900.0,0.0,iPhone 16 Pro Max 512GB White Titanium,
-MYX23,51900.0,0.0,iPhone 16 Pro Max 512GB Desert Titanium,
-MYX33,51900.0,0.0,iPhone 16 Pro Max 512GB Natural Titanium,
-MYX43,58900.0,0.0,iPhone 16 Pro Max 1TB Black Titanium,
-MYX53,58900.0,0.0,iPhone 16 Pro Max 1TB White Titanium,
-MYX63,58900.0,0.0,iPhone 16 Pro Max 1TB Desert Titanium,
-MYX73,58900.0,0.0,iPhone 16 Pro Max 1TB Natural Titanium,
+﻿SKU_US,SKU_TW,美國價格,台灣價格,美國產品名,台灣產品名
+MTLV3,MTP03,729.0,25900.0,iPhone 15 128GB Black,iPhone 15 128GB Black
+MTLY3,MTP43,729.0,25900.0,iPhone 15 128GB Blue,iPhone 15 128GB Blue
+MTM23,MTP53,729.0,25900.0,iPhone 15 128GB Green,iPhone 15 128GB Green
+MTLW3,MTP13,729.0,25900.0,iPhone 15 128GB Pink,iPhone 15 128GB Pink
+MTLX3,MTP23,729.0,25900.0,iPhone 15 128GB Yellow,iPhone 15 128GB Yellow
+MTM43,MTP63,829.0,29400.0,iPhone 15 256GB Black,iPhone 15 256GB Black
+MTM73,MTP93,829.0,29400.0,iPhone 15 256GB Blue,iPhone 15 256GB Blue
+MTM83,MTPA3,829.0,29400.0,iPhone 15 256GB Green,iPhone 15 256GB Green
+MTM53,MTP73,829.0,29400.0,iPhone 15 256GB Pink,iPhone 15 256GB Pink
+MTM63,MTP83,829.0,29400.0,iPhone 15 256GB Yellow,iPhone 15 256GB Yellow
+MTM93,MTPC3,1029.0,36400.0,iPhone 15 512GB Black,iPhone 15 512GB Black
+MTMF3,MTPG3,1029.0,36400.0,iPhone 15 512GB Blue,iPhone 15 512GB Blue
+MTMG3,MTPH3,1029.0,36400.0,iPhone 15 512GB Green,iPhone 15 512GB Green
+MTMA3,MTPD3,1029.0,36400.0,iPhone 15 512GB Pink,iPhone 15 512GB Pink
+MTMC3,MTPF3,1029.0,36400.0,iPhone 15 512GB Yellow,iPhone 15 512GB Yellow
+MTXR3,MU0Y3,829.0,29900.0,iPhone 15 Plus 128GB Black,iPhone 15 Plus 128GB Black
+MTXV3,MU163,829.0,29900.0,iPhone 15 Plus 128GB Blue,iPhone 15 Plus 128GB Blue
+MTXW3,MU173,829.0,29900.0,iPhone 15 Plus 128GB Green,iPhone 15 Plus 128GB Green
+MTXT3,MU103,829.0,29900.0,iPhone 15 Plus 128GB Pink,iPhone 15 Plus 128GB Pink
+MTXU3,MU123,829.0,29900.0,iPhone 15 Plus 128GB Yellow,iPhone 15 Plus 128GB Yellow
+MTXX3,MU183,929.0,33400.0,iPhone 15 Plus 256GB Black,iPhone 15 Plus 256GB Black
+MU013,MU1F3,929.0,33400.0,iPhone 15 Plus 256GB Blue,iPhone 15 Plus 256GB Blue
+MU023,MU1G3,929.0,33400.0,iPhone 15 Plus 256GB Green,iPhone 15 Plus 256GB Green
+MTXY3,MU193,929.0,33400.0,iPhone 15 Plus 256GB Pink,iPhone 15 Plus 256GB Pink
+MU003,MU1D3,929.0,33400.0,iPhone 15 Plus 256GB Yellow,iPhone 15 Plus 256GB Yellow
+MU033,MU1H3,1129.0,40400.0,iPhone 15 Plus 512GB Black,iPhone 15 Plus 512GB Black
+MU063,MU1P3,1129.0,40400.0,iPhone 15 Plus 512GB Blue,iPhone 15 Plus 512GB Blue
+MU073,MU1Q3,1129.0,40400.0,iPhone 15 Plus 512GB Green,iPhone 15 Plus 512GB Green
+MU043,MU1J3,1129.0,40400.0,iPhone 15 Plus 512GB Pink,iPhone 15 Plus 512GB Pink
+MU053,MU1M3,1129.0,40400.0,iPhone 15 Plus 512GB Yellow,iPhone 15 Plus 512GB Yellow
+MYAP3,MYE73,829.0,29900.0,iPhone 16 128GB Black,iPhone 16 128GB Black
+MYAR3,MYEA3,829.0,29900.0,iPhone 16 128GB Pink,iPhone 16 128GB Pink
+MYAW3,MYED3,829.0,29900.0,iPhone 16 128GB Teal,iPhone 16 128GB Teal
+MYAT3,MYEC3,829.0,29900.0,iPhone 16 128GB Ultramarine,iPhone 16 128GB Ultramarine
+MYAQ3,MYE93,829.0,29900.0,iPhone 16 128GB White,iPhone 16 128GB White
+MYAX3,MYEE3,929.0,33400.0,iPhone 16 256GB Black,iPhone 16 256GB Black
+MYD03,MYEG3,929.0,33400.0,iPhone 16 256GB Pink,iPhone 16 256GB Pink
+MYD23,MYEJ3,929.0,33400.0,iPhone 16 256GB Teal,iPhone 16 256GB Teal
+MYD13,MYEH3,929.0,33400.0,iPhone 16 256GB Ultramarine,iPhone 16 256GB Ultramarine
+MYAY3,MYEF3,929.0,33400.0,iPhone 16 256GB White,iPhone 16 256GB White
+MYD33,MYEK3,1129.0,40400.0,iPhone 16 512GB Black,iPhone 16 512GB Black
+MYD53,MYEQ3,1129.0,40400.0,iPhone 16 512GB Pink,iPhone 16 512GB Pink
+MYD73,MYEU3,1129.0,40400.0,iPhone 16 512GB Teal,iPhone 16 512GB Teal
+MYD63,MYER3,1129.0,40400.0,iPhone 16 512GB Ultramarine,iPhone 16 512GB Ultramarine
+MYD43,MYEP3,1129.0,40400.0,iPhone 16 512GB White,iPhone 16 512GB White
+MXUT3,MXVU3,929.0,32900.0,iPhone 16 Plus 128GB Black,iPhone 16 Plus 128GB Black
+MXUV3,MXVW3,929.0,32900.0,iPhone 16 Plus 128GB Pink,iPhone 16 Plus 128GB Pink
+MXUX3,MXVY3,929.0,32900.0,iPhone 16 Plus 128GB Teal,iPhone 16 Plus 128GB Teal
+MXUW3,MXVX3,929.0,32900.0,iPhone 16 Plus 128GB Ultramarine,iPhone 16 Plus 128GB Ultramarine
+MXUU3,MXVV3,929.0,32900.0,iPhone 16 Plus 128GB White,iPhone 16 Plus 128GB White
+MXUY3,MXWN3,1029.0,36400.0,iPhone 16 Plus 256GB Black,iPhone 16 Plus 256GB Black
+MXV13,MXY13,1029.0,36400.0,iPhone 16 Plus 256GB Pink,iPhone 16 Plus 256GB Pink
+MXV43,MXY53,1029.0,36400.0,iPhone 16 Plus 256GB Teal,iPhone 16 Plus 256GB Teal
+MXV33,MXY23,1029.0,36400.0,iPhone 16 Plus 256GB Ultramarine,iPhone 16 Plus 256GB Ultramarine
+MXV03,MXWV3,1029.0,36400.0,iPhone 16 Plus 256GB White,iPhone 16 Plus 256GB White
+MXV53,MY1P3,1229.0,43400.0,iPhone 16 Plus 512GB Black,iPhone 16 Plus 512GB Black
+MXV73,MY253,1229.0,43400.0,iPhone 16 Plus 512GB Pink,iPhone 16 Plus 512GB Pink
+MXV93,MY2J3,1229.0,43400.0,iPhone 16 Plus 512GB Teal,iPhone 16 Plus 512GB Teal
+MXV83,MY2D3,1229.0,43400.0,iPhone 16 Plus 512GB Ultramarine,iPhone 16 Plus 512GB Ultramarine
+MXV63,MY1X3,1229.0,43400.0,iPhone 16 Plus 512GB White,iPhone 16 Plus 512GB White
+MYM93,MYND3,999.0,36900.0,iPhone 16 Pro 128GB Black Titanium,iPhone 16 Pro 128GB Black Titanium
+MYMD3,MYNG3,999.0,36900.0,iPhone 16 Pro 128GB Natural Titanium,iPhone 16 Pro 128GB Natural Titanium
+MYMA3,MYNE3,999.0,36900.0,iPhone 16 Pro 128GB White Titanium,iPhone 16 Pro 128GB White Titanium
+MYMQ3,MYNR3,1499.0,54400.0,iPhone 16 Pro 1TB Black Titanium,iPhone 16 Pro 1TB Black Titanium
+MYMT3,MYNX3,1499.0,54400.0,iPhone 16 Pro 1TB Desert Titanium,iPhone 16 Pro 1TB Natural Titanium
+MYMR3,MYNT3,1499.0,54400.0,iPhone 16 Pro 1TB White Titanium,iPhone 16 Pro 1TB White Titanium
+MYMG3,MYNH3,1099.0,40400.0,iPhone 16 Pro 256GB Black Titanium,iPhone 16 Pro 256GB Black Titanium
+MYMK3,MYNK3,1099.0,40400.0,iPhone 16 Pro 256GB Natural Titanium,iPhone 16 Pro 256GB Desert Titanium
+MYMH3,MYNJ3,1099.0,40400.0,iPhone 16 Pro 256GB White Titanium,iPhone 16 Pro 256GB White Titanium
+MYML3,MYNM3,1299.0,47400.0,iPhone 16 Pro 512GB Black Titanium,iPhone 16 Pro 512GB Black Titanium
+MYMP3,MYNQ3,1299.0,47400.0,iPhone 16 Pro 512GB Natural Titanium,iPhone 16 Pro 512GB Natural Titanium
+MYMM3,MYNN3,1299.0,47400.0,iPhone 16 Pro 512GB White Titanium,iPhone 16 Pro 512GB White Titanium
+MYWC3,MYX43,1599.0,58900.0,iPhone 16 Pro Max 1TB Black Titanium,iPhone 16 Pro Max 1TB Black Titanium
+MYWE3,MYX73,1599.0,58900.0,iPhone 16 Pro Max 1TB Desert Titanium,iPhone 16 Pro Max 1TB Natural Titanium
+MYWD3,MYX53,1599.0,58900.0,iPhone 16 Pro Max 1TB White Titanium,iPhone 16 Pro Max 1TB White Titanium
+MYW33,MYWV3,1199.0,44900.0,iPhone 16 Pro Max 256GB Black Titanium,iPhone 16 Pro Max 256GB Black Titanium
+MYW63,MYWY3,1199.0,44900.0,iPhone 16 Pro Max 256GB Natural Titanium,iPhone 16 Pro Max 256GB Natural Titanium
+MYW43,MYWW3,1199.0,44900.0,iPhone 16 Pro Max 256GB White Titanium,iPhone 16 Pro Max 256GB White Titanium
+MYW73,MYX03,1399.0,51900.0,iPhone 16 Pro Max 512GB Black Titanium,iPhone 16 Pro Max 512GB Black Titanium
+MYW93,MYX23,1399.0,51900.0,iPhone 16 Pro Max 512GB Desert Titanium,iPhone 16 Pro Max 512GB Desert Titanium
+MYW83,MYX13,1399.0,51900.0,iPhone 16 Pro Max 512GB White Titanium,iPhone 16 Pro Max 512GB White Titanium
