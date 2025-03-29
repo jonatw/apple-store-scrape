@@ -22,7 +22,7 @@ Apple Store Scraper is a tool for scraping iPhone and iPad product pricing infor
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/your-username/apple-store-scrape.git
+git clone https://github.com/jonatw/apple-store-scrape.git
 cd apple-store-scrape
 ```
 
