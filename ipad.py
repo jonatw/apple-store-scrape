@@ -13,8 +13,60 @@ Do not run this script too frequently to avoid overloading Apple's servers.
 # Define the base URL for the iPad product pages
 base_url = "https://www.apple.com/shop/buy-ipad"
 
-# List of iPad models
-models = ["ipad-pro", "ipad-air", "ipad", "ipad-mini"]
+def get_available_models(region=""):
+    """
+    從 Apple 商店頁面獲取當前可用的 iPad 型號
+    
+    參數:
+    region (str): 地區代碼，例如 "tw" 代表台灣，"" 代表美國
+    
+    返回:
+    list: 可用的 iPad 型號列表，例如 ["ipad-pro", "ipad-air", ...]
+    """
+    region_prefix = f"/{region}" if region else ""
+    url = f"https://www.apple.com{region_prefix}/shop/buy-ipad"
+    
+    try:
+        response = requests.get(url)
+        if response.status_code != 200:
+            print(f"無法訪問 {url}，使用預設型號列表")
+            return ["ipad-pro", "ipad-air", "ipad", "ipad-mini"]
+        
+        # 解析 HTML
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # 尋找所有指向 buy-ipad 頁面的連結
+        ipad_links = []
+        for link in soup.find_all('a', href=True):
+            href = link.get('href')
+            if '/shop/buy-ipad/' in href:
+                # 提取型號部分 (例如從 /tw/shop/buy-ipad/ipad-pro 提取 ipad-pro)
+                parts = href.split('/shop/buy-ipad/')
+                if len(parts) > 1:
+                    model = parts[1].split('?')[0].split('#')[0]
+                    # 確保獲取的是有效的 iPad 型號
+                    if model.startswith('ipad-') or model == 'ipad':
+                        ipad_links.append(model)
+        
+        # 去除重複項並返回
+        unique_models = list(set(ipad_links))
+        
+        if not unique_models:
+            print(f"在 {url} 找不到 iPad 型號，使用預設型號列表")
+            return ["ipad-pro", "ipad-air", "ipad", "ipad-mini"]
+        
+        return unique_models
+    
+    except Exception as e:
+        print(f"獲取 iPad 型號時出錯: {e}，使用預設型號列表")
+        return ["ipad-pro", "ipad-air", "ipad", "ipad-mini"]
+
+# 動態獲取台灣和美國的 iPhone 型號
+tw_models = get_available_models("tw")
+us_models = get_available_models("")
+
+# 合併兩個列表，確保所有型號都被包含
+models = list(set(tw_models + us_models))
 
 # Function to retrieve and extract product data from a page
 def extract_product_details(url, is_taiwan=False):
