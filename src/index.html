@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compare Apple product prices between Taiwan and the US, helping you decide where to make your purchase">
+  <meta name="theme-color" content="#0d6efd">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Apple Price Compare">
+  <title>Apple Product Price Comparison</title>
+  
+  <!-- PWA 支援 (簡化版) -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  
+  <!-- Import Bootstrap CSS -->
+  <script type="module">
+    import 'bootstrap/dist/css/bootstrap.min.css'
+    import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+    import './main.js'
+  </script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <style>
+    /* 基本樣式 */
+    body {
+      padding-bottom: 2rem;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    /* 價格差異顏色 */
+    .price-higher {
+      color: #dc3545;
+    }
+    
+    .price-lower {
+      color: #198754;
+    }
+    
+    [data-bs-theme="dark"] .price-higher {
+      color: #f07781;
+    }
+    
+    [data-bs-theme="dark"] .price-lower {
+      color: #75c687;
+    }
+    
+    /* 載入動畫 */
+    .loading {
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
+    /* 頁腳樣式 */
+    footer {
+      margin-top: 3rem;
+      padding: 1rem 0;
+      font-size: 0.85rem;
+      color: #6c757d;
+      border-top: 1px solid #dee2e6;
+    }
+    
+    /* 深色模式按鈕 */
+    .theme-toggle {
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .theme-toggle:hover {
+      transform: rotate(15deg);
+    }
+    
+    /* 匯率與手續費設定面板 */
+    .settings-panel {
+      position: sticky;
+      top: 70px;
+      z-index: 100;
+      transition: all 0.3s;
+    }
+    
+    .settings-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      font-size: 0.7rem;
+    }
+    
+    /* 表頭固定 */
+    .table-fixed-header {
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    
+    .table-fixed-header thead th {
+      position: sticky;
+      top: 0;
+      background-color: var(--bs-body-bg);
+      z-index: 1;
+    }
+    
+    /* 響應式調整 */
+    @media (max-width: 768px) {
+      .card-title {
+        font-size: 0.9rem;
+      }
+      
+      .card-text.display-4 {
+        font-size: 1.8rem;
+      }
+      
+      .display-6 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 導航欄 -->
+  <nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark" style="background-color: #333;">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fab fa-apple me-2"></i>Price Comparison
+      </a>
+      
+      <div class="d-flex align-items-center">
+        <!-- 深色模式切換 -->
+        <div class="theme-toggle me-3" id="theme-toggle">
+          <i class="fas fa-sun fs-5"></i>
+        </div>
+        
+        <!-- 漢堡選單 -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" data-product="iphone">iPhone</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-product="ipad">iPad</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- 主要內容 -->
+  <div class="container my-4">
+    <!-- 標題和說明 -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <h1 class="h3 mb-3" id="page-title">Apple iPhone 價格比較</h1>
+        <p class="text-muted">
+          Compare Apple product prices between Taiwan and the US to help you decide where to buy.
+          <span class="d-none d-md-inline">
+            <i class="fas fa-plane-departure ms-1"></i> Compare before traveling to save money on Apple products!
+          </span>
+        </p>
+      </div>
+    </div>
+    
+    <!-- 匯率與手續費設定面板 -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card settings-panel">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+              <i class="fas fa-cog me-2"></i>Settings
+              <span class="badge bg-primary settings-badge" id="settings-changed" style="display: none;">Updated</span>
+            </h5>
+            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#settingsCollapse">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <div class="collapse show" id="settingsCollapse">
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="exchange-rate" class="form-label">Exchange Rate (1 USD = ? TWD)</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="exchange-rate" value="31.5" min="20" max="40" step="0.1">
+                    <span class="input-group-text">TWD</span>
+                  </div>
+                  <div class="form-text">Current rate is approximately NT$31.5</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="card-fee" class="form-label">Foreign Transaction Fee</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="card-fee" value="1.5" min="0" max="10" step="0.1">
+                    <span class="input-group-text">%</span>
+                  </div>
+                  <div class="form-text">Typical credit card foreign transaction fee is 1.5%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 價格摘要卡片 -->
+    <div class="row mb-4">
+      <div class="col-md-3 col-6 mb-3 mb-md-0">
+        <div class="card h-100">
+          <div class="card-body text-center p-2 p-md-3">
+            <h5 class="card-title">Products</h5>
+            <p class="card-text display-4" id="total-products">-</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6 mb-3 mb-md-0">
+        <div class="card h-100">
+          <div class="card-body text-center p-2 p-md-3">
+            <h5 class="card-title">Avg. Difference</h5>
+            <p class="card-text display-4" id="avg-diff">-</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="card h-100">
+          <div class="card-body text-center p-2 p-md-3">
+            <h5 class="card-title">With Fee</h5>
+            <p class="card-text display-4" id="avg-diff-with-fee">-</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="card h-100">
+          <div class="card-body text-center p-2 p-md-3">
+            <h5 class="card-title">Last Updated</h5>
+            <p class="card-text display-6" id="last-updated">-</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 產品表格卡片 -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Product Details</h5>
+            <div>
+              <input type="text" class="form-control form-control-sm" id="product-search" placeholder="Search products...">
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive table-fixed-header">
+              <table class="table table-striped table-hover mb-0" id="products-table">
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>US Price (USD)</th>
+                    <th>US+Fee (TWD)</th>
+                    <th>Taiwan Price (TWD)</th>
+                    <th>Diff. (%)</th>
+                    <th>Recommended</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data will be populated by JavaScript -->
+                  <tr>
+                    <td colspan="6" class="loading">
+                      <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Add to Home Screen Prompt (iOS Safari only) -->
+  <div class="container d-none" id="ios-add-to-home">
+    <div class="alert alert-info alert-dismissible fade show mb-4 d-flex align-items-center" role="alert">
+      <div>
+        <i class="fas fa-info-circle me-2"></i>
+        <strong>Tip:</strong> Tap <i class="fas fa-share-square mx-1"></i> then "Add to Home Screen" to use offline!
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
+  
+  <!-- 頁腳 -->
+  <footer class="container text-center">
+    <p>
+      <small>
+        Data source: Apple official website. This site is not affiliated with Apple Inc.
+        Automatically updated via <a href="https://github.com/jonatw/apple-store-scrape" target="_blank">apple-store-scrape</a>.
+      </small>
+    </p>
+  </footer>
+
+  <!-- JavaScript -->
+  <!-- Removed direct script imports as they are now handled by Vite -->
+
+</body>
+</html>

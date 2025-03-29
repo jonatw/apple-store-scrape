@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>將 SVG 轉換為 PNG 圖標</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      margin: 20px 0;
+      border: 1px solid #eee;
+      padding: 20px;
+      border-radius: 5px;
+      background: #f9f9f9;
+      text-align: center;
+    }
+    
+    h1 {
+      color: #333;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    
+    button {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px;
+    }
+    
+    button:hover {
+      background: #0055aa;
+    }
+    
+    .instructions {
+      background: #fffaf0;
+      padding: 15px;
+      border-radius: 5px;
+      border-left: 4px solid #f0ad4e;
+      margin: 20px 0;
+    }
+    
+    #svgImage, #pngImage {
+      max-width: 100%;
+      height: auto;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>將 SVG 轉換為 PNG 圖標</h1>
+  
+  <div class="instructions">
+    <h3>說明：</h3>
+    <p>此工具幫助您將 SVG 圖標轉換為 PNG 格式，以便用於 PWA 圖標。</p>
+    <ol>
+      <li>點擊「生成 PNG」按鈕</li>
+      <li>右鍵點擊生成的 PNG 圖像，選擇「儲存圖片」</li>
+      <li>將檔案儲存為 <code>apple-touch-icon.png</code></li>
+      <li>確保該檔案位於 <code>/preview/icons/</code> 目錄下</li>
+    </ol>
+  </div>
+  
+  <div class="container">
+    <h2>SVG 原始圖標：</h2>
+    <img id="svgImage" src="icons/apple-touch-icon.svg" alt="SVG 圖標">
+    
+    <button id="convertButton">生成 PNG</button>
+    
+    <h2>生成的 PNG 圖標：</h2>
+    <img id="pngImage" alt="PNG 圖標">
+  </div>
+  
+  <script>
+    document.getElementById('convertButton').addEventListener('click', function() {
+      // 取得 SVG 圖片
+      const svgImage = document.getElementById('svgImage');
+      
+      // 創建 Canvas
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+      
+      // 創建臨時圖片來繪製 SVG
+      const img = new Image();
+      img.onload = function() {
+        // 繪製 SVG 到 Canvas
+        ctx.drawImage(img, 0, 0, 512, 512);
+        
+        // 轉換 Canvas 為 PNG
+        const pngUrl = canvas.toDataURL('image/png');
+        
+        // 設置 PNG 圖片
+        const pngImage = document.getElementById('pngImage');
+        pngImage.src = pngUrl;
+        
+        // 顯示下載鏈接
+        const downloadInfo = document.createElement('p');
+        downloadInfo.innerHTML = '✅ 成功生成 PNG！請右鍵點擊圖片，選擇「儲存圖片」';
+        pngImage.parentNode.insertBefore(downloadInfo, pngImage.nextSibling);
+      };
+      
+      // 加載 SVG 圖片
+      img.src = svgImage.src;
+    });
+  </script>
+</body>
+</html>
