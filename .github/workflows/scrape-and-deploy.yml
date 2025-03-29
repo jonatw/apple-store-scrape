@@ -32,12 +32,12 @@ jobs:
           python iphone.py
           python ipad.py
       
-      - name: Convert data to JSON
+      - name: Convert data to JSON and fetch exchange rate
         run: |
           python convert_to_json.py
-          # Make sure all required directories exist
-          mkdir -p src/data
-          cp data/*.json src/data/
+          # Debug listing of created files
+          echo "Files in src/data directory:"
+          ls -la src/data/
       
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -51,11 +51,8 @@ jobs:
       - name: Build website
         run: npm run build
       
-      - name: Ensure JSON files are in the dist directory
+      - name: Debug build output
         run: |
-          # Copy JSON files directly to the dist directory (extra assurance)
-          cp data/*.json dist/
-          # Debug listing of dist directory content
           echo "Files in dist directory:"
           ls -la dist/
       

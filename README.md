@@ -13,6 +13,8 @@ Apple Store Scraper is a tool for scraping iPhone and iPad product pricing infor
 - Uses standardized product names for accurate product matching across regions
 - Automatically organizes data into CSV format with region-specific columns
 - Intelligent product matching system that works across different regions
+- Automatically fetches the latest exchange rates from Cathay Bank
+- Daily automated updates through GitHub Actions
 
 ## Requirements
 
@@ -53,7 +55,7 @@ npm install
 ```bash
 npm run scrape
 ```
-This command executes both iPhone and iPad scrapers and converts the data to JSON format.
+This command executes both iPhone and iPad scrapers, fetches the latest exchange rate, and converts the data to JSON format.
 
 2. Start the development server:
 ```bash
@@ -77,9 +79,10 @@ npm run preview
 This project includes a GitHub Actions workflow that automatically:
 
 1. Runs the scrapers daily to fetch the latest Apple product prices
-2. Converts the data to JSON format
-3. Builds the web interface
-4. Deploys to GitHub Pages
+2. Fetches the latest USD/TWD exchange rate
+3. Converts the data to JSON format
+4. Builds the web interface
+5. Deploys to GitHub Pages
 
 You can also manually trigger the workflow from the Actions tab in your GitHub repository.
 
@@ -159,12 +162,12 @@ apple-store-scrape/
 ├── .github/workflows/         # GitHub Actions workflow definitions
 │   └── scrape-and-deploy.yml  # Daily scraping and deployment workflow
 │
-├── data/                      # JSON data for web interface
-│   ├── index.json             # Data index file
-│   ├── iphone_data.json       # iPhone price data
-│   └── ipad_data.json         # iPad price data
-│
-├── src/                       # Web interface source files
+├── src/                       # Web interface source files and data
+│   ├── data/                  # JSON data for web interface
+│   │   ├── index.json         # Data index file
+│   │   ├── iphone_data.json   # iPhone price data
+│   │   ├── ipad_data.json     # iPad price data
+│   │   └── exchange_rate.json # Current exchange rate data
 │   ├── icons/                 # App icons
 │   ├── index.html             # Main HTML template
 │   ├── main.js                # JavaScript functionality
@@ -177,7 +180,7 @@ apple-store-scrape/
 ├── iphone_products_merged.csv # iPhone data output (CSV)
 ├── ipad.py                    # iPad data scraping script
 ├── ipad_products_merged.csv   # iPad data output (CSV)
-├── convert_to_json.py         # Script to convert CSV to JSON
+├── convert_to_json.py         # Script to convert CSV to JSON and fetch exchange rates
 │
 ├── package.json               # Node.js dependencies and scripts
 ├── vite.config.js             # Vite configuration
@@ -212,11 +215,12 @@ apple-store-scrape/
    - Handle missing values and duplicate data
    - Organize columns in a consistent format
 
-5. **CSV Export**:
-   - Save processed data in CSV format
-   - Use `utf-8-sig` encoding to ensure proper display of characters
+5. **Exchange Rate Fetching**:
+   - Automatically fetch the latest USD/TWD exchange rate from Cathay Bank
+   - Fall back to previous rates if fetching fails
+   - Store exchange rate data in JSON format
 
-6. **JSON Conversion**:
+6. **CSV to JSON Conversion**:
    - Convert CSV data to structured JSON format
    - Add metadata like exchange rates and update timestamps
    - Calculate price difference percentages
@@ -269,6 +273,8 @@ Data is sourced from Apple's official product pages:
 
 The scripts specifically look for a `<script>` tag with `id="metrics"` in the page, which contains complete product information, including SKU, price, and configuration details.
 
+Exchange rate data is sourced from Cathay Bank's exchange rate page.
+
 ### Web Technologies
 
 - **Vite**: Modern build tool and development server
@@ -285,13 +291,14 @@ The scripts include several error handling mechanisms:
 - Debugging output when `DEBUG = True`
 - Fill strategies for missing data
 - Failsafe defaults for web interface when data is unavailable
+- Fallback options for exchange rate fetching
 
 ## Notes and Limitations
 
 - Apple may change its website structure; if scripts stop working, the HTML parsing logic may need to be updated
 - This tool is for personal research and comparison only, please respect Apple's terms of service
 - The scripts implement rate limiting (1 second delay between requests) to be respectful to Apple's servers
-- Exchange rates are configurable in the web interface but not automatically updated from external sources
+- Exchange rates are updated from Cathay Bank but can be manually overridden in the web interface
 - The tool currently doesn't track historical price data
 - Price comparisons don't account for tax differences between regions
 

@@ -139,12 +139,35 @@ function calculatePriceStats(products) {
 // Load product data
 async function loadProductData(product) {
   try {
-    // 直接從根目錄載入
+    // Direct load from root directory
     const response = await fetch(`${product}_data.json`);
     if (!response.ok) {
       throw new Error(`Failed to load ${product} data: ${response.status}`);
     }
     const data = await response.json();
+    
+    // Update default exchange rate if available in metadata
+    if (data.metadata && data.metadata.exchangeRates && data.metadata.exchangeRates.TWD) {
+      // Only update if we haven't loaded data before
+      if (!productData) {
+        exchangeRate = data.metadata.exchangeRates.TWD;
+        // Update the input field as well
+        const exchangeRateInput = document.getElementById('exchange-rate');
+        if (exchangeRateInput) {
+          exchangeRateInput.value = exchangeRate;
+        }
+        console.log(`Using exchange rate from data: ${exchangeRate}`);
+      }
+    }
+    
+    // Display exchange rate update date if available
+    if (data.metadata && data.metadata.lastExchangeRateUpdate) {
+      const exchangeRateDate = formatDate(data.metadata.lastExchangeRateUpdate);
+      const exchangeRateFormText = document.querySelector('#exchange-rate + .input-group + .form-text');
+      if (exchangeRateFormText) {
+        exchangeRateFormText.innerHTML = `Current rate from Cathay Bank (updated: ${exchangeRateDate})`;
+      }
+    }
     
     // Add calculated price difference (with fees)
     data.products.forEach(p => {

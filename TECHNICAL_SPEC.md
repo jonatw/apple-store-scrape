@@ -116,6 +116,37 @@ iPad product information scraping module with multi-region support and dynamic m
     - Merges products based on SKU matching
     - Organizes columns in the preferred order
 
+### convert_to_json.py
+
+Data processing module that converts CSV data to JSON format and fetches exchange rates.
+
+#### Main Functions
+
+- `fetch_exchange_rate(debug=False)`:
+  - **Purpose**: Fetches the current USD/TWD exchange rate from Cathay Bank's website
+  - **Process**:
+    - Makes HTTP request to Cathay Bank's exchange rate page
+    - Parses HTML content using BeautifulSoup
+    - Extracts the USD/TWD selling rate
+    - Returns the rate as a float value
+
+- `get_exchange_rates(debug=False)`:
+  - **Purpose**: Gets exchange rates for use in price comparisons
+  - **Process**:
+    - Attempts to fetch the latest exchange rate from Cathay Bank
+    - If successful, saves the rate to exchange_rate.json
+    - If fetching fails, tries to use previously saved rates
+    - Provides fallback default values if all else fails
+    - Returns exchange rate data structure
+
+- `csv_to_json(csv_file, json_file, product_type, exchange_rates)`:
+  - **Purpose**: Converts CSV product data to structured JSON format
+  - **Process**:
+    - Reads CSV file using pandas
+    - Processes price difference calculations using exchange rates
+    - Creates structured JSON with metadata and product array
+    - Writes JSON output to the specified file
+
 ## Data Structures
 
 ### Configuration Data
@@ -152,6 +183,19 @@ Example of JSON structure scraped from the webpage (simplified):
 }
 ```
 
+### Exchange Rate Data Structure
+
+```json
+{
+  "rates": {
+    "USD": 1.0,
+    "TWD": 31.53
+  },
+  "lastUpdated": "2025-03-30T14:30:22.456789",
+  "source": "Cathay Bank"
+}
+```
+
 ### Product Matching Strategies
 
 #### iPhone - Standardized Name Matching
@@ -185,6 +229,35 @@ SKU,Price_US,Price_TW,PRODUCT_NAME
 MPMJ3LL/A,599.0,18900.0,iPad Air Wi-Fi 64GB - Space Gray
 ```
 
+#### JSON Output Structure
+```json
+{
+  "metadata": {
+    "lastUpdated": "2025-03-30T14:30:22.456789",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 31.53
+    },
+    "regions": ["US", "TW"],
+    "productType": "iphone",
+    "totalProducts": 40,
+    "lastExchangeRateUpdate": "2025-03-30T14:30:22.456789",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "SKU_US": "MLG33LL/A",
+      "SKU_TW": "MLG33ZP/A",
+      "Price_US": 999.0,
+      "Price_TW": 31900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 128GB Natural Titanium",
+      "price_difference_percent": 0.8,
+      "product_type": "iphone"
+    }
+  ]
+}
+```
+
 ## API and Data Sources
 
 ### Source Endpoints
@@ -196,6 +269,11 @@ MPMJ3LL/A,599.0,18900.0,iPad Air Wi-Fi 64GB - Space Gray
 #### iPad
 - Base URL pattern: `https://www.apple.com/{region_code}/shop/buy-ipad/{model}`
 - Models: Dynamically detected or fallback to ["ipad-pro", "ipad-air", "ipad", "ipad-mini"]
+
+#### Exchange Rate
+- Base URL: `https://accessibility.cathaybk.com.tw/exchange-rate-search.aspx`
+- Data location: Table row containing `美元(USD)` in the first column
+- Target data: Selling rate in the third column
 
 ### Data Extraction Location
 
@@ -225,9 +303,21 @@ In the HTML, product information is contained in the following tag:
    - Create multi-region output format
    - Handle missing values
 
-5. **Output Generation**:
+5. **Exchange Rate Fetching**:
+   - Request Cathay Bank's exchange rate page
+   - Parse HTML to extract USD/TWD exchange rate
+   - Apply fallback mechanisms if fetching fails
+
+6. **JSON Conversion**:
+   - Read CSV product data
+   - Calculate price differences using exchange rates
+   - Generate structured JSON with metadata
+   - Save to src/data directory for web access
+
+7. **Output Generation**:
    - Organize columns in a standardized format
    - Save to CSV with appropriate encoding
+   - Generate JSON for web interface
 
 ## Performance Considerations
 
@@ -261,6 +351,11 @@ The system incorporates multiple resilience features:
    - Fills missing SKUs with empty strings
    - Ensures consistent output format regardless of data completeness
 
+5. **Exchange Rate Fallbacks**:
+   - Attempts to fetch latest rates
+   - If fetching fails, tries previously saved rates
+   - Provides default fallback values if all else fails
+
 ## Extensibility
 
 The system is designed to be modular and can be extended in the following ways:
@@ -281,10 +376,11 @@ The system is designed to be modular and can be extended in the following ways:
 1. Create a new script following the pattern of `iphone.py` or `ipad.py`
 2. Update URL patterns and model detection logic as needed
 3. Choose an appropriate product matching strategy
+4. Update convert_to_json.py to handle the new category
 
 ### Future Enhancement Opportunities
 
-- Currency conversion to facilitate direct price comparisons
+- Support for additional currency exchange rate sources
 - Historical data tracking to monitor price changes over time
 - Visualization components for price comparison
 - API endpoint for programmatic access to data
@@ -292,7 +388,14 @@ The system is designed to be modular and can be extended in the following ways:
 
 ## Version Changelog
 
-### Version 1.1.0 (Current)
+### Version 1.2.0 (Current)
+- Integrated exchange rate fetching directly into convert_to_json.py
+- Streamlined data storage to use src/data directory exclusively
+- Improved Vite build configuration for better file handling
+- Enhanced GitHub Actions workflow for smoother deployments
+- Updated debug logging for better troubleshooting
+
+### Version 1.1.0
 - Added dynamic model detection from Apple website
 - Implemented multi-region architecture with configurable region support
 - Improved product matching with standardized product names
