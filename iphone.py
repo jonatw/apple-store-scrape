@@ -11,79 +11,72 @@ This tool is for personal research and comparison only. Please respect Apple's t
 Do not run this script too frequently to avoid overloading Apple's servers.
 """
 
-def get_available_models(region=""):
-    """
-    從 Apple 商店頁面獲取當前可用的 iPhone 型號
+# ==================== CONFIGURATION ====================
 
-    參數:
-    region (str): 地區代碼，例如 "tw" 代表台灣，"" 代表美國
+# Define regions to scrape
+# Format: region_code: [display_name, currency_code, locale, currency_symbol]
+# Use empty string "" for US as it has no region prefix in URL
+REGIONS = {
+    "": ["US", "USD", "en-us", "$"],       # United States
+    "tw": ["TW", "TWD", "zh-tw", "NT$"],   # Taiwan
+    # Uncomment or add more regions as needed:
+    # "jp": ["JP", "JPY", "ja-jp", "¥"],      # Japan
+    # "uk": ["UK", "GBP", "en-gb", "£"],      # United Kingdom
+    # "au": ["AU", "AUD", "en-au", "A$"],     # Australia
+    # "ca": ["CA", "CAD", "en-ca", "C$"],     # Canada
+    # "de": ["DE", "EUR", "de-de", "€"],      # Germany
+    # "fr": ["FR", "EUR", "fr-fr", "€"],      # France
+}
 
-    返回:
-    list: 可用的 iPhone 型號列表，例如 ["iphone-16-pro", "iphone-16", ...]
-    """
-    region_prefix = f"/{region}" if region else ""
-    url = f"https://www.apple.com{region_prefix}/shop/buy-iphone"
+# Reference region for product naming (first one will be used as reference)
+REFERENCE_REGION = list(REGIONS.keys())[0]
 
-    try:
-        response = requests.get(url)
-        if response.status_code != 200:
-            print(f"無法訪問 {url}，使用預設型號列表")
-            return ["iphone-16-pro", "iphone-16", "iphone-16e", "iphone-15"]
+# Request delay to avoid overloading servers (seconds)
+REQUEST_DELAY = 1
 
-        # 解析 HTML
-        soup = BeautifulSoup(response.text, 'html.parser')
+# Set to True to print debug information
+DEBUG = True
 
-        # 尋找所有指向 buy-iphone 頁面的連結
-        iphone_links = []
-        for link in soup.find_all('a', href=True):
-            href = link.get('href')
-            if '/shop/buy-iphone/iphone-' in href:
-                # 提取型號部分 (例如從 /tw/shop/buy-iphone/iphone-16-pro 提取 iphone-16-pro)
-                model = href.split('buy-iphone/')[1].split('?')[0].split('#')[0]
-                iphone_links.append(model)
+# ==================== FUNCTIONS ====================
 
-        # 去除重複項並返回
-        unique_models = list(set(iphone_links))
+def debug_print(message):
+    """Print debug message if DEBUG is enabled"""
+    if DEBUG:
+        print(f"[DEBUG] {message}")
 
-        if not unique_models:
-            print(f"在 {url} 找不到 iPhone 型號，使用預設型號列表")
-            return ["iphone-16-pro", "iphone-16", "iphone-16e", "iphone-15"]
-
-        return unique_models
-
-    except Exception as e:
-        print(f"獲取 iPhone 型號時出錯: {e}，使用預設型號列表")
-        return ["iphone-16-pro", "iphone-16", "iphone-16e", "iphone-15"]
-
-# 產品名稱標準化函數
 def standardize_product_name(name):
-    """標準化產品名稱，以便匹配相同的產品"""
+    """
+    Standardize product name for matching across regions
+    
+    Parameters:
+    name (str): Original product name, e.g., "iPhone 16 Pro 256GB Black Titanium"
+    
+    Returns:
+    str: Standardized name key, e.g., "iphone16pro_256gb_blacktitanium"
+    """
     if not name:
         return ""
 
-    # 移除空格，轉為小寫
+    # Convert to lowercase
     name = name.lower()
 
-    # 提取型號部分 (如 "iPhone 16 Pro")
+    # Extract model part
     model_match = re.search(r'iphone\s*(\d+)\s*(pro\s*max|pro|plus|se)?', name)
 
-    # 提取容量部分 (如 "256GB")
+    # Extract capacity part
     storage_match = re.search(r'(\d+)\s*(gb|tb)', name)
 
-    # 提取顏色部分
-    color_keywords = [
-        "black", "white", "blue", "purple", "yellow", "green", 
-        "pink", "red", "silver", "gold", "titanium", "starlight",
-        "ultramarine", "teal", "desert", "natural", "gray", "graphite"
-    ]
-
-    found_color = None
-    for color in color_keywords:
-        if color in name:
-            found_color = color
-            break
-
-    # 創建標準化鍵
+    # Extract color by removing model and capacity parts
+    name_copy = name
+    if model_match:
+        name_copy = name_copy.replace(model_match.group(0), "")
+    if storage_match:
+        name_copy = name_copy.replace(storage_match.group(0), "")
+    
+    # Clean up the remaining text to get the color
+    color = name_copy.strip().replace(" ", "")
+    
+    # Create standardized key parts
     key_parts = []
 
     if model_match:
@@ -94,21 +87,81 @@ def standardize_product_name(name):
     if storage_match:
         key_parts.append(f"{storage_match.group(1)}{storage_match.group(2)}")
 
-    if found_color:
-        key_parts.append(found_color)
+    if color:
+        key_parts.append(color)
 
-    # 返回標準化鍵
+    # Join key parts with underscore
     return "_".join(key_parts) if key_parts else name.replace(" ", "")
 
-# Function to retrieve and extract product data from a page
-def extract_product_details(url, is_taiwan=False):
-    # Rate limiting - add a delay between requests to be respectful
-    time.sleep(1)  # Sleep for 1 second between requests
+def get_available_models(region_code=""):
+    """
+    Get available iPhone models from Apple store page
+    
+    Parameters:
+    region_code (str): Region code, e.g., "tw" for Taiwan, "" for US
+    
+    Returns:
+    list: List of available iPhone models, e.g., ["iphone-16-pro", "iphone-16", ...]
+    """
+    region_prefix = f"/{region_code}" if region_code else ""
+    url = f"https://www.apple.com{region_prefix}/shop/buy-iphone"
+    
+    default_models = ["iphone-16-pro", "iphone-16", "iphone-16e", "iphone-15"]
+    
+    try:
+        response = requests.get(url)
+        if response.status_code != 200:
+            debug_print(f"Cannot access {url}, using default model list")
+            return default_models
 
+        # Parse HTML
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Find all links to buy-iphone pages
+        iphone_links = []
+        for link in soup.find_all('a', href=True):
+            href = link.get('href')
+            if '/shop/buy-iphone/iphone-' in href:
+                # Extract model part (e.g., extract iphone-16-pro from /tw/shop/buy-iphone/iphone-16-pro)
+                model = href.split('buy-iphone/')[1].split('?')[0].split('#')[0]
+                iphone_links.append(model)
+
+        # Remove duplicates and return
+        unique_models = list(set(iphone_links))
+
+        if not unique_models:
+            debug_print(f"Could not find iPhone models at {url}, using default model list")
+            return default_models
+
+        return unique_models
+
+    except Exception as e:
+        debug_print(f"Error getting iPhone models: {e}, using default model list")
+        return default_models
+
+def extract_product_details(url, region_code=""):
+    """
+    Extract product details from Apple store page
+    
+    Parameters:
+    url (str): URL of the Apple store product page
+    region_code (str): Region code to identify the region
+    
+    Returns:
+    list: List of dictionaries containing product details
+    """
+    # Rate limiting
+    time.sleep(REQUEST_DELAY)
+    
+    # Get region display name
+    region_display = REGIONS.get(region_code, ["Unknown"])[0]
+    
+    debug_print(f"Fetching products from {url} for region {region_display}")
+    
     response = requests.get(url)
 
     if response.status_code != 200:
-        print(f"Failed to retrieve {url}. Status code: {response.status_code}")
+        debug_print(f"Failed to retrieve {url}. Status code: {response.status_code}")
         return []
 
     # Parse the HTML content
@@ -117,95 +170,196 @@ def extract_product_details(url, is_taiwan=False):
     # Search for the script with type "application/json" and id "metrics"
     json_script = soup.find('script', {'type': 'application/json', 'id': 'metrics'})
     if not json_script:
-        print(f"No matching script found in {url}")
+        debug_print(f"No matching script found in {url}")
         return []
 
     # Parse JSON content
-    json_data = json.loads(json_script.string)
-    data = json_data.get('data', {})
-    products = data.get('products', [])
+    try:
+        json_data = json.loads(json_script.string)
+        data = json_data.get('data', {})
+        products = data.get('products', [])
+        
+        # Debug info
+        debug_print(f"Found {len(products)} products for region {region_display}")
+        
+        # Extract relevant product details
+        product_details = []
+        for product in products:
+            sku = product.get("sku")
+            name = product.get("name", "")
+            price = product.get("price", {}).get("fullPrice")
+            part_number = product.get("partNumber", "")
+            
+            # Generate standardized name for matching products across regions
+            std_name = standardize_product_name(name)
+            
+            product_details.append({
+                "SKU": sku,
+                "Name": name,
+                "Price": price,
+                "Region": region_display,
+                "Region_Code": region_code,
+                "PartNumber": part_number,
+                "Standardized_Name": std_name
+            })
+            
+        return product_details
+    except Exception as e:
+        debug_print(f"Error parsing product data: {e}")
+        return []
 
-    # Extract relevant product details
-    product_details = []
-    for product in products:
-        sku = product.get("sku")
-        name = product.get("name", "")
-        price = product.get("price", {}).get("fullPrice")
-        region = "TW" if is_taiwan else "US"
+def get_all_products():
+    """
+    Get all products from all configured regions
+    
+    Returns:
+    list: Combined list of all product details from all regions
+    """
+    # Get all unique models from all regions
+    all_models = set()
+    for region_code in REGIONS.keys():
+        models = get_available_models(region_code)
+        all_models.update(models)
+    
+    debug_print(f"Found models across all regions: {', '.join(all_models)}")
+    
+    # Fetch products for each model from each region
+    all_products = []
+    for model in all_models:
+        for region_code in REGIONS.keys():
+            region_prefix = f"/{region_code}" if region_code else ""
+            url = f"https://www.apple.com{region_prefix}/shop/buy-iphone/{model}"
+            products = extract_product_details(url, region_code)
+            all_products.extend(products)
+    
+    return all_products
 
-        # 生成標準化名稱以匹配產品
-        std_name = standardize_product_name(name)
+def merge_product_data(product_data):
+    """
+    Merge product data from all regions
+    
+    Parameters:
+    product_data (list): List of product dictionaries
+    
+    Returns:
+    DataFrame: Merged product data with columns for each region
+    """
+    # Convert to DataFrame
+    df = pd.DataFrame(product_data)
+    
+    if df.empty:
+        debug_print("No product data to merge!")
+        return pd.DataFrame()
+    
+    # Create separate DataFrames for each region
+    region_dfs = {}
+    for region_code, region_info in REGIONS.items():
+        region_display = region_info[0]
+        region_data = df[df['Region_Code'] == region_code].copy()
+        
+        # Ensure uniqueness of standardized names
+        region_data = region_data.drop_duplicates(subset='Standardized_Name')
+        
+        # Rename columns to include region
+        region_data.rename(columns={
+            'SKU': f'SKU_{region_display}',
+            'Price': f'Price_{region_display}',
+            'Name': f'Name_{region_display}',
+            'PartNumber': f'PartNumber_{region_display}'
+        }, inplace=True)
+        
+        # Store for merging
+        region_dfs[region_code] = region_data
+    
+    # Start with the reference region
+    ref_region = REFERENCE_REGION
+    ref_display = REGIONS[ref_region][0]
+    
+    if ref_region not in region_dfs:
+        debug_print(f"Reference region {ref_display} not found in data!")
+        return pd.DataFrame()
+    
+    merged_df = region_dfs[ref_region]
+    
+    # Merge with other regions
+    for region_code, region_df in region_dfs.items():
+        if region_code == ref_region:
+            continue
+        
+        # Select columns to merge
+        columns_to_merge = [
+            f'SKU_{REGIONS[region_code][0]}', 
+            f'Price_{REGIONS[region_code][0]}', 
+            'Standardized_Name'
+        ]
+            
+        merged_df = pd.merge(
+            merged_df, 
+            region_df[columns_to_merge], 
+            on='Standardized_Name', 
+            how='outer'
+        )
+    
+    # Fill NaN values
+    for region_code, region_info in REGIONS.items():
+        region_display = region_info[0]
+        merged_df[f'Price_{region_display}'] = merged_df[f'Price_{region_display}'].fillna(0)
+        merged_df[f'SKU_{region_display}'] = merged_df[f'SKU_{region_display}'].fillna('')
+    
+    # Create final output dataframe with the requested column format
+    # 1. First all SKU columns
+    # 2. Then all Price columns
+    # 3. Finally the product name
+    
+    # Prepare the output columns in the desired order
+    sku_columns = []
+    price_columns = []
+    
+    for region_code, region_info in REGIONS.items():
+        region_display = region_info[0]
+        sku_columns.append(f'SKU_{region_display}')
+        price_columns.append(f'Price_{region_display}')
+    
+    # Create the output dataframe with columns in the specified order
+    output_columns = sku_columns + price_columns + [f'Name_{ref_display}']
+    output_df = merged_df[output_columns].copy()
+    
+    # Rename the product name column
+    output_df = output_df.rename(columns={f'Name_{ref_display}': 'PRODUCT_NAME'})
+    
+    return output_df
 
-        product_details.append({
-            "SKU": sku,
-            "Name": name,
-            "Price": price,
-            "Region": region,
-            "Standardized_Name": std_name
-        })
+# ==================== MAIN EXECUTION ====================
 
-    return product_details
+def main():
+    """Main execution function"""
+    print("Starting iPhone product scraper...")
+    print(f"Configured regions: {', '.join([info[0] for info in REGIONS.values()])}")
+    
+    # Get all products from all regions
+    all_products = get_all_products()
+    
+    # Merge product data
+    merged_data = merge_product_data(all_products)
+    
+    # Display results
+    print("\nResults:")
+    print(merged_data)
+    
+    # Save to CSV
+    output_file = 'iphone_products_merged.csv'
+    merged_data.to_csv(output_file, index=False, encoding='utf-8-sig')
+    print(f"\nSaved results to {output_file}")
+    
+    # Display stats
+    print(f"\nTotal unique products found: {len(merged_data)}")
+    for region_code, region_info in REGIONS.items():
+        region_display = region_info[0]
+        price_col = f'Price_{region_display}'
+        
+        if price_col in merged_data.columns:
+            non_zero_prices = (merged_data[price_col] > 0).sum()
+            print(f"Products found in {region_display}: {non_zero_prices}")
 
-# 動態獲取台灣和美國的 iPhone 型號
-tw_models = get_available_models("tw")
-us_models = get_available_models("")
-
-# 合併兩個列表，確保所有型號都被包含
-models = list(set(tw_models + us_models))
-
-# Initialize an empty list to store product details from all URLs
-all_product_details = []
-
-# Loop through each model and add both English and Taiwan URL
-for model in models:
-    # 美國資料
-    us_url = f"https://www.apple.com/shop/buy-iphone/{model}"
-    us_products = extract_product_details(us_url, is_taiwan=False)
-    all_product_details.extend(us_products)
-
-    # 台灣資料
-    tw_url = f"https://www.apple.com/tw/shop/buy-iphone/{model}"
-    tw_products = extract_product_details(tw_url, is_taiwan=True)
-    all_product_details.extend(tw_products)
-
-# Convert the extracted data into a DataFrame
-df = pd.DataFrame(all_product_details)
-
-# 按地區分類數據
-df_us = df[df['Region'] == 'US'].copy()
-df_tw = df[df['Region'] == 'TW'].copy()
-
-# 確保標準化名稱的唯一性
-df_us = df_us.drop_duplicates(subset='Standardized_Name')
-df_tw = df_tw.drop_duplicates(subset='Standardized_Name')
-
-# 重命名列以便於合併後識別
-df_us.rename(columns={'SKU': 'SKU_US', 'Price': 'Price_US', 'Name': 'Name_US'}, inplace=True)
-df_tw.rename(columns={'SKU': 'SKU_TW', 'Price': 'Price_TW', 'Name': 'Name_TW'}, inplace=True)
-
-# 使用標準化名稱進行合併
-df_merged = pd.merge(df_us, df_tw, on='Standardized_Name', how='outer', suffixes=('_US', '_TW'))
-
-# 為缺失值賦予預設值
-df_merged['Price_US'] = df_merged['Price_US'].fillna(0)
-df_merged['Price_TW'] = df_merged['Price_TW'].fillna(0)
-df_merged['Name_US'] = df_merged['Name_US'].fillna('')
-df_merged['Name_TW'] = df_merged['Name_TW'].fillna('')
-df_merged['SKU_US'] = df_merged['SKU_US'].fillna('')
-df_merged['SKU_TW'] = df_merged['SKU_TW'].fillna('')
-
-# 選擇並重命名要保留的列
-df_final = df_merged[['SKU_US', 'SKU_TW', 'Price_US', 'Price_TW', 'Name_US', 'Name_TW']].rename(
-    columns={
-        'Price_TW': '台灣價格',
-        'Price_US': '美國價格',
-        'Name_TW': '台灣產品名',
-        'Name_US': '美國產品名'
-    }
-)
-
-# 顯示最終結果
-print(df_final)
-
-# 保存結果到 CSV 文件
-df_final.to_csv('iphone_products_merged.csv', index=False, encoding='utf-8-sig')
+if __name__ == "__main__":
+    main()
