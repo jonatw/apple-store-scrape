@@ -2,6 +2,8 @@
 
 Apple Store Scraper is a tool for scraping iPhone and iPad product pricing information from the Apple online store. This tool allows for comparison of Apple product prices across multiple regions (currently configured for the United States and Taiwan), helping consumers understand price differences across different markets.
 
+**Live Demo**: [https://jonatw.github.io/apple-store-scrape/](https://jonatw.github.io/apple-store-scrape/)
+
 ## Features
 
 - Scrapes the latest iPhone and iPad product information from Apple's online store

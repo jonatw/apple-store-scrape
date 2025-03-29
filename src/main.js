@@ -139,8 +139,8 @@ function calculatePriceStats(products) {
 // Load product data
 async function loadProductData(product) {
   try {
-    // 使用相對於 src 路徑
-    const response = await fetch(`data/${product}_data.json`);
+    // 使用絕對路徑當部署到子路徑時
+    const response = await fetch(`./${product}_data.json`);
     if (!response.ok) {
       throw new Error(`Failed to load ${product} data: ${response.status}`);
     }
