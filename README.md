@@ -15,6 +15,9 @@ Apple Store Scraper is a tool for scraping iPhone and iPad product pricing infor
 - Intelligent product matching system that works across different regions
 - Automatically fetches the latest exchange rates from Cathay Bank
 - Daily automated updates through GitHub Actions
+- Responsive web interface with dark mode support
+- Interactive exchange rate and foreign transaction fee settings
+- Search functionality for finding specific products
 
 ## Requirements
 
@@ -23,6 +26,7 @@ Apple Store Scraper is a tool for scraping iPhone and iPad product pricing infor
   - requests==2.32.3
   - beautifulsoup4==4.12.3
   - pandas==2.2.3
+- Node.js and npm for web interface
 
 ## Installation
 
@@ -108,7 +112,14 @@ REGIONS = {
 
 ### Web Interface Configuration
 
-You can customize the exchange rate and foreign transaction fee in the web interface. These settings are saved in the browser's local storage for future visits.
+You can customize the exchange rate and foreign transaction fee in the web interface. These settings are saved in the browser's local storage for future visits. The web interface includes:
+
+- Dark/light theme toggle that respects system preferences
+- Responsive design for mobile and desktop
+- Search functionality for filtering products
+- Interactive settings panel for adjusting exchange rates and fees
+- Price difference calculations with and without foreign transaction fees
+- Product recommendation based on price comparison
 
 ## Data Format
 
@@ -229,6 +240,8 @@ apple-store-scrape/
    - Dynamic rendering of product data
    - Interactive settings for exchange rates and fees
    - Search and filtering capabilities
+   - Responsive design for all device sizes
+   - Theme switching (dark/light mode)
 
 8. **Automated Updates**:
    - GitHub Actions workflow runs the pipeline daily
