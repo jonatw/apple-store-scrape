@@ -1,0 +1,865 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-04-19T00:15:41.546415",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 32.71
+    },
+    "regions": [
+      "US",
+      "TW"
+    ],
+    "productType": "iphone",
+    "totalProducts": 94,
+    "lastExchangeRateUpdate": "2025-04-19T00:15:40.490281",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "SKU_US": "MTLV3",
+      "SKU_TW": "MTP03",
+      "Price_US": 729.0,
+      "Price_TW": 25900.0,
+      "PRODUCT_NAME": "iPhone 15 128GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 8.6
+    },
+    {
+      "SKU_US": "MTLY3",
+      "SKU_TW": "MTP43",
+      "Price_US": 729.0,
+      "Price_TW": 25900.0,
+      "PRODUCT_NAME": "iPhone 15 128GB Blue",
+      "product_type": "iphone",
+      "price_difference_percent": 8.6
+    },
+    {
+      "SKU_US": "MTM23",
+      "SKU_TW": "MTP53",
+      "Price_US": 729.0,
+      "Price_TW": 25900.0,
+      "PRODUCT_NAME": "iPhone 15 128GB Green",
+      "product_type": "iphone",
+      "price_difference_percent": 8.6
+    },
+    {
+      "SKU_US": "MTLW3",
+      "SKU_TW": "MTP13",
+      "Price_US": 729.0,
+      "Price_TW": 25900.0,
+      "PRODUCT_NAME": "iPhone 15 128GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 8.6
+    },
+    {
+      "SKU_US": "MTLX3",
+      "SKU_TW": "MTP23",
+      "Price_US": 729.0,
+      "Price_TW": 25900.0,
+      "PRODUCT_NAME": "iPhone 15 128GB Yellow",
+      "product_type": "iphone",
+      "price_difference_percent": 8.6
+    },
+    {
+      "SKU_US": "MTM43",
+      "SKU_TW": "MTP63",
+      "Price_US": 829.0,
+      "Price_TW": 29400.0,
+      "PRODUCT_NAME": "iPhone 15 256GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 8.4
+    },
+    {
+      "SKU_US": "MTM73",
+      "SKU_TW": "MTP93",
+      "Price_US": 829.0,
+      "Price_TW": 29400.0,
+      "PRODUCT_NAME": "iPhone 15 256GB Blue",
+      "product_type": "iphone",
+      "price_difference_percent": 8.4
+    },
+    {
+      "SKU_US": "MTM83",
+      "SKU_TW": "MTPA3",
+      "Price_US": 829.0,
+      "Price_TW": 29400.0,
+      "PRODUCT_NAME": "iPhone 15 256GB Green",
+      "product_type": "iphone",
+      "price_difference_percent": 8.4
+    },
+    {
+      "SKU_US": "MTM53",
+      "SKU_TW": "MTP73",
+      "Price_US": 829.0,
+      "Price_TW": 29400.0,
+      "PRODUCT_NAME": "iPhone 15 256GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 8.4
+    },
+    {
+      "SKU_US": "MTM63",
+      "SKU_TW": "MTP83",
+      "Price_US": 829.0,
+      "Price_TW": 29400.0,
+      "PRODUCT_NAME": "iPhone 15 256GB Yellow",
+      "product_type": "iphone",
+      "price_difference_percent": 8.4
+    },
+    {
+      "SKU_US": "MTM93",
+      "SKU_TW": "MTPC3",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 15 512GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MTMF3",
+      "SKU_TW": "MTPG3",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 15 512GB Blue",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MTMG3",
+      "SKU_TW": "MTPH3",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 15 512GB Green",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MTMA3",
+      "SKU_TW": "MTPD3",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 15 512GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MTMC3",
+      "SKU_TW": "MTPF3",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 15 512GB Yellow",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MTXR3",
+      "SKU_TW": "MU0Y3",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 128GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MTXV3",
+      "SKU_TW": "MU163",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 128GB Blue",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MTXW3",
+      "SKU_TW": "MU173",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 128GB Green",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MTXT3",
+      "SKU_TW": "MU103",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 128GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MTXU3",
+      "SKU_TW": "MU123",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 128GB Yellow",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MTXX3",
+      "SKU_TW": "MU183",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 256GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MU013",
+      "SKU_TW": "MU1F3",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 256GB Blue",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MU023",
+      "SKU_TW": "MU1G3",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 256GB Green",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MTXY3",
+      "SKU_TW": "MU193",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 256GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MU003",
+      "SKU_TW": "MU1D3",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 256GB Yellow",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MU033",
+      "SKU_TW": "MU1H3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 512GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MU063",
+      "SKU_TW": "MU1P3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 512GB Blue",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MU073",
+      "SKU_TW": "MU1Q3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 512GB Green",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MU043",
+      "SKU_TW": "MU1J3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 512GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MU053",
+      "SKU_TW": "MU1M3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 15 Plus 512GB Yellow",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MYAP3",
+      "SKU_TW": "MYE73",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 16 128GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MD0D4",
+      "SKU_TW": "MD1Q4",
+      "Price_US": 599.0,
+      "Price_TW": 21900.0,
+      "PRODUCT_NAME": "iPhone 16e 128GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU_US": "MD0E4",
+      "SKU_TW": "MD1R4",
+      "Price_US": 599.0,
+      "Price_TW": 21900.0,
+      "PRODUCT_NAME": "iPhone 16e 128GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU_US": "MYAR3",
+      "SKU_TW": "MYEA3",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 16 128GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MYAW3",
+      "SKU_TW": "MYED3",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 16 128GB Teal",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MYAT3",
+      "SKU_TW": "MYEC3",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 16 128GB Ultramarine",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MYAQ3",
+      "SKU_TW": "MYE93",
+      "Price_US": 829.0,
+      "Price_TW": 29900.0,
+      "PRODUCT_NAME": "iPhone 16 128GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 10.3
+    },
+    {
+      "SKU_US": "MYAX3",
+      "SKU_TW": "MYEE3",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 16 256GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MD0F4",
+      "SKU_TW": "MD1T4",
+      "Price_US": 699.0,
+      "Price_TW": 25400.0,
+      "PRODUCT_NAME": "iPhone 16e 256GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU_US": "MD0G4",
+      "SKU_TW": "MD1W4",
+      "Price_US": 699.0,
+      "Price_TW": 25400.0,
+      "PRODUCT_NAME": "iPhone 16e 256GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU_US": "MYD03",
+      "SKU_TW": "MYEG3",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 16 256GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MYD23",
+      "SKU_TW": "MYEJ3",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 16 256GB Teal",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MYD13",
+      "SKU_TW": "MYEH3",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 16 256GB Ultramarine",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MYAY3",
+      "SKU_TW": "MYEF3",
+      "Price_US": 929.0,
+      "Price_TW": 33400.0,
+      "PRODUCT_NAME": "iPhone 16 256GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 9.9
+    },
+    {
+      "SKU_US": "MYD33",
+      "SKU_TW": "MYEK3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 512GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MD0J4",
+      "SKU_TW": "MD1X4",
+      "Price_US": 899.0,
+      "Price_TW": 32400.0,
+      "PRODUCT_NAME": "iPhone 16e 512GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 10.2
+    },
+    {
+      "SKU_US": "MD0Q4",
+      "SKU_TW": "MD274",
+      "Price_US": 899.0,
+      "Price_TW": 32400.0,
+      "PRODUCT_NAME": "iPhone 16e 512GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 10.2
+    },
+    {
+      "SKU_US": "MYD53",
+      "SKU_TW": "MYEQ3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 512GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MYD73",
+      "SKU_TW": "MYEU3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 512GB Teal",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MYD63",
+      "SKU_TW": "MYER3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 512GB Ultramarine",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MYD43",
+      "SKU_TW": "MYEP3",
+      "Price_US": 1129.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 512GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU_US": "MXUT3",
+      "SKU_TW": "MXVU3",
+      "Price_US": 929.0,
+      "Price_TW": 32900.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 128GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 8.3
+    },
+    {
+      "SKU_US": "MXUV3",
+      "SKU_TW": "MXVW3",
+      "Price_US": 929.0,
+      "Price_TW": 32900.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 128GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 8.3
+    },
+    {
+      "SKU_US": "MXUX3",
+      "SKU_TW": "MXVY3",
+      "Price_US": 929.0,
+      "Price_TW": 32900.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 128GB Teal",
+      "product_type": "iphone",
+      "price_difference_percent": 8.3
+    },
+    {
+      "SKU_US": "MXUW3",
+      "SKU_TW": "MXVX3",
+      "Price_US": 929.0,
+      "Price_TW": 32900.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 128GB Ultramarine",
+      "product_type": "iphone",
+      "price_difference_percent": 8.3
+    },
+    {
+      "SKU_US": "MXUU3",
+      "SKU_TW": "MXVV3",
+      "Price_US": 929.0,
+      "Price_TW": 32900.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 128GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 8.3
+    },
+    {
+      "SKU_US": "MXUY3",
+      "SKU_TW": "MXWN3",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 256GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MXV13",
+      "SKU_TW": "MXY13",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 256GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MXV43",
+      "SKU_TW": "MXY53",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 256GB Teal",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MXV33",
+      "SKU_TW": "MXY23",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 256GB Ultramarine",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MXV03",
+      "SKU_TW": "MXWV3",
+      "Price_US": 1029.0,
+      "Price_TW": 36400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 256GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 8.1
+    },
+    {
+      "SKU_US": "MXV53",
+      "SKU_TW": "MY1P3",
+      "Price_US": 1229.0,
+      "Price_TW": 43400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 512GB Black",
+      "product_type": "iphone",
+      "price_difference_percent": 8.0
+    },
+    {
+      "SKU_US": "MXV73",
+      "SKU_TW": "MY253",
+      "Price_US": 1229.0,
+      "Price_TW": 43400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 512GB Pink",
+      "product_type": "iphone",
+      "price_difference_percent": 8.0
+    },
+    {
+      "SKU_US": "MXV93",
+      "SKU_TW": "MY2J3",
+      "Price_US": 1229.0,
+      "Price_TW": 43400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 512GB Teal",
+      "product_type": "iphone",
+      "price_difference_percent": 8.0
+    },
+    {
+      "SKU_US": "MXV83",
+      "SKU_TW": "MY2D3",
+      "Price_US": 1229.0,
+      "Price_TW": 43400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 512GB Ultramarine",
+      "product_type": "iphone",
+      "price_difference_percent": 8.0
+    },
+    {
+      "SKU_US": "MXV63",
+      "SKU_TW": "MY1X3",
+      "Price_US": 1229.0,
+      "Price_TW": 43400.0,
+      "PRODUCT_NAME": "iPhone 16 Plus 512GB White",
+      "product_type": "iphone",
+      "price_difference_percent": 8.0
+    },
+    {
+      "SKU_US": "MYM93",
+      "SKU_TW": "MYND3",
+      "Price_US": 999.0,
+      "Price_TW": 36900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 128GB Black Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU_US": "MYMC3",
+      "SKU_TW": "MYNF3",
+      "Price_US": 999.0,
+      "Price_TW": 36900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 128GB Desert Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU_US": "MYMD3",
+      "SKU_TW": "MYNG3",
+      "Price_US": 999.0,
+      "Price_TW": 36900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 128GB Natural Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU_US": "MYMA3",
+      "SKU_TW": "MYNE3",
+      "Price_US": 999.0,
+      "Price_TW": 36900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 128GB White Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU_US": "MYMQ3",
+      "SKU_TW": "MYNR3",
+      "Price_US": 1499.0,
+      "Price_TW": 54400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 1TB Black Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 10.9
+    },
+    {
+      "SKU_US": "MYMT3",
+      "SKU_TW": "MYNW3",
+      "Price_US": 1499.0,
+      "Price_TW": 54400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 1TB Desert Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 10.9
+    },
+    {
+      "SKU_US": "MYMU3",
+      "SKU_TW": "MYNX3",
+      "Price_US": 1499.0,
+      "Price_TW": 54400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 1TB Natural Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 10.9
+    },
+    {
+      "SKU_US": "MYMR3",
+      "SKU_TW": "MYNT3",
+      "Price_US": 1499.0,
+      "Price_TW": 54400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 1TB White Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 10.9
+    },
+    {
+      "SKU_US": "MYMG3",
+      "SKU_TW": "MYNH3",
+      "Price_US": 1099.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 256GB Black Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.4
+    },
+    {
+      "SKU_US": "MYMJ3",
+      "SKU_TW": "MYNK3",
+      "Price_US": 1099.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 256GB Desert Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.4
+    },
+    {
+      "SKU_US": "MYMK3",
+      "SKU_TW": "MYNL3",
+      "Price_US": 1099.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 256GB Natural Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.4
+    },
+    {
+      "SKU_US": "MYMH3",
+      "SKU_TW": "MYNJ3",
+      "Price_US": 1099.0,
+      "Price_TW": 40400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 256GB White Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.4
+    },
+    {
+      "SKU_US": "MYML3",
+      "SKU_TW": "MYNM3",
+      "Price_US": 1299.0,
+      "Price_TW": 47400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 512GB Black Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 11.6
+    },
+    {
+      "SKU_US": "MYMN3",
+      "SKU_TW": "MYNP3",
+      "Price_US": 1299.0,
+      "Price_TW": 47400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 512GB Desert Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 11.6
+    },
+    {
+      "SKU_US": "MYMP3",
+      "SKU_TW": "MYNQ3",
+      "Price_US": 1299.0,
+      "Price_TW": 47400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 512GB Natural Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 11.6
+    },
+    {
+      "SKU_US": "MYMM3",
+      "SKU_TW": "MYNN3",
+      "Price_US": 1299.0,
+      "Price_TW": 47400.0,
+      "PRODUCT_NAME": "iPhone 16 Pro 512GB White Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 11.6
+    },
+    {
+      "SKU_US": "MYWC3",
+      "SKU_TW": "MYX43",
+      "Price_US": 1599.0,
+      "Price_TW": 58900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 1TB Black Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.6
+    },
+    {
+      "SKU_US": "MYWE3",
+      "SKU_TW": "MYX63",
+      "Price_US": 1599.0,
+      "Price_TW": 58900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 1TB Desert Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.6
+    },
+    {
+      "SKU_US": "MYWF3",
+      "SKU_TW": "MYX73",
+      "Price_US": 1599.0,
+      "Price_TW": 58900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 1TB Natural Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.6
+    },
+    {
+      "SKU_US": "MYWD3",
+      "SKU_TW": "MYX53",
+      "Price_US": 1599.0,
+      "Price_TW": 58900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 1TB White Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 12.6
+    },
+    {
+      "SKU_US": "MYW33",
+      "SKU_TW": "MYWV3",
+      "Price_US": 1199.0,
+      "Price_TW": 44900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 256GB Black Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 14.5
+    },
+    {
+      "SKU_US": "MYW53",
+      "SKU_TW": "MYWX3",
+      "Price_US": 1199.0,
+      "Price_TW": 44900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 256GB Desert Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 14.5
+    },
+    {
+      "SKU_US": "MYW63",
+      "SKU_TW": "MYWY3",
+      "Price_US": 1199.0,
+      "Price_TW": 44900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 256GB Natural Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 14.5
+    },
+    {
+      "SKU_US": "MYW43",
+      "SKU_TW": "MYWW3",
+      "Price_US": 1199.0,
+      "Price_TW": 44900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 256GB White Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 14.5
+    },
+    {
+      "SKU_US": "MYW73",
+      "SKU_TW": "MYX03",
+      "Price_US": 1399.0,
+      "Price_TW": 51900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 512GB Black Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 13.4
+    },
+    {
+      "SKU_US": "MYW93",
+      "SKU_TW": "MYX23",
+      "Price_US": 1399.0,
+      "Price_TW": 51900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 512GB Desert Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 13.4
+    },
+    {
+      "SKU_US": "MYWA3",
+      "SKU_TW": "MYX33",
+      "Price_US": 1399.0,
+      "Price_TW": 51900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 512GB Natural Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 13.4
+    },
+    {
+      "SKU_US": "MYW83",
+      "SKU_TW": "MYX13",
+      "Price_US": 1399.0,
+      "Price_TW": 51900.0,
+      "PRODUCT_NAME": "iPhone 16 Pro Max 512GB White Titanium",
+      "product_type": "iphone",
+      "price_difference_percent": 13.4
+    }
+  ]
+}
