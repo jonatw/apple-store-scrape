@@ -71,16 +71,14 @@ function formatPercentage(value) {
   return `${value > 0 ? '+' : ''}${value}%`;
 }
 
-// Format date
+// Format date to YYYY-MM-DD
 function formatDate(dateString) {
   if (!dateString) return '-';
-  
   const date = new Date(dateString);
-  return date.toLocaleDateString('zh-TW', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  });
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 // Calculate US price with fee (converted to TWD)
@@ -101,9 +99,13 @@ function calculatePriceStats(products) {
   }
   
   // Basic price difference (without fees)
-  const differences = products
-    .map(p => p.price_difference_percent || 0)
-    .filter(diff => diff !== 0);
+  const differences = products.map(p => {
+    const usdPrice = p.Price_US || 0;
+    const twdPrice = p.Price_TW || 0;
+    if (usdPrice <= 0 || twdPrice <= 0) return 0;
+    const usdTWD = usdPrice * exchangeRate;
+    return ((twdPrice - usdTWD) / usdTWD) * 100;
+  }).filter(diff => diff !== 0);
   
   // Price difference with fees
   const differencesWithFee = products.map(p => {
