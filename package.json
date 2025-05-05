@@ -1,7 +1,7 @@
 {
   "name": "apple-price-compare",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,11 +10,9 @@
     "scrape": "source .venv/bin/activate && python3 iphone.py && python3 ipad.py && python3 convert_to_json.py"
   },
   "devDependencies": {
-    "sass": "^1.79.3",
-    "vite": "^6.2.2"
-  },
-  "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.6",
+    "sass": "^1.87.0",
+    "vite": "^6.3.5"
   }
 }
