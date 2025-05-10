@@ -1,0 +1,1299 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-05-10T00:16:22.072603",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 30.37
+    },
+    "regions": [
+      "US",
+      "TW"
+    ],
+    "productType": "ipad",
+    "totalProducts": 160,
+    "lastExchangeRateUpdate": "2025-05-10T00:16:21.185630",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "SKU": "MC9W4",
+      "Price_US": 599.0,
+      "Price_TW": 19900.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 128GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU": "MC9X4",
+      "Price_US": 599.0,
+      "Price_TW": 19900.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 128GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU": "MC9Y4",
+      "Price_US": 599.0,
+      "Price_TW": 19900.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 128GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU": "MCA04",
+      "Price_US": 599.0,
+      "Price_TW": 19900.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 128GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 9.4
+    },
+    {
+      "SKU": "MCA14",
+      "Price_US": 699.0,
+      "Price_TW": 23400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 256GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 10.2
+    },
+    {
+      "SKU": "MCA34",
+      "Price_US": 699.0,
+      "Price_TW": 23400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 256GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 10.2
+    },
+    {
+      "SKU": "MCA44",
+      "Price_US": 699.0,
+      "Price_TW": 23400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 256GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 10.2
+    },
+    {
+      "SKU": "MCA64",
+      "Price_US": 699.0,
+      "Price_TW": 23400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 256GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 10.2
+    },
+    {
+      "SKU": "MCA74",
+      "Price_US": 899.0,
+      "Price_TW": 30400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 512GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.3
+    },
+    {
+      "SKU": "MCA94",
+      "Price_US": 899.0,
+      "Price_TW": 30400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 512GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.3
+    },
+    {
+      "SKU": "MCAA4",
+      "Price_US": 899.0,
+      "Price_TW": 30400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 512GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.3
+    },
+    {
+      "SKU": "MCAE4",
+      "Price_US": 899.0,
+      "Price_TW": 30400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 512GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.3
+    },
+    {
+      "SKU": "MCAH4",
+      "Price_US": 1099.0,
+      "Price_TW": 37400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 1TB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MCAJ4",
+      "Price_US": 1099.0,
+      "Price_TW": 37400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 1TB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MCAQ4",
+      "Price_US": 1099.0,
+      "Price_TW": 37400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 1TB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MCAU4",
+      "Price_US": 1099.0,
+      "Price_TW": 37400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi 1TB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MCFV4",
+      "Price_US": 749.0,
+      "Price_TW": 24900.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 128GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 9.5
+    },
+    {
+      "SKU": "MCFW4",
+      "Price_US": 749.0,
+      "Price_TW": 24900.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 128GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 9.5
+    },
+    {
+      "SKU": "MCFX4",
+      "Price_US": 749.0,
+      "Price_TW": 24900.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 128GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 9.5
+    },
+    {
+      "SKU": "MCFY4",
+      "Price_US": 749.0,
+      "Price_TW": 24900.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 128GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 9.5
+    },
+    {
+      "SKU": "MCG04",
+      "Price_US": 849.0,
+      "Price_TW": 28400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 256GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 10.1
+    },
+    {
+      "SKU": "MCG14",
+      "Price_US": 849.0,
+      "Price_TW": 28400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 256GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 10.1
+    },
+    {
+      "SKU": "MCG24",
+      "Price_US": 849.0,
+      "Price_TW": 28400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 256GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 10.1
+    },
+    {
+      "SKU": "MCG34",
+      "Price_US": 849.0,
+      "Price_TW": 28400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 256GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 10.1
+    },
+    {
+      "SKU": "MCG44",
+      "Price_US": 1049.0,
+      "Price_TW": 35400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 512GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MCG54",
+      "Price_US": 1049.0,
+      "Price_TW": 35400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 512GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MCG64",
+      "Price_US": 1049.0,
+      "Price_TW": 35400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 512GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MCG74",
+      "Price_US": 1049.0,
+      "Price_TW": 35400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 512GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MCG84",
+      "Price_US": 1249.0,
+      "Price_TW": 42400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 1TB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU": "MCG94",
+      "Price_US": 1249.0,
+      "Price_TW": 42400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 1TB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU": "MCGA4",
+      "Price_US": 1249.0,
+      "Price_TW": 42400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 1TB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU": "MCGC4",
+      "Price_US": 1249.0,
+      "Price_TW": 42400.0,
+      "PRODUCT_NAME": "11-inch iPad Air Wi-Fi + Cellular 1TB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU": "MCJ14",
+      "Price_US": 949.0,
+      "Price_TW": 31900.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 128GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 10.7
+    },
+    {
+      "SKU": "MCJ24",
+      "Price_US": 949.0,
+      "Price_TW": 31900.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 128GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 10.7
+    },
+    {
+      "SKU": "MCJ34",
+      "Price_US": 949.0,
+      "Price_TW": 31900.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 128GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 10.7
+    },
+    {
+      "SKU": "MCJ44",
+      "Price_US": 949.0,
+      "Price_TW": 31900.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 128GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 10.7
+    },
+    {
+      "SKU": "MCJ54",
+      "Price_US": 1049.0,
+      "Price_TW": 35400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 256GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MCJ64",
+      "Price_US": 1049.0,
+      "Price_TW": 35400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 256GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MCJ74",
+      "Price_US": 1049.0,
+      "Price_TW": 35400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 256GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MCJ84",
+      "Price_US": 1049.0,
+      "Price_TW": 35400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 256GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MCJ94",
+      "Price_US": 1249.0,
+      "Price_TW": 42400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 512GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU": "MCJA4",
+      "Price_US": 1249.0,
+      "Price_TW": 42400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 512GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU": "MCJC4",
+      "Price_US": 1249.0,
+      "Price_TW": 42400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 512GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU": "MCJD4",
+      "Price_US": 1249.0,
+      "Price_TW": 42400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 512GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.8
+    },
+    {
+      "SKU": "MCJE4",
+      "Price_US": 1449.0,
+      "Price_TW": 49400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 1TB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 12.3
+    },
+    {
+      "SKU": "MCJF4",
+      "Price_US": 1449.0,
+      "Price_TW": 49400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 1TB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.3
+    },
+    {
+      "SKU": "MCJG4",
+      "Price_US": 1449.0,
+      "Price_TW": 49400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 1TB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 12.3
+    },
+    {
+      "SKU": "MCJH4",
+      "Price_US": 1449.0,
+      "Price_TW": 49400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi + Cellular 1TB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 12.3
+    },
+    {
+      "SKU": "MCNH4",
+      "Price_US": 799.0,
+      "Price_TW": 26900.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 128GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 10.9
+    },
+    {
+      "SKU": "MCNJ4",
+      "Price_US": 799.0,
+      "Price_TW": 26900.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 128GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 10.9
+    },
+    {
+      "SKU": "MCNK4",
+      "Price_US": 799.0,
+      "Price_TW": 26900.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 128GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 10.9
+    },
+    {
+      "SKU": "MCNL4",
+      "Price_US": 799.0,
+      "Price_TW": 26900.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 128GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 10.9
+    },
+    {
+      "SKU": "MCNN4",
+      "Price_US": 899.0,
+      "Price_TW": 30400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 256GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.3
+    },
+    {
+      "SKU": "MCNP4",
+      "Price_US": 899.0,
+      "Price_TW": 30400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 256GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.3
+    },
+    {
+      "SKU": "MCNQ4",
+      "Price_US": 899.0,
+      "Price_TW": 30400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 256GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.3
+    },
+    {
+      "SKU": "MCNR4",
+      "Price_US": 899.0,
+      "Price_TW": 30400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 256GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.3
+    },
+    {
+      "SKU": "MCNT4",
+      "Price_US": 1099.0,
+      "Price_TW": 37400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 512GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MCNW4",
+      "Price_US": 1099.0,
+      "Price_TW": 37400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 512GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MCNX4",
+      "Price_US": 1099.0,
+      "Price_TW": 37400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 512GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MCNY4",
+      "Price_US": 1099.0,
+      "Price_TW": 37400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 512GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MCQ04",
+      "Price_US": 1299.0,
+      "Price_TW": 44400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 1TB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 12.5
+    },
+    {
+      "SKU": "MCQ14",
+      "Price_US": 1299.0,
+      "Price_TW": 44400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 1TB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.5
+    },
+    {
+      "SKU": "MCQ24",
+      "Price_US": 1299.0,
+      "Price_TW": 44400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 1TB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 12.5
+    },
+    {
+      "SKU": "MCQ34",
+      "Price_US": 1299.0,
+      "Price_TW": 44400.0,
+      "PRODUCT_NAME": "13-inch iPad Air Wi-Fi 1TB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 12.5
+    },
+    {
+      "SKU": "MD3Y4",
+      "Price_US": 349.0,
+      "Price_TW": 11900.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 128GB - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 12.3
+    },
+    {
+      "SKU": "MD4A4",
+      "Price_US": 349.0,
+      "Price_TW": 11900.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 128GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.3
+    },
+    {
+      "SKU": "MD4D4",
+      "Price_US": 349.0,
+      "Price_TW": 11900.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 128GB - Yellow",
+      "product_type": "ipad",
+      "price_difference_percent": 12.3
+    },
+    {
+      "SKU": "MD4E4",
+      "Price_US": 349.0,
+      "Price_TW": 11900.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 128GB - Pink",
+      "product_type": "ipad",
+      "price_difference_percent": 12.3
+    },
+    {
+      "SKU": "MD4G4",
+      "Price_US": 449.0,
+      "Price_TW": 15400.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 256GB - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MD4H4",
+      "Price_US": 449.0,
+      "Price_TW": 15400.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 256GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MD4J4",
+      "Price_US": 449.0,
+      "Price_TW": 15400.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 256GB - Yellow",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MD4P4",
+      "Price_US": 449.0,
+      "Price_TW": 15400.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 256GB - Pink",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MD4Q4",
+      "Price_US": 649.0,
+      "Price_TW": 22400.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 512GB - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 13.6
+    },
+    {
+      "SKU": "MD4Y4",
+      "Price_US": 649.0,
+      "Price_TW": 22400.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 512GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 13.6
+    },
+    {
+      "SKU": "MD5A4",
+      "Price_US": 649.0,
+      "Price_TW": 22400.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 512GB - Yellow",
+      "product_type": "ipad",
+      "price_difference_percent": 13.6
+    },
+    {
+      "SKU": "MD5C4",
+      "Price_US": 649.0,
+      "Price_TW": 22400.0,
+      "PRODUCT_NAME": "iPad Wi-Fi 512GB - Pink",
+      "product_type": "ipad",
+      "price_difference_percent": 13.6
+    },
+    {
+      "SKU": "MD7F4",
+      "Price_US": 499.0,
+      "Price_TW": 16900.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 128GB - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 11.5
+    },
+    {
+      "SKU": "MD7G4",
+      "Price_US": 499.0,
+      "Price_TW": 16900.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 128GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.5
+    },
+    {
+      "SKU": "MD7H4",
+      "Price_US": 499.0,
+      "Price_TW": 16900.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 128GB - Yellow",
+      "product_type": "ipad",
+      "price_difference_percent": 11.5
+    },
+    {
+      "SKU": "MD7J4",
+      "Price_US": 499.0,
+      "Price_TW": 16900.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 128GB - Pink",
+      "product_type": "ipad",
+      "price_difference_percent": 11.5
+    },
+    {
+      "SKU": "MD7K4",
+      "Price_US": 599.0,
+      "Price_TW": 20400.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 256GB - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MD7L4",
+      "Price_US": 599.0,
+      "Price_TW": 20400.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 256GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MD7M4",
+      "Price_US": 599.0,
+      "Price_TW": 20400.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 256GB - Yellow",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MD7N4",
+      "Price_US": 599.0,
+      "Price_TW": 20400.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 256GB - Pink",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MD7P4",
+      "Price_US": 799.0,
+      "Price_TW": 27400.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 512GB - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MD7Q4",
+      "Price_US": 799.0,
+      "Price_TW": 27400.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 512GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MD7R4",
+      "Price_US": 799.0,
+      "Price_TW": 27400.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 512GB - Yellow",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MD7T4",
+      "Price_US": 799.0,
+      "Price_TW": 27400.0,
+      "PRODUCT_NAME": "iPad Wi‑Fi + Cellular 512GB - Pink",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MVV83",
+      "Price_US": 999.0,
+      "Price_TW": 34900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 256GB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.0
+    },
+    {
+      "SKU": "MVV93",
+      "Price_US": 999.0,
+      "Price_TW": 34900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 256GB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.0
+    },
+    {
+      "SKU": "MVVC3",
+      "Price_US": 1199.0,
+      "Price_TW": 41900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 512GB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVVD3",
+      "Price_US": 1199.0,
+      "Price_TW": 41900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 512GB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVVE3",
+      "Price_US": 1599.0,
+      "Price_TW": 55900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 1TB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVVF3",
+      "Price_US": 1599.0,
+      "Price_TW": 55900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 1TB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVVG3",
+      "Price_US": 1999.0,
+      "Price_TW": 69900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 2TB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVVH3",
+      "Price_US": 1999.0,
+      "Price_TW": 69900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 2TB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVW13",
+      "Price_US": 1199.0,
+      "Price_TW": 41900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 256GB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVW23",
+      "Price_US": 1199.0,
+      "Price_TW": 41900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 256GB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVW33",
+      "Price_US": 1399.0,
+      "Price_TW": 48900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 512GB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVW43",
+      "Price_US": 1399.0,
+      "Price_TW": 48900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 512GB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVW53",
+      "Price_US": 1799.0,
+      "Price_TW": 62900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 1TB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVW63",
+      "Price_US": 1799.0,
+      "Price_TW": 62900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 1TB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVW73",
+      "Price_US": 2199.0,
+      "Price_TW": 76900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 2TB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVW83",
+      "Price_US": 2199.0,
+      "Price_TW": 76900.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 2TB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MVX23",
+      "Price_US": 1299.0,
+      "Price_TW": 45900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 256GB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 16.3
+    },
+    {
+      "SKU": "MVX33",
+      "Price_US": 1299.0,
+      "Price_TW": 45900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 256GB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 16.3
+    },
+    {
+      "SKU": "MVX43",
+      "Price_US": 1499.0,
+      "Price_TW": 52900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 512GB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 16.2
+    },
+    {
+      "SKU": "MVX53",
+      "Price_US": 1499.0,
+      "Price_TW": 52900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 512GB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 16.2
+    },
+    {
+      "SKU": "MVX63",
+      "Price_US": 1899.0,
+      "Price_TW": 66900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 1TB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 16.0
+    },
+    {
+      "SKU": "MVX73",
+      "Price_US": 1899.0,
+      "Price_TW": 66900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 1TB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 16.0
+    },
+    {
+      "SKU": "MVX83",
+      "Price_US": 2299.0,
+      "Price_TW": 80900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 2TB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.9
+    },
+    {
+      "SKU": "MVX93",
+      "Price_US": 2299.0,
+      "Price_TW": 80900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 2TB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.9
+    },
+    {
+      "SKU": "MVXR3",
+      "Price_US": 1499.0,
+      "Price_TW": 52900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 256GB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 16.2
+    },
+    {
+      "SKU": "MVXT3",
+      "Price_US": 1499.0,
+      "Price_TW": 52900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 256GB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 16.2
+    },
+    {
+      "SKU": "MVXU3",
+      "Price_US": 1699.0,
+      "Price_TW": 59900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 512GB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 16.1
+    },
+    {
+      "SKU": "MVXV3",
+      "Price_US": 1699.0,
+      "Price_TW": 59900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 512GB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 16.1
+    },
+    {
+      "SKU": "MVXW3",
+      "Price_US": 2099.0,
+      "Price_TW": 73900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 1TB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.9
+    },
+    {
+      "SKU": "MVXX3",
+      "Price_US": 2099.0,
+      "Price_TW": 73900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 1TB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.9
+    },
+    {
+      "SKU": "MVXY3",
+      "Price_US": 2499.0,
+      "Price_TW": 87900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 2TB with standard glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.8
+    },
+    {
+      "SKU": "MVY03",
+      "Price_US": 2499.0,
+      "Price_TW": 87900.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 2TB with standard glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.8
+    },
+    {
+      "SKU": "MWR63",
+      "Price_US": 1699.0,
+      "Price_TW": 59400.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 1TB with nano-texture glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MWR73",
+      "Price_US": 1699.0,
+      "Price_TW": 59400.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 1TB with nano-texture glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MWR83",
+      "Price_US": 2099.0,
+      "Price_TW": 73400.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 2TB with nano-texture glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MWR93",
+      "Price_US": 2099.0,
+      "Price_TW": 73400.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi 2TB with nano-texture glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MWRF3",
+      "Price_US": 1999.0,
+      "Price_TW": 70400.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 1TB with nano-texture glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 16.0
+    },
+    {
+      "SKU": "MWRG3",
+      "Price_US": 1999.0,
+      "Price_TW": 70400.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 1TB with nano-texture glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 16.0
+    },
+    {
+      "SKU": "MWRH3",
+      "Price_US": 2399.0,
+      "Price_TW": 84400.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 2TB with nano-texture glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.8
+    },
+    {
+      "SKU": "MWRJ3",
+      "Price_US": 2399.0,
+      "Price_TW": 84400.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi 2TB with nano-texture glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.8
+    },
+    {
+      "SKU": "MWRP3",
+      "Price_US": 1899.0,
+      "Price_TW": 66400.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 1TB with nano-texture glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MWRQ3",
+      "Price_US": 1899.0,
+      "Price_TW": 66400.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 1TB with nano-texture glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.1
+    },
+    {
+      "SKU": "MWRR3",
+      "Price_US": 2299.0,
+      "Price_TW": 80400.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 2TB with nano-texture glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.2
+    },
+    {
+      "SKU": "MWRT3",
+      "Price_US": 2299.0,
+      "Price_TW": 80400.0,
+      "PRODUCT_NAME": "11-inch iPad Pro Wi‑Fi + Cellular 2TB with nano-texture glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.2
+    },
+    {
+      "SKU": "MWRY3",
+      "Price_US": 2199.0,
+      "Price_TW": 77400.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 1TB with nano-texture glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.9
+    },
+    {
+      "SKU": "MWT03",
+      "Price_US": 2199.0,
+      "Price_TW": 77400.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 1TB with nano-texture glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.9
+    },
+    {
+      "SKU": "MWT13",
+      "Price_US": 2599.0,
+      "Price_TW": 91400.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 2TB with nano-texture glass - Space Black",
+      "product_type": "ipad",
+      "price_difference_percent": 15.8
+    },
+    {
+      "SKU": "MWT23",
+      "Price_US": 2599.0,
+      "Price_TW": 91400.0,
+      "PRODUCT_NAME": "13-inch iPad Pro Wi‑Fi + Cellular 2TB with nano-texture glass - Silver",
+      "product_type": "ipad",
+      "price_difference_percent": 15.8
+    },
+    {
+      "SKU": "MXN63",
+      "Price_US": 499.0,
+      "Price_TW": 16900.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 128GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.5
+    },
+    {
+      "SKU": "MXN73",
+      "Price_US": 499.0,
+      "Price_TW": 16900.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 128GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.5
+    },
+    {
+      "SKU": "MXN83",
+      "Price_US": 499.0,
+      "Price_TW": 16900.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 128GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.5
+    },
+    {
+      "SKU": "MXN93",
+      "Price_US": 499.0,
+      "Price_TW": 16900.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 128GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.5
+    },
+    {
+      "SKU": "MXNA3",
+      "Price_US": 599.0,
+      "Price_TW": 20400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 256GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MXNC3",
+      "Price_US": 599.0,
+      "Price_TW": 20400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 256GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MXND3",
+      "Price_US": 599.0,
+      "Price_TW": 20400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 256GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MXNE3",
+      "Price_US": 599.0,
+      "Price_TW": 20400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 256GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 12.1
+    },
+    {
+      "SKU": "MXPN3",
+      "Price_US": 649.0,
+      "Price_TW": 21900.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 128GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MXPP3",
+      "Price_US": 649.0,
+      "Price_TW": 21900.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 128GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MXPQ3",
+      "Price_US": 649.0,
+      "Price_TW": 21900.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 128GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MXPR3",
+      "Price_US": 649.0,
+      "Price_TW": 21900.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 128GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.1
+    },
+    {
+      "SKU": "MXPT3",
+      "Price_US": 749.0,
+      "Price_TW": 25400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 256GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 11.7
+    },
+    {
+      "SKU": "MXPW3",
+      "Price_US": 749.0,
+      "Price_TW": 25400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 256GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 11.7
+    },
+    {
+      "SKU": "MXPX3",
+      "Price_US": 749.0,
+      "Price_TW": 25400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 256GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 11.7
+    },
+    {
+      "SKU": "MXPY3",
+      "Price_US": 749.0,
+      "Price_TW": 25400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 256GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 11.7
+    },
+    {
+      "SKU": "MYGY3",
+      "Price_US": 799.0,
+      "Price_TW": 27400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 512GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MYH13",
+      "Price_US": 799.0,
+      "Price_TW": 27400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 512GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MYH23",
+      "Price_US": 799.0,
+      "Price_TW": 27400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 512GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MYH33",
+      "Price_US": 799.0,
+      "Price_TW": 27400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi 512GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 12.9
+    },
+    {
+      "SKU": "MYHC3",
+      "Price_US": 949.0,
+      "Price_TW": 32400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 512GB - Space Gray",
+      "product_type": "ipad",
+      "price_difference_percent": 12.4
+    },
+    {
+      "SKU": "MYHD3",
+      "Price_US": 949.0,
+      "Price_TW": 32400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 512GB - Blue",
+      "product_type": "ipad",
+      "price_difference_percent": 12.4
+    },
+    {
+      "SKU": "MYHE3",
+      "Price_US": 949.0,
+      "Price_TW": 32400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 512GB - Starlight",
+      "product_type": "ipad",
+      "price_difference_percent": 12.4
+    },
+    {
+      "SKU": "MYHF3",
+      "Price_US": 949.0,
+      "Price_TW": 32400.0,
+      "PRODUCT_NAME": "iPad mini Wi‑Fi + Cellular 512GB - Purple",
+      "product_type": "ipad",
+      "price_difference_percent": 12.4
+    }
+  ]
+}
