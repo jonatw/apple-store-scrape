@@ -1,0 +1,19 @@
+{
+  "name": "Apple Product Price Comparison",
+  "short_name": "Apple Price",
+  "description": "Compare Apple product prices between Taiwan and the US, helping you decide where to make your purchase",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d6efd",
+  "icons": [
+    {
+      "src": "icons/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "lang": "en",
+  "orientation": "any"
+}
