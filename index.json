@@ -1,0 +1,15 @@
+{
+  "lastUpdated": "2025-05-31T00:16:56.269882",
+  "datasets": [
+    {
+      "type": "iphone",
+      "file": "iphone_data.json",
+      "title": "iPhone Models"
+    },
+    {
+      "type": "ipad",
+      "file": "ipad_data.json",
+      "title": "iPad Models"
+    }
+  ]
+}
