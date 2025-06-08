@@ -258,25 +258,25 @@ def main():
     # Get exchange rates - now integrated directly in this script
     exchange_rates = get_exchange_rates(debug=debug_mode)
     
-    # Convert iPhone data
+    # Convert iPhone data (use consolidated data for cleaner output)
     iphone_success = csv_to_json(
-        "iphone_products_merged.csv", 
+        "iphone_products_consolidated.csv", 
         os.path.join(data_dir, "iphone_data.json"),
         "iphone",
         exchange_rates
     )
     
-    # Convert iPad data
+    # Convert iPad data (use consolidated data for cleaner output)
     ipad_success = csv_to_json(
-        "ipad_products_merged.csv", 
+        "ipad_products_consolidated.csv", 
         os.path.join(data_dir, "ipad_data.json"),
         "ipad",
         exchange_rates
     )
     
-    # Convert Mac data
+    # Convert Mac data (use consolidated data for cleaner output)
     mac_success = csv_to_json(
-        "mac_products_merged.csv",
+        "mac_products_consolidated.csv",
         os.path.join(data_dir, "mac_data.json"),
         "mac",
         exchange_rates

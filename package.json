@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "scrape": "source .venv/bin/activate && python3 iphone.py && python3 ipad.py && python3 mac.py && python3 convert_to_json.py",
+    "scrape": "source .venv/bin/activate && python3 iphone.py && python3 ipad.py && python3 mac.py && python3 consolidate_colors.py && python3 convert_to_json.py",
     "test": "source .venv/bin/activate && python3 test_scrapers.py",
     "test-quick": "source .venv/bin/activate && SKIP_NETWORK_TESTS=1 python3 test_scrapers.py",
     "test-network": "source .venv/bin/activate && python3 -m unittest test_scrapers.TestEndToEndIntegration -v",
