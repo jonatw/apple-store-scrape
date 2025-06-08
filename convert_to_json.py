@@ -295,21 +295,23 @@ def main():
             exchange_rates
         )
     
-    # Convert AirPods data (only if file exists)
+    # Convert AirPods data (use consolidated data if available, otherwise fallback to merged)
+    airpods_file = "airpods_products_consolidated.csv" if os.path.exists("airpods_products_consolidated.csv") else "airpods_products_merged.csv"
     airpods_success = False
-    if os.path.exists("airpods_prices.csv"):
+    if os.path.exists(airpods_file):
         airpods_success = csv_to_json(
-            "airpods_prices.csv",
+            airpods_file,
             os.path.join(data_dir, "airpods_data.json"),
             "airpods",
             exchange_rates
         )
     
-    # Convert Apple TV/Home data (only if file exists)
+    # Convert Apple TV/Home data (use consolidated data if available, otherwise fallback to merged)
+    tvhome_file = "tvhome_products_consolidated.csv" if os.path.exists("tvhome_products_consolidated.csv") else "tvhome_products_merged.csv"
     tvhome_success = False
-    if os.path.exists("tvhome_prices.csv"):
+    if os.path.exists(tvhome_file):
         tvhome_success = csv_to_json(
-            "tvhome_prices.csv",
+            tvhome_file,
             os.path.join(data_dir, "tvhome_data.json"),
             "tvhome",
             exchange_rates

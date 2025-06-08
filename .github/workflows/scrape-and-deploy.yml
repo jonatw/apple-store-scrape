@@ -32,6 +32,8 @@ jobs:
           python iphone.py
           python ipad.py
           python mac.py
+          python airpods.py
+          python tvhome.py
       
       - name: Consolidate product data by removing color duplicates
         run: |

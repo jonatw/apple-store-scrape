@@ -189,6 +189,20 @@ def main():
         "Mac"
     )
     
+    # Process AirPods data
+    airpods_success = consolidate_product_data(
+        "airpods_products_merged.csv",
+        "airpods_products_consolidated.csv",
+        "AirPods"
+    )
+    
+    # Process TV/Home data  
+    tvhome_success = consolidate_product_data(
+        "tvhome_products_merged.csv",
+        "tvhome_products_consolidated.csv",
+        "TV/Home"
+    )
+    
     print("=" * 50)
     print("Color consolidation completed!")
     
@@ -198,9 +212,20 @@ def main():
         print("✓ iPad data consolidated") 
     if mac_success:
         print("✓ Mac data processed")
+    if airpods_success:
+        print("✓ AirPods data consolidated")
+    if tvhome_success:
+        print("✓ TV/Home data consolidated")
     
     print("\nConsolidated files:")
-    for file in ["iphone_products_consolidated.csv", "ipad_products_consolidated.csv", "mac_products_consolidated.csv"]:
+    expected_files = [
+        "iphone_products_consolidated.csv", 
+        "ipad_products_consolidated.csv", 
+        "mac_products_consolidated.csv",
+        "airpods_products_consolidated.csv",
+        "tvhome_products_consolidated.csv"
+    ]
+    for file in expected_files:
         if os.path.exists(file):
             print(f"  - {file}")
 
