@@ -274,6 +274,38 @@ def main():
         exchange_rates
     )
     
+    # Convert Mac data
+    mac_success = csv_to_json(
+        "mac_products_merged.csv",
+        os.path.join(data_dir, "mac_data.json"),
+        "mac",
+        exchange_rates
+    )
+    
+    # Convert Apple Watch data
+    watch_success = csv_to_json(
+        "watch_prices.csv",
+        os.path.join(data_dir, "watch_data.json"),
+        "watch",
+        exchange_rates
+    )
+    
+    # Convert AirPods data
+    airpods_success = csv_to_json(
+        "airpods_prices.csv",
+        os.path.join(data_dir, "airpods_data.json"),
+        "airpods",
+        exchange_rates
+    )
+    
+    # Convert Apple TV/Home data
+    tvhome_success = csv_to_json(
+        "tvhome_prices.csv",
+        os.path.join(data_dir, "tvhome_data.json"),
+        "tvhome",
+        exchange_rates
+    )
+    
     # Generate index file containing references to all datasets
     index = {
         "lastUpdated": datetime.now().isoformat(),
@@ -294,13 +326,41 @@ def main():
             "title": "iPad Models"
         })
     
+    if mac_success:
+        index["datasets"].append({
+            "type": "mac",
+            "file": "mac_data.json",
+            "title": "Mac Models"
+        })
+    
+    if watch_success:
+        index["datasets"].append({
+            "type": "watch",
+            "file": "watch_data.json",
+            "title": "Apple Watch Models"
+        })
+    
+    if airpods_success:
+        index["datasets"].append({
+            "type": "airpods",
+            "file": "airpods_data.json",
+            "title": "AirPods Models"
+        })
+    
+    if tvhome_success:
+        index["datasets"].append({
+            "type": "tvhome",
+            "file": "tvhome_data.json",
+            "title": "Apple TV & Home Models"
+        })
+    
     # Write index file
     with open(os.path.join(data_dir, "index.json"), 'w', encoding='utf-8') as f:
         json.dump(index, f, ensure_ascii=False, indent=2)
     
     print(f"\nCreated data index file: {os.path.join(data_dir, 'index.json')}")
     
-    if iphone_success or ipad_success:
+    if iphone_success or ipad_success or mac_success:
         print("\nConversion completed successfully!")
     else:
         print("\nNo data was converted!")
