@@ -31,6 +31,13 @@ jobs:
         run: |
           python iphone.py
           python ipad.py
+          python mac.py
+      
+      - name: Consolidate product data by removing color duplicates
+        run: |
+          python consolidate_colors.py
+          echo "Consolidated files created:"
+          ls -la *_consolidated.csv
       
       - name: Convert data to JSON and fetch exchange rate
         run: |

@@ -258,53 +258,62 @@ def main():
     # Get exchange rates - now integrated directly in this script
     exchange_rates = get_exchange_rates(debug=debug_mode)
     
-    # Convert iPhone data (use consolidated data for cleaner output)
+    # Convert iPhone data (use consolidated data if available, otherwise fallback to merged)
+    iphone_file = "iphone_products_consolidated.csv" if os.path.exists("iphone_products_consolidated.csv") else "iphone_products_merged.csv"
     iphone_success = csv_to_json(
-        "iphone_products_consolidated.csv", 
+        iphone_file, 
         os.path.join(data_dir, "iphone_data.json"),
         "iphone",
         exchange_rates
     )
     
-    # Convert iPad data (use consolidated data for cleaner output)
+    # Convert iPad data (use consolidated data if available, otherwise fallback to merged)
+    ipad_file = "ipad_products_consolidated.csv" if os.path.exists("ipad_products_consolidated.csv") else "ipad_products_merged.csv"
     ipad_success = csv_to_json(
-        "ipad_products_consolidated.csv", 
+        ipad_file, 
         os.path.join(data_dir, "ipad_data.json"),
         "ipad",
         exchange_rates
     )
     
-    # Convert Mac data (use consolidated data for cleaner output)
+    # Convert Mac data (use consolidated data if available, otherwise fallback to merged)
+    mac_file = "mac_products_consolidated.csv" if os.path.exists("mac_products_consolidated.csv") else "mac_products_merged.csv"
     mac_success = csv_to_json(
-        "mac_products_consolidated.csv",
+        mac_file,
         os.path.join(data_dir, "mac_data.json"),
         "mac",
         exchange_rates
     )
     
-    # Convert Apple Watch data
-    watch_success = csv_to_json(
-        "watch_prices.csv",
-        os.path.join(data_dir, "watch_data.json"),
-        "watch",
-        exchange_rates
-    )
+    # Convert Apple Watch data (only if file exists)
+    watch_success = False
+    if os.path.exists("watch_prices.csv"):
+        watch_success = csv_to_json(
+            "watch_prices.csv",
+            os.path.join(data_dir, "watch_data.json"),
+            "watch",
+            exchange_rates
+        )
     
-    # Convert AirPods data
-    airpods_success = csv_to_json(
-        "airpods_prices.csv",
-        os.path.join(data_dir, "airpods_data.json"),
-        "airpods",
-        exchange_rates
-    )
+    # Convert AirPods data (only if file exists)
+    airpods_success = False
+    if os.path.exists("airpods_prices.csv"):
+        airpods_success = csv_to_json(
+            "airpods_prices.csv",
+            os.path.join(data_dir, "airpods_data.json"),
+            "airpods",
+            exchange_rates
+        )
     
-    # Convert Apple TV/Home data
-    tvhome_success = csv_to_json(
-        "tvhome_prices.csv",
-        os.path.join(data_dir, "tvhome_data.json"),
-        "tvhome",
-        exchange_rates
-    )
+    # Convert Apple TV/Home data (only if file exists)
+    tvhome_success = False
+    if os.path.exists("tvhome_prices.csv"):
+        tvhome_success = csv_to_json(
+            "tvhome_prices.csv",
+            os.path.join(data_dir, "tvhome_data.json"),
+            "tvhome",
+            exchange_rates
+        )
     
     # Generate index file containing references to all datasets
     index = {
