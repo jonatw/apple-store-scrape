@@ -32,6 +32,7 @@ jobs:
           python iphone.py
           python ipad.py
           python mac.py
+          python watch.py
           python airpods.py
           python tvhome.py
       

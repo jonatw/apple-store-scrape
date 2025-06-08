@@ -285,11 +285,12 @@ def main():
         exchange_rates
     )
     
-    # Convert Apple Watch data (only if file exists)
+    # Convert Apple Watch data (use consolidated data if available, otherwise fallback to merged)
+    watch_file = "watch_products_consolidated.csv" if os.path.exists("watch_products_consolidated.csv") else "watch_products_merged.csv"
     watch_success = False
-    if os.path.exists("watch_prices.csv"):
+    if os.path.exists(watch_file):
         watch_success = csv_to_json(
-            "watch_prices.csv",
+            watch_file,
             os.path.join(data_dir, "watch_data.json"),
             "watch",
             exchange_rates

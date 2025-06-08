@@ -196,6 +196,13 @@ def main():
         "AirPods"
     )
     
+    # Process Watch data
+    watch_success = consolidate_product_data(
+        "watch_products_merged.csv",
+        "watch_products_consolidated.csv",
+        "Watch"
+    )
+    
     # Process TV/Home data  
     tvhome_success = consolidate_product_data(
         "tvhome_products_merged.csv",
@@ -214,6 +221,8 @@ def main():
         print("✓ Mac data processed")
     if airpods_success:
         print("✓ AirPods data consolidated")
+    if watch_success:
+        print("✓ Watch data consolidated")
     if tvhome_success:
         print("✓ TV/Home data consolidated")
     
@@ -222,6 +231,7 @@ def main():
         "iphone_products_consolidated.csv", 
         "ipad_products_consolidated.csv", 
         "mac_products_consolidated.csv",
+        "watch_products_consolidated.csv",
         "airpods_products_consolidated.csv",
         "tvhome_products_consolidated.csv"
     ]

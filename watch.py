@@ -16,6 +16,13 @@ Do not run this script too frequently to avoid overloading Apple's servers.
 REGIONS = {
     "": ["US", "USD", "en-us", "$"],       # United States
     "tw": ["TW", "TWD", "zh-tw", "NT$"],   # Taiwan
+    # Uncomment or add more regions as needed:
+    # "jp": ["JP", "JPY", "ja-jp", "¥"],      # Japan
+    # "uk": ["UK", "GBP", "en-gb", "£"],      # United Kingdom
+    # "au": ["AU", "AUD", "en-au", "A$"],     # Australia
+    # "ca": ["CA", "CAD", "en-ca", "C$"],     # Canada
+    # "de": ["DE", "EUR", "de-de", "€"],      # Germany
+    # "fr": ["FR", "EUR", "fr-fr", "€"],      # France
 }
 
 # Reference region for product naming
@@ -33,6 +40,29 @@ def debug_print(message):
     """Print debug message if DEBUG is enabled"""
     if DEBUG:
         print(f"[DEBUG] {message}")
+
+def standardize_product_name(name):
+    """
+    Standardize product name for matching across regions
+    
+    Parameters:
+    name (str): Original product name
+    
+    Returns:
+    str: Standardized name key for matching
+    """
+    if not name:
+        return ""
+    
+    # Convert to lowercase and replace spaces/commas with underscores
+    name = name.lower()
+    name = name.replace(" ", "_").replace(",", "")
+    
+    # Remove common words that might vary
+    name = name.replace("apple_watch_", "")
+    name = name.replace("series_10", "s10")
+    
+    return name
 
 def get_available_models(region_code=""):
     """
@@ -87,7 +117,7 @@ def get_available_models(region_code=""):
 
 def extract_product_details(url, region_code=""):
     """
-    Extract product details from Apple store page using the same method as working scrapers
+    Extract product details from Apple Watch store page (different structure than iPhone/iPad)
     
     Parameters:
     url (str): Product page URL
@@ -113,26 +143,126 @@ def extract_product_details(url, region_code=""):
         # Parse the HTML content
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Search for the script with type "application/json" and id "metrics" (same as working scrapers)
-        json_script = soup.find('script', {'type': 'application/json', 'id': 'metrics'})
-        if not json_script:
-            debug_print(f"No matching script found in {url}")
+        # Apple Watch pages use a different structure - look for PRODUCT_SELECTION_BOOTSTRAP
+        product_selection_script = None
+        for script in soup.find_all('script'):
+            if script.string and 'PRODUCT_SELECTION_BOOTSTRAP' in script.string:
+                product_selection_script = script
+                break
+        
+        if not product_selection_script:
+            debug_print(f"No PRODUCT_SELECTION_BOOTSTRAP script found in {url}")
             return []
         
-        # Parse JSON content
-        json_data = json.loads(json_script.string)
-        data = json_data.get('data', {})
-        products = data.get('products', [])
+        # Extract the JSON data from the script
+        script_content = product_selection_script.string
+        start_marker = 'productSelectionData: '
+        start_idx = script_content.find(start_marker)
+        if start_idx == -1:
+            debug_print(f"No productSelectionData found in script for {url}")
+            return []
+        
+        start_idx += len(start_marker)
+        
+        # Find the end of the JSON object
+        brace_count = 0
+        end_idx = start_idx
+        in_string = False
+        escape_next = False
+        
+        for i, char in enumerate(script_content[start_idx:]):
+            actual_idx = start_idx + i
+            
+            if escape_next:
+                escape_next = False
+                continue
+                
+            if char == '\\':
+                escape_next = True
+                continue
+                
+            if char == '"' and not escape_next:
+                in_string = not in_string
+                continue
+                
+            if not in_string:
+                if char == '{':
+                    brace_count += 1
+                elif char == '}':
+                    brace_count -= 1
+                    if brace_count == 0:
+                        end_idx = actual_idx + 1
+                        break
+        
+        json_str = script_content[start_idx:end_idx]
+        
+        try:
+            product_data = json.loads(json_str)
+        except json.JSONDecodeError as e:
+            debug_print(f"Failed to parse product selection JSON for {url}: {e}")
+            return []
+        
+        # Extract products and prices
+        products = product_data.get('products', [])
+        prices = product_data.get('displayValues', {}).get('prices', {})
         
         debug_print(f"Found {len(products)} products for region {region_display}")
         
-        # Extract relevant product details (same format as iPhone/iPad scrapers)
+        # Extract relevant product details
         product_details = []
         for product in products:
-            sku = product.get("sku")
-            name = product.get("name", "")
-            price = product.get("price", {}).get("fullPrice")
-            part_number = product.get("partNumber", "")
+            part_number = product.get("part", "")
+            price_key = product.get("priceKey", "")
+            dimensions = product.get("dimensions", {})
+            
+            # Get price from prices dictionary
+            price_info = prices.get(price_key, {})
+            price = price_info.get("amount", 0)
+            
+            # Build product name from dimensions and URL info
+            case_size = dimensions.get("watch_cases-dimensionCaseSize", "")
+            case_material = dimensions.get("watch_cases-dimensionCaseMaterial", "")
+            case_color = dimensions.get("watch_cases-dimensionColor", "")
+            connectivity = dimensions.get("watch_cases-dimensionConnection", "")
+            
+            # Format connectivity
+            conn_formatted = ""
+            if connectivity == "gps":
+                conn_formatted = "GPS"
+            elif connectivity == "gpscell":
+                conn_formatted = "GPS + Cellular"
+            
+            # Determine watch model from URL
+            watch_model = "Apple Watch Series 10"
+            if "apple-watch-se" in url:
+                watch_model = "Apple Watch SE"
+            elif "apple-watch-ultra" in url:
+                watch_model = "Apple Watch Ultra 2"
+            elif "apple-watch-hermes" in url:
+                if "ultra" in url:
+                    watch_model = "Apple Watch Hermès Ultra 2"
+                else:
+                    watch_model = "Apple Watch Hermès Series 10"
+            
+            # Build product name
+            name_parts = [watch_model]
+            if conn_formatted:
+                name_parts.append(conn_formatted)
+            if case_size:
+                name_parts.append(case_size)
+            if case_color and case_material:
+                # Format color name (replace underscores, capitalize)
+                color_formatted = case_color.replace("_", " ").title()
+                material_formatted = case_material.title()
+                name_parts.append(f"{color_formatted} {material_formatted}")
+            
+            name = ", ".join(name_parts)
+            
+            # Use part number as SKU for consistency
+            sku = part_number
+            
+            # Generate standardized name for matching products across regions
+            std_name = standardize_product_name(name)
             
             product_details.append({
                 "SKU": sku,
@@ -140,7 +270,8 @@ def extract_product_details(url, region_code=""):
                 "Price": price,
                 "Region": region_display,
                 "Region_Code": region_code,
-                "PartNumber": part_number
+                "PartNumber": part_number,
+                "Standardized_Name": std_name
             })
             
         return product_details
@@ -177,7 +308,7 @@ def get_all_products():
 
 def merge_product_data(product_data):
     """
-    Merge product data from all regions using SKU-based matching (same as iPad scraper)
+    Merge product data from all regions using standardized name matching (same as iPhone scraper)
     
     Parameters:
     product_data (list): List of product data from all regions
@@ -198,11 +329,12 @@ def merge_product_data(product_data):
         region_display = region_info[0]
         region_data = df[df['Region_Code'] == region_code].copy()
         
-        # Ensure uniqueness of SKUs
-        region_data = region_data.drop_duplicates(subset='SKU')
+        # Ensure uniqueness of standardized names
+        region_data = region_data.drop_duplicates(subset='Standardized_Name')
         
         # Rename columns to include region
         region_data.rename(columns={
+            'SKU': f'SKU_{region_display}',
             'Price': f'Price_{region_display}',
             'Name': f'Name_{region_display}',
             'PartNumber': f'PartNumber_{region_display}'
@@ -219,46 +351,49 @@ def merge_product_data(product_data):
         debug_print(f"Reference region {ref_display} not found in data!")
         return pd.DataFrame()
     
-    # Get the base dataframe
-    merged_df = region_dfs[ref_region][['SKU', f'Price_{ref_display}', f'Name_{ref_display}']].copy()
+    merged_df = region_dfs[ref_region]
     
-    # Merge with other regions using SKU as the key
+    # Merge with other regions using standardized name as the key
     for region_code, region_df in region_dfs.items():
         if region_code == ref_region:
             continue
         
-        region_display = REGIONS[region_code][0]
-        
         # Select columns to merge
-        columns_to_merge = ['SKU', f'Price_{region_display}', f'Name_{region_display}']
+        columns_to_merge = [
+            f'SKU_{REGIONS[region_code][0]}', 
+            f'Price_{REGIONS[region_code][0]}', 
+            'Standardized_Name'
+        ]
             
         merged_df = pd.merge(
             merged_df, 
             region_df[columns_to_merge], 
-            on='SKU', 
+            on='Standardized_Name', 
             how='outer'
         )
     
-    # Fill missing values
+    # Fill NaN values
     for region_code, region_info in REGIONS.items():
         region_display = region_info[0]
         merged_df[f'Price_{region_display}'] = merged_df[f'Price_{region_display}'].fillna(0)
-        merged_df[f'Name_{region_display}'] = merged_df[f'Name_{region_display}'].fillna('')
+        merged_df[f'SKU_{region_display}'] = merged_df[f'SKU_{region_display}'].fillna('')
     
-    # Create final output dataframe with columns in the desired order:
-    # 1. SKU (common for all regions, so no need for region prefix)
-    # 2. Price columns for each region 
-    # 3. Product name from reference region
+    # Create final output dataframe with the requested column format
+    # 1. First all SKU columns
+    # 2. Then all Price columns
+    # 3. Finally the product name
     
-    # Prepare the price columns
+    # Prepare the output columns in the desired order
+    sku_columns = []
     price_columns = []
     
     for region_code, region_info in REGIONS.items():
         region_display = region_info[0]
+        sku_columns.append(f'SKU_{region_display}')
         price_columns.append(f'Price_{region_display}')
     
     # Create the output dataframe with columns in the specified order
-    output_columns = ['SKU'] + price_columns + [f'Name_{ref_display}']
+    output_columns = sku_columns + price_columns + [f'Name_{ref_display}']
     output_df = merged_df[output_columns].copy()
     
     # Rename the product name column
@@ -291,6 +426,7 @@ def main():
     for region_code, region_info in REGIONS.items():
         region_display = region_info[0]
         price_col = f'Price_{region_display}'
+        sku_col = f'SKU_{region_display}'
         
         if price_col in merged_data.columns:
             non_zero_prices = (merged_data[price_col] > 0).sum()
