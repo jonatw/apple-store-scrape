@@ -38,7 +38,7 @@ jobs:
       
       - name: Consolidate product data by removing color duplicates
         run: |
-          python consolidate_colors.py
+          python smart_consolidate_colors.py
           echo "Consolidated files created:"
           ls -la *_consolidated.csv
       
