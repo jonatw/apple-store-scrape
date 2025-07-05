@@ -1,0 +1,201 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-07-05T00:18:33.955037",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 28.98
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "watch",
+    "totalProducts": 14,
+    "lastExchangeRateUpdate": "2025-07-05T00:18:32.749388",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "Apple Watch Hermès Series 10, 42mm",
+      "Price_TW": 42700.0,
+      "Price_US": 1249.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_TW": "MX0Q3TA/A",
+      "SKU_US": "MX0Q3LW/A",
+      "SKU_Variants_TW": "MX0Q3TA/A",
+      "SKU_Variants_US": "MX0Q3LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 18.0
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Hermès Series 10, 46mm",
+      "Price_TW": 44200.0,
+      "Price_US": 1299.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_TW": "MX193TA/A",
+      "SKU_US": "MX193LW/A",
+      "SKU_Variants_TW": "MX193TA/A",
+      "SKU_Variants_US": "MX193LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 17.4
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Hermès Ultra 2, 49mm",
+      "Price_TW": 47700.0,
+      "Price_US": 1399.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_TW": "MX773TA/A",
+      "SKU_US": "MX773LW/A",
+      "SKU_Variants_TW": "MX773TA/A",
+      "SKU_Variants_US": "MX773LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 17.7
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 10, GPS + Cellular, 42mm, Titanium",
+      "Price_TW": 23900.0,
+      "Price_US": 699.0,
+      "Available_Colors": "Gold, Natural, Slate, Titanium",
+      "Color_Variants": 3,
+      "SKU_TW": "MX0N3TA/A",
+      "SKU_US": "MX0N3LW/A",
+      "SKU_Variants_TW": "MX0N3TA/A, MX0J3TA/A, MX0M3TA/A",
+      "SKU_Variants_US": "MX0N3LW/A, MX0J3LW/A, MX0M3LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 18.0
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 10, GPS + Cellular, 42mm, Jet Aluminum",
+      "Price_TW": 16500.0,
+      "Price_US": 499.0,
+      "Available_Colors": "Aluminum, Black, Gold, Jet Black, Rosegold, Silver",
+      "Color_Variants": 3,
+      "SKU_TW": "MX0G3TA/A",
+      "SKU_US": "MX0G3LW/A",
+      "SKU_Variants_TW": "MX0G3TA/A, MX0H3TA/A, MX0F3TA/A",
+      "SKU_Variants_US": "MX0G3LW/A, MX0H3LW/A, MX0F3LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 14.1
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 10, GPS + Cellular, 46mm, Titanium",
+      "Price_TW": 25400.0,
+      "Price_US": 749.0,
+      "Available_Colors": "Gold, Natural, Slate, Titanium",
+      "Color_Variants": 3,
+      "SKU_TW": "MX183TA/A",
+      "SKU_US": "MX183LW/A",
+      "SKU_Variants_TW": "MX183TA/A, MX163TA/A, MX173TA/A",
+      "SKU_Variants_US": "MX183LW/A, MX163LW/A, MX173LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 17.0
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 10, GPS + Cellular, 46mm, Jet Aluminum",
+      "Price_TW": 17500.0,
+      "Price_US": 529.0,
+      "Available_Colors": "Aluminum, Black, Gold, Jet Black, Rosegold, Silver",
+      "Color_Variants": 3,
+      "SKU_TW": "MX133TA/A",
+      "SKU_US": "MX133LW/A",
+      "SKU_Variants_TW": "MX133TA/A, MX143TA/A, MX123TA/A",
+      "SKU_Variants_US": "MX133LW/A, MX143LW/A, MX123LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 14.2
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 10, GPS, 42mm, Jet Aluminum",
+      "Price_TW": 13500.0,
+      "Price_US": 399.0,
+      "Available_Colors": "Aluminum, Black, Gold, Jet Black, Rosegold, Silver",
+      "Color_Variants": 3,
+      "SKU_TW": "MWWX3TA/A",
+      "SKU_US": "MWWX3LW/A",
+      "SKU_Variants_TW": "MWWX3TA/A, MWWY3TA/A, MWWW3TA/A",
+      "SKU_Variants_US": "MWWX3LW/A, MWWY3LW/A, MWWW3LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 16.8
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 10, GPS, 46mm, Jet Aluminum",
+      "Price_TW": 14500.0,
+      "Price_US": 429.0,
+      "Available_Colors": "Aluminum, Black, Gold, Jet Black, Rosegold, Silver",
+      "Color_Variants": 3,
+      "SKU_TW": "MWX13TA/A",
+      "SKU_US": "MWX13LW/A",
+      "SKU_Variants_TW": "MWX13TA/A, MWX23TA/A, MWX03TA/A",
+      "SKU_Variants_US": "MWX13LW/A, MWX23LW/A, MWX03LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 16.6
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE, GPS + Cellular, 40mm, Aluminum",
+      "Price_TW": 9400.0,
+      "Price_US": 299.0,
+      "Available_Colors": "Aluminum, Midnight, Silver, Starlight",
+      "Color_Variants": 3,
+      "SKU_TW": "MA9H4TA/A",
+      "SKU_US": "MA9E4LL/A",
+      "SKU_Variants_TW": "MA9H4TA/A, MA9J4TA/A, MA9K4TA/A",
+      "SKU_Variants_US": "MA9E4LL/A, MA9F4LL/A, MA9G4LL/A",
+      "product_type": "watch",
+      "price_difference_percent": 8.5
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE, GPS + Cellular, 44mm, Aluminum",
+      "Price_TW": 10400.0,
+      "Price_US": 329.0,
+      "Available_Colors": "Aluminum, Midnight, Silver, Starlight",
+      "Color_Variants": 3,
+      "SKU_TW": "MA9P4TA/A",
+      "SKU_US": "MA9L4LL/A",
+      "SKU_Variants_TW": "MA9P4TA/A, MA9Q4TA/A, MA9R4TA/A",
+      "SKU_Variants_US": "MA9L4LL/A, MA9M4LL/A, MA9N4LL/A",
+      "product_type": "watch",
+      "price_difference_percent": 9.1
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE, GPS, 40mm, Aluminum",
+      "Price_TW": 7900.0,
+      "Price_US": 249.0,
+      "Available_Colors": "Aluminum, Midnight, Silver, Starlight",
+      "Color_Variants": 3,
+      "SKU_TW": "MA9A4TA/A",
+      "SKU_US": "MA9A4LL/A",
+      "SKU_Variants_TW": "MA9A4TA/A, MA9C4TA/A, MA9D4TA/A",
+      "SKU_Variants_US": "MA9A4LL/A, MA9C4LL/A, MA9D4LL/A",
+      "product_type": "watch",
+      "price_difference_percent": 9.5
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE, GPS, 44mm, Aluminum",
+      "Price_TW": 8900.0,
+      "Price_US": 279.0,
+      "Available_Colors": "Aluminum, Midnight, Silver, Starlight",
+      "Color_Variants": 3,
+      "SKU_TW": "MA7W4TA/A",
+      "SKU_US": "MA7W4LL/A",
+      "SKU_Variants_TW": "MA7W4TA/A, MA7X4TA/A, MA7Y4TA/A",
+      "SKU_Variants_US": "MA7W4LL/A, MA7X4LL/A, MA7Y4LL/A",
+      "product_type": "watch",
+      "price_difference_percent": 10.1
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Ultra 2, 49mm",
+      "Price_TW": 27900.0,
+      "Price_US": 799.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_TW": "MYT73TA/A",
+      "SKU_US": "MYT03LW/A",
+      "SKU_Variants_TW": "MYT73TA/A",
+      "SKU_Variants_US": "MYT03LW/A",
+      "product_type": "watch",
+      "price_difference_percent": 20.5
+    }
+  ]
+}

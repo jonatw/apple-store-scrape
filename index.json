@@ -1,0 +1,35 @@
+{
+  "lastUpdated": "2025-07-05T00:18:33.958757",
+  "datasets": [
+    {
+      "type": "iphone",
+      "file": "iphone_data.json",
+      "title": "iPhone Models"
+    },
+    {
+      "type": "ipad",
+      "file": "ipad_data.json",
+      "title": "iPad Models"
+    },
+    {
+      "type": "mac",
+      "file": "mac_data.json",
+      "title": "Mac Models"
+    },
+    {
+      "type": "watch",
+      "file": "watch_data.json",
+      "title": "Apple Watch Models"
+    },
+    {
+      "type": "airpods",
+      "file": "airpods_data.json",
+      "title": "AirPods Models"
+    },
+    {
+      "type": "tvhome",
+      "file": "tvhome_data.json",
+      "title": "Apple TV & Home Models"
+    }
+  ]
+}

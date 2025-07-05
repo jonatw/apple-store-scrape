@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-07-05T00:18:33.956834",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 28.98
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "airpods",
+    "totalProducts": 3,
+    "lastExchangeRateUpdate": "2025-07-05T00:18:32.749388",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "AirPods Max -",
+      "Price_TW": 17990.0,
+      "Price_US": 549.0,
+      "Available_Colors": "Blue, Max, Midnight, Orange, Purple, Starlight",
+      "Color_Variants": 5,
+      "SKU": "MWW43",
+      "SKU_Variants_US": "MWW43, MWW53, MWW63, MWW73, MWW83",
+      "product_type": "airpods",
+      "price_difference_percent": 13.1
+    },
+    {
+      "PRODUCT_NAME": "AirPods 4",
+      "Price_TW": 4490.0,
+      "Price_US": 129.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MXP63",
+      "SKU_Variants_US": "MXP63",
+      "product_type": "airpods",
+      "price_difference_percent": 20.1
+    },
+    {
+      "PRODUCT_NAME": "AirPods 4 with Active Noise Cancellation",
+      "Price_TW": 5990.0,
+      "Price_US": 179.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MXP93",
+      "SKU_Variants_US": "MXP93",
+      "product_type": "airpods",
+      "price_difference_percent": 15.5
+    }
+  ]
+}

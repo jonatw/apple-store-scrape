@@ -1,0 +1,118 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-07-05T00:18:33.958496",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 28.98
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "tvhome",
+    "totalProducts": 9,
+    "lastExchangeRateUpdate": "2025-07-05T00:18:32.749388",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "HomePod - Midnight",
+      "Price_TW": 9300.0,
+      "Price_US": 299.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MDEW4",
+      "SKU_Variants_US": "MDEW4",
+      "product_type": "tvhome",
+      "price_difference_percent": 7.3
+    },
+    {
+      "PRODUCT_NAME": "HomePod - White",
+      "Price_TW": 9300.0,
+      "Price_US": 299.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MDEY4",
+      "SKU_Variants_US": "MDEY4",
+      "product_type": "tvhome",
+      "price_difference_percent": 7.3
+    },
+    {
+      "PRODUCT_NAME": "HomePod mini - Blue",
+      "Price_TW": 3000.0,
+      "Price_US": 99.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MJ2C3",
+      "SKU_Variants_US": "MJ2C3",
+      "product_type": "tvhome",
+      "price_difference_percent": 4.6
+    },
+    {
+      "PRODUCT_NAME": "HomePod mini - Orange",
+      "Price_TW": 3000.0,
+      "Price_US": 99.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MJ2D3",
+      "SKU_Variants_US": "MJ2D3",
+      "product_type": "tvhome",
+      "price_difference_percent": 4.6
+    },
+    {
+      "PRODUCT_NAME": "HomePod mini - Yellow",
+      "Price_TW": 3000.0,
+      "Price_US": 99.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MJ2E3",
+      "SKU_Variants_US": "MJ2E3",
+      "product_type": "tvhome",
+      "price_difference_percent": 4.6
+    },
+    {
+      "PRODUCT_NAME": "Apple TV 4K Wi‑Fi with 64GB storage",
+      "Price_TW": 4490.0,
+      "Price_US": 129.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MN873",
+      "SKU_Variants_US": "MN873",
+      "product_type": "tvhome",
+      "price_difference_percent": 20.1
+    },
+    {
+      "PRODUCT_NAME": "Apple TV 4K Wi‑Fi + Ethernet with 128GB storage",
+      "Price_TW": 4990.0,
+      "Price_US": 149.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MN893",
+      "SKU_Variants_US": "MN893",
+      "product_type": "tvhome",
+      "price_difference_percent": 15.6
+    },
+    {
+      "PRODUCT_NAME": "HomePod mini - Midnight",
+      "Price_TW": 3000.0,
+      "Price_US": 99.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MTJT3",
+      "SKU_Variants_US": "MTJT3",
+      "product_type": "tvhome",
+      "price_difference_percent": 4.6
+    },
+    {
+      "PRODUCT_NAME": "HomePod mini - White",
+      "Price_TW": 3000.0,
+      "Price_US": 99.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU": "MY5H2",
+      "SKU_Variants_US": "MY5H2",
+      "product_type": "tvhome",
+      "price_difference_percent": 4.6
+    }
+  ]
+}
