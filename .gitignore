@@ -104,6 +104,8 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+# Gemini CLI
+.gemini/
+
 # AI knowledge transfer system - keep versioned for collaboration
-# (intentionally not ignored)
 # .ai/
