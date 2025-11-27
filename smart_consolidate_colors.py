@@ -13,125 +13,115 @@ class SmartColorConsolidator:
         self.common_colors = {
             # Basic colors
             'black', 'blue', 'green', 'pink', 'yellow', 'red', 'white', 'purple', 'orange',
-            'gray', 'grey', 'silver', 'gold', 'brown', 'cyan', 'magenta',
+            'gray', 'grey', 'silver', 'gold', 'brown', 'cyan', 'magenta', 'teal', 'indigo', 'violet', 'lime',
             
             # Apple-specific colors
             'space gray', 'space grey', 'rose gold', 'midnight', 'starlight', 'deep purple',
-            'alpine green', 'sierra blue', 'graphite', 'jet black', 'product red',
+            'alpine green', 'sierra blue', 'graphite', 'jet black', 'product red', 'space black',
+            'natural titanium', 'black titanium', 'white titanium', 'blue titanium', 'desert titanium',
+            'cloud white', 'light gold', 'sky blue', 'cosmic orange', 'deep blue', 'ultramarine',
+            'lavender', 'mist blue', 'sage', 'desert', 'mist',
             
-            # Watch/iPhone specific
-            'natural', 'slate', 'ultra', 'ceramic', 'edition'
+            # Modifiers often found with colors
+            'dark', 'light', 'pale', 'deep', 'space', 'rose', 'alpine', 'sierra', 'midnight', 
+            'starlight', 'natural', 'desert', 'cloud', 'sky', 'cosmic', 'mist'
         }
-    
+        
+        self.ignored_words = {
+            'gb', 'tb', 'inch', 'wifi', 'wi-fi', 'cellular', 'gps', 'mm', 'fi', 'wi', 'mini', 'plus', 'max', 'pro', 'air', 'se', 'ultra'
+        }
+
     def extract_color_from_name(self, product_name):
         """Extract potential color words from product name"""
-        if not product_name:
+        if not product_name or not isinstance(product_name, str):
             return []
         
         name_lower = product_name.lower()
         found_colors = []
         
-        # Look for known colors
-        for color in self.common_colors:
+        # 1. Look for explicit known multi-word colors first (greedy match)
+        # Sort by length desc to match "Space Gray" before "Gray"
+        sorted_colors = sorted([c for c in self.common_colors if ' ' in c], key=len, reverse=True)
+        for color in sorted_colors:
             if color in name_lower:
                 found_colors.append(color)
+                # Remove it from temp name to avoid double counting parts
+                name_lower = name_lower.replace(color, '')
         
-        # Also extract words that might be colors (usually at the end)
-        words = re.findall(r'\b[a-zA-Z]+\b', product_name)
-        if len(words) >= 2:
-            # Last 1-2 words might be colors
-            potential_colors = words[-2:]
-            for word in potential_colors:
-                if word.lower() not in ['gb', 'tb', 'inch', 'wifi', 'cellular', 'gps', 'mm']:
-                    found_colors.append(word.lower())
-        
+        # 2. Look for single word colors in what remains
+        words = re.findall(r'\b[a-zA-Z]+\b', name_lower)
+        for word in words:
+            if word in self.common_colors and word not in self.ignored_words:
+                found_colors.append(word)
+                
         return list(set(found_colors))
-    
+
+    def clean_product_name(self, name, product_type):
+        """Strip colors and modifiers to get a base product name"""
+        if not name or not isinstance(name, str):
+            return ""
+            
+        clean_name = name.strip()
+        
+        # Fix specific known bad names
+        if 'airpodspro' in clean_name.lower():
+            return 'AirPods Pro 2'
+            
+        # Strategy: Remove known colors (case insensitive)
+        sorted_colors = sorted([c for c in self.common_colors], key=len, reverse=True)
+        
+        for color in sorted_colors:
+            # Remove color if it's a distinct word
+            pattern = re.compile(rf'\b{re.escape(color)}\b', re.IGNORECASE)
+            clean_name = pattern.sub('', clean_name)
+            
+        # Remove trailing dashes and spaces (Run this AFTER color removal to catch "AirPods Max - <removed_color>")
+        clean_name = re.sub(r'\s*-\s*$', '', clean_name)
+        clean_name = re.sub(r'\s*-\s*', ' ', clean_name) # Replace internal dashes with space
+        
+        # Collapse spaces
+        clean_name = re.sub(r'\s+', ' ', clean_name).strip()
+        
+        return clean_name
+
     def create_grouping_key(self, row, product_type):
         """Create a key for grouping products that should be consolidated"""
+        name = row.get('PRODUCT_NAME', '')
         
+        # Special handling for specific types
         if product_type.lower() == 'iphone':
-            # For iPhone: model + storage (ignore color)
-            name = row.get('PRODUCT_NAME', '')
-            # Extract everything except the last word (usually color)
-            parts = name.split()
-            if len(parts) > 1:
-                # Remove last word if it's likely a color
-                last_word = parts[-1].lower()
-                if last_word in self.common_colors or len(last_word) < 8:
-                    base_name = ' '.join(parts[:-1])
-                else:
-                    base_name = name
-            else:
-                base_name = name
-            return base_name.strip()
-        
-        elif product_type.lower() == 'ipad':
-            # For iPad: model + storage + connectivity (ignore color after dash)
-            name = row.get('PRODUCT_NAME', '')
-            # Remove color part after dash
-            if ' - ' in name:
-                base_name = name.split(' - ')[0]
-            else:
-                # Try to remove color from end
-                parts = name.split()
-                if len(parts) > 1:
-                    last_word = parts[-1].lower()
-                    if last_word in self.common_colors:
-                        base_name = ' '.join(parts[:-1])
-                    else:
-                        base_name = name
-                else:
-                    base_name = name
-            return base_name.strip()
-        
-        elif product_type.lower() == 'mac':
-            # For Mac: use price + chip + memory + storage as key (different configs shouldn't merge)
-            price_us = row.get('Price_US', 0)
-            chip = row.get('Chip', '')
-            memory = row.get('Memory', '')
-            storage = row.get('Storage', '')
-            return f"mac_{price_us}_{chip}_{memory}_{storage}"
-        
-        elif product_type.lower() == 'watch':
-            # For Watch: model + size + connectivity + material (ignore specific colors)
-            name = row.get('PRODUCT_NAME', '')
-            price_us = row.get('Price_US', 0)
-            # Use price as main differentiator since different materials have different prices
-            # Extract base model info
-            base_parts = []
-            if 'Watch' in name:
-                # Extract model and size info
-                parts = name.split(',')
-                if len(parts) >= 2:
-                    base_parts = parts[:2]  # Model and size
-                    # Add connectivity if present
-                    for part in parts[2:]:
-                        if any(conn in part.lower() for conn in ['gps', 'cellular', 'wifi']):
-                            base_parts.append(part.strip())
-                            break
+            # Group by: Clean Name + Storage
+            storage = ''
+            match = re.search(r'(\d+[GT]B)', name, re.IGNORECASE)
+            if match:
+                storage = match.group(1).upper()
             
-            base_name = ', '.join(base_parts) if base_parts else name
-            return f"{base_name}_{price_us}"
-        
-        elif product_type.lower() in ['airpods', 'tvhome']:
-            # For AirPods and TV/Home: use price as main differentiator
-            name = row.get('PRODUCT_NAME', '')
-            price_us = row.get('Price_US', 0)
-            # Remove obvious color indicators
-            base_name = name
-            for color in self.common_colors:
-                pattern = rf'\b{re.escape(color)}\b'
-                base_name = re.sub(pattern, '', base_name, flags=re.IGNORECASE)
-            base_name = re.sub(r'\s+', ' ', base_name).strip()
-            base_name = re.sub(r'\s*-\s*$', '', base_name)  # Remove trailing dash
-            return f"{base_name}_{price_us}"
-        
+            base_name = self.clean_product_name(name, product_type)
+            return f"{base_name}_{storage}"
+
+        elif product_type.lower() == 'mac':
+            # Group by: Price + Specs (Chip, Memory, Storage)
+            price = row.get('Price_US', 0)
+            chip = row.get('Chip', '')
+            mem = row.get('Memory', '')
+            store = row.get('Storage', '')
+            cpu = row.get('CPU_Cores', '')
+            gpu = row.get('GPU_Cores', '')
+            
+            # If specs are fully present, use them as the primary key
+            if chip and mem and store:
+                 # Note: We don't use name here to ensure "Silver iMac" groups with "Blue iMac"
+                 return f"mac_{chip}_{cpu}_{gpu}_{mem}_{store}_{price}"
+            
+            # Fallback: Clean Name + Price
+            clean_name = self.clean_product_name(name, product_type)
+            return f"{clean_name}_{price}"
+
         else:
-            # Fallback: use product name + price
-            name = row.get('PRODUCT_NAME', '')
-            price_us = row.get('Price_US', 0)
-            return f"{name}_{price_us}"
+            # Default: Clean Name + Price (works for iPad, Watch, AirPods)
+            base_name = self.clean_product_name(name, product_type)
+            price = row.get('Price_US', 0)
+            return f"{base_name}_{price}"
     
     def consolidate_products(self, df, product_type):
         """Consolidate products by grouping identical specs with different colors"""

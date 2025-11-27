@@ -40,7 +40,7 @@ function copyJsonFilesPlugin() {
 
 export default defineConfig({
   root: 'src',
-  base: '/apple-store-scrape/', // GitHub Pages subdirectory
+  base: process.env.VITE_APP_BASE_URL || '/', // Default to '/' for local, use env var for GH Pages
   
   // Don't use publicDir to handle data files, we'll use a plugin instead
   publicDir: false,

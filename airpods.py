@@ -37,7 +37,7 @@ def debug_print(message):
 
 def get_available_models(region_code=""):
     """
-    Get available AirPods models by analyzing the main AirPods page
+    Get available AirPods models by analyzing the main AirPods marketing page
     
     Parameters:
     region_code (str): Region code, e.g., "tw" for Taiwan, "" for US
@@ -46,10 +46,11 @@ def get_available_models(region_code=""):
     list: List of available AirPods models
     """
     region_prefix = f"/{region_code}" if region_code else ""
-    url = f"https://www.apple.com{region_prefix}/airpods"
+    # Use the marketing page which has links to all models
+    url = f"https://www.apple.com{region_prefix}/airpods/"
     
-    # Updated default models based on current Apple lineup
-    default_models = ["airpods_4", "airpods_pro_2", "airpods_max"]
+    # Default models as fallback
+    default_models = ["airpods-4", "airpods-pro-2", "airpods-max"]
     
     try:
         response = requests.get(url)
@@ -60,18 +61,33 @@ def get_available_models(region_code=""):
         # Parse HTML
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Find all buy links for AirPods products (using correct URL pattern)
+        # Find all buy links for AirPods products
         airpods_models = []
         
-        # Look for buy/goto patterns
+        # Look for links containing /shop/goto/buy_airpods/
         for link in soup.find_all('a', href=True):
             href = link.get('href')
             
-            # Check for buy/goto patterns (correct Apple URL structure)
             if '/shop/goto/buy_airpods/' in href:
-                # Extract model from buy link
-                model = href.split('buy_airpods/')[1].split('?')[0].split('#')[0]
-                airpods_models.append(model)
+                # Extract model from link (e.g. /us/shop/goto/buy_airpods/airpods_4)
+                parts = href.split('buy_airpods/')
+                if len(parts) > 1:
+                    # Clean up query params or anchors
+                    model_raw = parts[1].split('?')[0].split('#')[0]
+                    
+                    # Normalize model name: Apple often uses underscores in goto links (airpods_4) 
+                    # but hyphens in store URLs (airpods-4).
+                    model = model_raw.replace('_', '-')
+                    
+                    # Filter out sub-configurations (like /with_active_noise_cancellation) 
+                    # We just want the base model name if possible, or we can try to scrape them all.
+                    # If the model contains slashes, it might be a specific config. 
+                    # Usually the first part is the model.
+                    if '/' in model:
+                        model = model.split('/')[0]
+                        
+                    if model and model != "": 
+                         airpods_models.append(model)
 
         # Remove duplicates and clean up
         unique_models = list(set(airpods_models))
@@ -117,36 +133,146 @@ def extract_product_details(url, region_code=""):
         # Parse the HTML content
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Search for the script with type "application/json" and id "metrics" (same as working scrapers)
-        json_script = soup.find('script', {'type': 'application/json', 'id': 'metrics'})
-        if not json_script:
-            debug_print(f"No matching script found in {url}")
-            return []
-        
-        # Parse JSON content
-        json_data = json.loads(json_script.string)
-        data = json_data.get('data', {})
-        products = data.get('products', [])
-        
-        debug_print(f"Found {len(products)} products for region {region_display}")
-        
-        # Extract relevant product details (same format as iPhone/iPad scrapers)
         product_details = []
-        for product in products:
-            sku = product.get("sku")
-            name = product.get("name", "")
-            price = product.get("price", {}).get("fullPrice")
-            part_number = product.get("partNumber", "")
-            
-            product_details.append({
-                "SKU": sku,
-                "Name": name,
-                "Price": price,
-                "Region": region_display,
-                "Region_Code": region_code,
-                "PartNumber": part_number
-            })
-            
+        
+        # Strategy 1: Try "metrics" script (standard for most pages)
+        json_script = soup.find('script', {'type': 'application/json', 'id': 'metrics'})
+        if json_script:
+            try:
+                json_data = json.loads(json_script.string)
+                data = json_data.get('data', {})
+                products = data.get('products', [])
+                
+                if products:
+                    debug_print(f"Found {len(products)} products via metrics for region {region_display}")
+                    for product in products:
+                        sku = product.get("sku")
+                        name = product.get("name", "")
+                        price = product.get("price", {}).get("fullPrice")
+                        part_number = product.get("partNumber", "")
+                        
+                        # Derive BaseSKU
+                        # If part_number has suffix like LL/A, strip it
+                        base_sku = sku # Default to SKU
+                        if part_number:
+                             # Remove region suffix like /A, LL/A, TA/A
+                             # Regex: Match 2 uppercase letters followed by / and 1 uppercase letter at end of string
+                             base_sku = re.sub(r'[A-Z]{2}/[A-Z]$', '', part_number)
+                             # Also handle simple /A case if any
+                             base_sku = re.sub(r'/[A-Z]$', '', base_sku)
+
+                        product_details.append({
+                            "SKU": base_sku,
+                            "OriginalSKU": sku or part_number,
+                            "Name": name,
+                            "Price": price,
+                            "Region": region_display,
+                            "Region_Code": region_code,
+                            "PartNumber": part_number
+                        })
+                    return product_details
+            except Exception as e:
+                debug_print(f"Error parsing metrics JSON: {e}")
+
+        # Strategy 2: Try "PRODUCT_SELECTION_BOOTSTRAP" (fallback for selection pages)
+        debug_print("Metrics strategy failed or found no products, trying PRODUCT_SELECTION_BOOTSTRAP")
+        
+        # Find script containing the bootstrap variable
+        script_content = None
+        for script in soup.find_all('script'):
+            if script.string and 'window.PRODUCT_SELECTION_BOOTSTRAP' in script.string:
+                script_content = script.string
+                break
+        
+        if script_content:
+            try:
+                # Locate productSelectionData
+                key_index = script_content.find('productSelectionData:')
+                if key_index != -1:
+                    # Find start of the JSON object (first '{' after key)
+                    start_index = script_content.find('{', key_index)
+                    if start_index != -1:
+                        # Extract JSON object by balancing braces
+                        brace_count = 0
+                        json_str = ""
+                        for i in range(start_index, len(script_content)):
+                            char = script_content[i]
+                            if char == '{':
+                                brace_count += 1
+                            elif char == '}':
+                                brace_count -= 1
+                            
+                            json_str += char
+                            
+                            if brace_count == 0:
+                                break
+                        
+                        if json_str:
+                            bootstrap_data = json.loads(json_str)
+                            
+                            products = bootstrap_data.get('products', [])
+                            display_values = bootstrap_data.get('displayValues', {})
+                            prices_map = display_values.get('prices', {})
+                            
+                            if products:
+                                 debug_print(f"Found {len(products)} products via bootstrap for region {region_display}")
+                                 for product in products:
+                                    part_number = product.get('partNumber')
+                                    base_part_number = product.get('basePartNumber')
+                                    
+                                    # Try to find price info using 'fullPrice' OR 'price' key
+                                    price_key = product.get('fullPrice')
+                                    if not price_key:
+                                        price_key = product.get('price')
+                                        
+                                    price_info = prices_map.get(price_key, {})
+                                    
+                                    # Extract numeric price
+                                    price_val = None
+                                    curr_price = price_info.get('currentPrice', {})
+                                    if curr_price:
+                                        raw_amount = curr_price.get('raw_amount')
+                                        if raw_amount:
+                                            try:
+                                                price_val = float(raw_amount.replace(',', ''))
+                                            except:
+                                                pass
+                                    
+                                    # Name extraction
+                                    name = product.get('familyType', '')
+                                    # Heuristic: if name is all lowercase or matches internal ID pattern, try to find better name from page title
+                                    if not name or name.islower() or name == 'airpodspro':
+                                        page_title = soup.find('title')
+                                        if page_title:
+                                            # Title is usually "Product Name - Apple" or "Buy Product Name - Apple"
+                                            # Clean up common suffixes/prefixes
+                                            title_text = page_title.text.replace(' - Apple', '').strip()
+                                            # Remove "Buy " only if it's at the start
+                                            if title_text.startswith('Buy '):
+                                                title_text = title_text[4:]
+                                            
+                                            if title_text:
+                                                name = title_text.strip()
+                                    
+                                    if not name:
+                                        name = "Unknown Product"
+                                    
+                                    # Use basePartNumber as SKU for merging if available
+                                    base_sku = base_part_number if base_part_number else part_number
+                                    
+                                    product_details.append({
+                                        "SKU": base_sku,
+                                        "OriginalSKU": part_number,
+                                        "Name": name,
+                                        "Price": price_val,
+                                        "Region": region_display,
+                                        "Region_Code": region_code,
+                                        "PartNumber": part_number
+                                    })
+                                 return product_details
+            except Exception as e:
+                debug_print(f"Error parsing bootstrap JSON: {e}")
+
         return product_details
         
     except Exception as e:
@@ -160,17 +286,20 @@ def get_all_products():
     Returns:
     list: List of all products from all regions
     """
-    # Use known working AirPods models with correct URL format (hyphens, not underscores)
-    known_models = ["airpods-4", "airpods-pro", "airpods-max"]
+    # Get all unique models from all regions
+    all_models = set()
+    for region_code in REGIONS.keys():
+        models = get_available_models(region_code)
+        all_models.update(models)
     
-    debug_print(f"Using known AirPods models: {', '.join(known_models)}")
+    debug_print(f"Found models across all regions: {', '.join(all_models)}")
     
     # Fetch products for each model from each region using correct URL pattern
     all_products = []
-    for model in known_models:
+    for model in all_models:
         for region_code in REGIONS.keys():
             region_prefix = f"/{region_code}" if region_code else ""
-            # Use the correct final URL pattern (not goto redirect)
+            # Use the correct final URL pattern
             url = f"https://www.apple.com{region_prefix}/shop/buy-airpods/{model}"
             products = extract_product_details(url, region_code)
             all_products.extend(products)

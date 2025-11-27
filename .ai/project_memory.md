@@ -62,6 +62,24 @@
 3. Test responsive design breakpoints
 4. Validate local storage functionality
 
+## Recent Updates (2025-11-28)
+
+### Robust Scraping Architecture
+- **Dual-Strategy Extraction**: All scrapers (iPhone, iPad, Mac, Watch, AirPods, TV) now implement a fallback mechanism. They first attempt to parse the standard `metrics` JSON. If that fails or yields no products, they gracefully switch to parsing the `window.PRODUCT_SELECTION_BOOTSTRAP` object using a robust brace-counting parser. This ensures compatibility with newer "selection-style" product pages (e.g., AirPods Pro 3, Apple Watch Series 11).
+- **Dynamic Model Discovery**: Refactored `get_available_models` in `watch.py` and `tvhome.py` to scrape marketing pages (`/watch/`, `/tv-home/`) instead of store hubs. Implemented intelligent mapping to convert marketing names (e.g., `apple_watch_series_11`) to canonical store URL slugs (`apple-watch`), resolving 404 errors for unreleased or redirected models.
+
+### Data Processing & Quality
+- **Smart Consolidation**: 
+    - Enhanced `smart_consolidate_colors.py` with an expanded color list (including "Ultramarine", "Desert", "Sage").
+    - Improved name cleaning logic to strip trailing dashes and aggressively remove colors from the start of names (fixing "Silver iMac" splitting).
+    - Mac products are now grouped by Price + Specs, ensuring identical configurations with different colors are merged into single rows.
+- **Data Sanitization**: Updated `convert_to_json.py` to replace `NaN` values with empty strings, preventing invalid JSON output that previously crashed the frontend.
+- **Correct Naming**: Implemented logic in `airpods.py` to map internal IDs (like `airpodspro`) to their true marketing titles ("AirPods Pro 3") by parsing page titles.
+
+### Frontend & Build
+- **Mac Specs Display**: Refactored `src/main.js` to elegantly display technical specifications (Chip, CPU/GPU, Memory, Storage) directly under the product name for Mac items, removing the need for empty/sparse columns.
+- **Local Development**: Configured `vite.config.js` to support dynamic base URLs, allowing the site to be served locally (`python3 -m http.server`) without path errors.
+
 ## Future Considerations
 
 ### Scalability
@@ -75,7 +93,6 @@
 - Monitor for breaking changes in dependencies
 
 ## Knowledge Gaps
-- Mac product scraping implementation details
-- Performance optimization opportunities
+- Performance optimization opportunities for large-scale scrapes
 - Advanced filtering/sorting requirements
 - Historical data tracking needs

@@ -146,59 +146,77 @@ def extract_enhanced_product_specs(soup):
     return spec_variants
 
 def match_products_with_specs(products, spec_variants):
-    """Match JSON products with extracted specifications based on price/position"""
+    """Match JSON products with extracted specifications based on price tiers"""
     
     if not spec_variants:
-        # Return products without specs if no specs found
-        return [{
-            **product,
-            'specs': {
-                'chip': '',
-                'cpu_cores': '',
-                'gpu_cores': '',
-                'neural_engine': '',
-                'memory': '',
-                'storage': ''
-            }
-        } for product in products]
+        return [{**p, 'specs': {
+            'chip': '', 'cpu_cores': '', 'gpu_cores': '', 
+            'neural_engine': '', 'memory': '', 'storage': ''
+        }} for p in products]
     
-    # Sort products by price to help with matching
-    sorted_products = sorted(products, key=lambda x: x.get('price', {}).get('fullPrice', 0))
+    # 1. Group products by price
+    products_by_price = {}
+    for p in products:
+        price = p.get('price', {}).get('fullPrice', 0)
+        if price not in products_by_price:
+            products_by_price[price] = []
+        products_by_price[price].append(p)
+        
+    # 2. Sort price tiers
+    sorted_prices = sorted(products_by_price.keys())
     
-    # Sort specs by storage size (smaller storage usually means lower price)
-    def storage_sort_key(specs):
-        storage = specs.get('storage', '0GB')
-        if 'TB' in storage:
-            return int(re.search(r'(\d+)', storage).group(1)) * 1000
-        elif 'GB' in storage:
-            return int(re.search(r'(\d+)', storage).group(1))
-        return 0
+    # 3. Sort specs by "value" (Storage > Memory > CPU > GPU)
+    def spec_sort_key(specs):
+        # Extract numeric values for sorting
+        def get_num(text, unit=''):
+            if not text: return 0
+            
+            # Handle split only if unit is provided
+            source_text = text
+            if unit:
+                parts = text.split(unit)
+                if parts:
+                    source_text = parts[0]
+            
+            # Remove non-numeric
+            clean = re.sub(r'[^\d]', '', source_text)
+            return int(clean) if clean else 0
+            
+        storage = get_num(specs.get('storage', ''), 'GB')
+        if 'TB' in specs.get('storage', ''): storage *= 1000
+        
+        memory = get_num(specs.get('memory', ''))
+        cpu = get_num(specs.get('cpu_cores', ''))
+        
+        return (storage, memory, cpu)
     
-    sorted_specs = sorted(spec_variants, key=storage_sort_key)
+    sorted_specs = sorted(spec_variants, key=spec_sort_key)
     
+    # 4. Assign specs to price tiers
     matched_products = []
     
-    # Strategy: Use a round-robin approach to distribute specs across products
-    for i, product in enumerate(sorted_products):
-        if sorted_specs:
-            # Use modulo to cycle through available specs
-            spec_index = i % len(sorted_specs)
-            assigned_specs = sorted_specs[spec_index]
-        else:
-            assigned_specs = {
-                'chip': '',
-                'cpu_cores': '',
-                'gpu_cores': '',
-                'neural_engine': '',
-                'memory': '',
-                'storage': ''
-            }
-        
-        matched_products.append({
-            **product,
-            'specs': assigned_specs
-        })
+    # If we have mismatch in counts, we try our best to align
+    # Usually: Lowest Price -> Lowest Spec
     
+    for i, price in enumerate(sorted_prices):
+        products_in_tier = products_by_price[price]
+        
+        # Find matching spec
+        # If we have enough specs, take the ith one.
+        # If not, reuse the last one (for highest tiers) or map proportionally.
+        if i < len(sorted_specs):
+            assigned_specs = sorted_specs[i]
+        else:
+            # Fallback: use the highest spec for remaining high price tiers
+            assigned_specs = sorted_specs[-1]
+            
+        # Assign this spec to ALL products in this price tier
+        for product in products_in_tier:
+            matched_products.append({
+                **product,
+                'specs': assigned_specs
+            })
+            
     return matched_products
 
 def get_available_models(region_code=""):

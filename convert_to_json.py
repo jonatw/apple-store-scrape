@@ -176,6 +176,10 @@ def csv_to_json(csv_file, json_file, product_type, exchange_rates):
             print(f"Warning: {csv_file} contains no data")
             return False
             
+        # Sanitize data: Replace NaN with empty string or None
+        # This prevents invalid JSON "NaN" values which break browser parsing
+        df = df.fillna('')
+            
         # Identify region columns (assuming format Price_XX)
         price_cols = [col for col in df.columns if col.startswith('Price_')]
         regions = [col.replace('Price_', '') for col in price_cols]

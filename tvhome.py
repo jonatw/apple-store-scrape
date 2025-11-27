@@ -38,22 +38,16 @@ def debug_print(message):
 def get_available_models(region_code=""):
     """
     Get available Apple TV and Home products by analyzing the main TV/Home pages
-    
-    Parameters:
-    region_code (str): Region code, e.g., "tw" for Taiwan, "" for US
-    
-    Returns:
-    dict: Dictionary with product categories and their models
     """
     region_prefix = f"/{region_code}" if region_code else ""
     
     # URLs to check for TV and Home products
-    tv_url = f"https://www.apple.com{region_prefix}/tv-home"
+    tv_url = f"https://www.apple.com{region_prefix}/tv-home/"
     
-    # Default models based on current Apple lineup (use underscore format for URLs)
+    # Default models based on current Apple lineup
     default_models = {
-        'tv': ['apple_tv_4k'],
-        'homepod': ['homepod', 'homepod_mini']
+        'tv': ['apple-tv-4k'],
+        'homepod': ['homepod', 'homepod-mini']
     }
     
     found_models = {'tv': [], 'homepod': []}
@@ -64,23 +58,28 @@ def get_available_models(region_code=""):
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'html.parser')
             
-            # Look for product links with correct goto patterns
             for link in soup.find_all('a', href=True):
                 href = link.get('href')
                 
-                # Check for buy links (correct Apple URL structure)
+                # Check for buy links
                 if '/shop/goto/buy_tv/' in href:
-                    model = href.split('buy_tv/')[1].split('?')[0].split('#')[0]
-                    found_models['tv'].append(model)
+                    parts = href.split('buy_tv/')
+                    if len(parts) > 1:
+                        model_raw = parts[1].split('?')[0].split('#')[0]
+                        model = model_raw.replace('_', '-')
+                        if model: found_models['tv'].append(model)
                 
                 elif '/shop/goto/buy_homepod/' in href:
-                    model = href.split('buy_homepod/')[1].split('?')[0].split('#')[0]
-                    found_models['homepod'].append(model)
+                    parts = href.split('buy_homepod/')
+                    if len(parts) > 1:
+                        model_raw = parts[1].split('?')[0].split('#')[0]
+                        model = model_raw.replace('_', '-')
+                        if model: found_models['homepod'].append(model)
                     
     except Exception as e:
         debug_print(f"Error accessing {tv_url}: {e}")
     
-    # Clean up and remove duplicates
+    # Clean up and fallback
     for category in found_models:
         found_models[category] = list(set(found_models[category]))
         if not found_models[category]:
@@ -93,21 +92,10 @@ def get_available_models(region_code=""):
 
 def extract_product_details(url, region_code=""):
     """
-    Extract product details from Apple store page using the same method as working scrapers
-    
-    Parameters:
-    url (str): Product page URL
-    region_code (str): Region code
-    
-    Returns:
-    list: List of product details
+    Extract product details from Apple store page using robust dual-strategy
     """
-    # Rate limiting
     time.sleep(REQUEST_DELAY)
-    
-    # Get region display name
     region_display = REGIONS.get(region_code, ["Unknown"])[0]
-    
     debug_print(f"Fetching products from {url} for region {region_display}")
     
     try:
@@ -116,41 +104,116 @@ def extract_product_details(url, region_code=""):
             debug_print(f"Failed to retrieve {url}. Status code: {response.status_code}")
             return []
         
-        # Parse the HTML content
         soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # Search for the script with type "application/json" and id "metrics" (same as working scrapers)
-        json_script = soup.find('script', {'type': 'application/json', 'id': 'metrics'})
-        if not json_script:
-            debug_print(f"No matching script found in {url}")
-            return []
-        
-        # Parse JSON content
-        json_data = json.loads(json_script.string)
-        data = json_data.get('data', {})
-        products = data.get('products', [])
-        
-        debug_print(f"Found {len(products)} products for region {region_display}")
-        
-        # Extract relevant product details (same format as iPhone/iPad scrapers)
         product_details = []
-        for product in products:
-            sku = product.get("sku")
-            name = product.get("name", "")
-            price = product.get("price", {}).get("fullPrice")
-            part_number = product.get("partNumber", "")
-            
-            product_details.append({
-                "SKU": sku,
-                "Name": name,
-                "Price": price,
-                "Region": region_display,
-                "Region_Code": region_code,
-                "PartNumber": part_number
-            })
-            
-        return product_details
         
+        # Strategy 1: Metrics JSON
+        json_script = soup.find('script', {'type': 'application/json', 'id': 'metrics'})
+        if json_script:
+            try:
+                json_data = json.loads(json_script.string)
+                data = json_data.get('data', {})
+                products = data.get('products', [])
+                
+                if products:
+                    debug_print(f"Found {len(products)} products via metrics for region {region_display}")
+                    for product in products:
+                        sku = product.get("sku")
+                        name = product.get("name", "")
+                        price = product.get("price", {}).get("fullPrice")
+                        part_number = product.get("partNumber", "")
+                        
+                        base_sku = sku
+                        if part_number:
+                             base_sku = re.sub(r'[A-Z]{2}/[A-Z]$', '', part_number)
+                             base_sku = re.sub(r'/[A-Z]$', '', base_sku)
+                        
+                        product_details.append({
+                            "SKU": base_sku,
+                            "OriginalSKU": sku or part_number,
+                            "Name": name,
+                            "Price": price,
+                            "Region": region_display,
+                            "Region_Code": region_code,
+                            "PartNumber": part_number
+                        })
+                    return product_details
+            except Exception as e:
+                debug_print(f"Error parsing metrics JSON: {e}")
+
+        # Strategy 2: PRODUCT_SELECTION_BOOTSTRAP
+        debug_print("Metrics strategy failed or found no products, trying PRODUCT_SELECTION_BOOTSTRAP")
+        
+        script_content = None
+        for script in soup.find_all('script'):
+            if script.string and 'window.PRODUCT_SELECTION_BOOTSTRAP' in script.string:
+                script_content = script.string
+                break
+        
+        if script_content:
+            try:
+                key_index = script_content.find('productSelectionData:')
+                if key_index != -1:
+                    start_index = script_content.find('{', key_index)
+                    if start_index != -1:
+                        brace_count = 0
+                        json_str = ""
+                        for i in range(start_index, len(script_content)):
+                            char = script_content[i]
+                            if char == '{': brace_count += 1
+                            elif char == '}': brace_count -= 1
+                            json_str += char
+                            if brace_count == 0: break
+                        
+                        if json_str:
+                            bootstrap_data = json.loads(json_str)
+                            products = bootstrap_data.get('products', [])
+                            display_values = bootstrap_data.get('displayValues', {})
+                            prices_map = display_values.get('prices', {})
+                            
+                            if products:
+                                debug_print(f"Found {len(products)} products via bootstrap for region {region_display}")
+                                for product in products:
+                                    part_number = product.get('partNumber')
+                                    base_part_number = product.get('basePartNumber')
+                                    
+                                    price_key = product.get('fullPrice') or product.get('price')
+                                    price_info = prices_map.get(price_key, {})
+                                    
+                                    price_val = None
+                                    curr_price = price_info.get('currentPrice', {})
+                                    if curr_price:
+                                        raw_amount = curr_price.get('raw_amount')
+                                        if raw_amount:
+                                            try:
+                                                price_val = float(raw_amount.replace(',', ''))
+                                            except:
+                                                pass
+                                    
+                                    name = product.get('familyType', '')
+                                    if not name:
+                                        name = soup.find('title').text.split('-')[0].strip() if soup.find('title') else "Unknown Product"
+                                    
+                                    base_sku = base_part_number
+                                    if not base_sku and part_number:
+                                         base_sku = re.sub(r'[A-Z]{2}/[A-Z]$', '', part_number)
+                                         base_sku = re.sub(r'/[A-Z]$', '', base_sku)
+                                    
+                                    product_details.append({
+                                        "SKU": base_sku,
+                                        "OriginalSKU": part_number,
+                                        "Name": name,
+                                        "Price": price_val,
+                                        "Region": region_display,
+                                        "Region_Code": region_code,
+                                        "PartNumber": part_number
+                                    })
+                                return product_details
+            except Exception as e:
+                debug_print(f"Error parsing bootstrap JSON: {e}")
+
+        return product_details
+
     except Exception as e:
         debug_print(f"Error extracting products from {url}: {e}")
         return []
@@ -158,34 +221,27 @@ def extract_product_details(url, region_code=""):
 def get_all_products():
     """
     Get all Apple TV and Home products from all regions
-    
-    Returns:
-    list: List of all products from all regions
     """
-    # Use known working models with correct URL format
-    tv_models = ["apple-tv-4k"]
-    homepod_models = ["homepod", "homepod-mini"]
+    models_dict = {'tv': set(), 'homepod': set()}
+    for region_code in REGIONS.keys():
+        found = get_available_models(region_code)
+        models_dict['tv'].update(found['tv'])
+        models_dict['homepod'].update(found['homepod'])
     
-    debug_print(f"Using known TV models: {', '.join(tv_models)}")
-    debug_print(f"Using known HomePod models: {', '.join(homepod_models)}")
-    
-    # Fetch products for each model from each region using correct URL patterns
     all_products = []
     
     # Process TV products
-    for model in tv_models:
+    for model in models_dict['tv']:
         for region_code in REGIONS.keys():
             region_prefix = f"/{region_code}" if region_code else ""
-            # Use the correct final URL pattern (not goto redirect)
             url = f"https://www.apple.com{region_prefix}/shop/buy-tv/{model}"
             products = extract_product_details(url, region_code)
             all_products.extend(products)
     
     # Process HomePod products
-    for model in homepod_models:
+    for model in models_dict['homepod']:
         for region_code in REGIONS.keys():
             region_prefix = f"/{region_code}" if region_code else ""
-            # Use the correct final URL pattern (not goto redirect)
             url = f"https://www.apple.com{region_prefix}/shop/buy-homepod/{model}"
             products = extract_product_details(url, region_code)
             all_products.extend(products)
@@ -194,124 +250,64 @@ def get_all_products():
 
 def merge_product_data(product_data):
     """
-    Merge product data from all regions using SKU-based matching (same as iPad scraper)
-    
-    Parameters:
-    product_data (list): List of product data from all regions
-    
-    Returns:
-    pandas.DataFrame: Merged product data
+    Merge product data from all regions using SKU-based matching
     """
-    # Convert to DataFrame
     df = pd.DataFrame(product_data)
-    
     if df.empty:
         debug_print("No product data to merge!")
         return pd.DataFrame()
     
-    # Create separate DataFrames for each region
     region_dfs = {}
     for region_code, region_info in REGIONS.items():
         region_display = region_info[0]
         region_data = df[df['Region_Code'] == region_code].copy()
-        
-        # Ensure uniqueness of SKUs
         region_data = region_data.drop_duplicates(subset='SKU')
         
-        # Rename columns to include region
         region_data.rename(columns={
             'Price': f'Price_{region_display}',
             'Name': f'Name_{region_display}',
             'PartNumber': f'PartNumber_{region_display}'
         }, inplace=True)
-        
-        # Store for merging
         region_dfs[region_code] = region_data
     
-    # Start with the reference region
     ref_region = REFERENCE_REGION
     ref_display = REGIONS[ref_region][0]
     
     if ref_region not in region_dfs:
-        debug_print(f"Reference region {ref_display} not found in data!")
         return pd.DataFrame()
     
-    # Get the base dataframe
     merged_df = region_dfs[ref_region][['SKU', f'Price_{ref_display}', f'Name_{ref_display}']].copy()
     
-    # Merge with other regions using SKU as the key
     for region_code, region_df in region_dfs.items():
-        if region_code == ref_region:
-            continue
+        if region_code == ref_region: continue
         
         region_display = REGIONS[region_code][0]
-        
-        # Select columns to merge
         columns_to_merge = ['SKU', f'Price_{region_display}', f'Name_{region_display}']
-            
-        merged_df = pd.merge(
-            merged_df, 
-            region_df[columns_to_merge], 
-            on='SKU', 
-            how='outer'
-        )
+        merged_df = pd.merge(merged_df, region_df[columns_to_merge], on='SKU', how='outer')
     
-    # Fill missing values
     for region_code, region_info in REGIONS.items():
         region_display = region_info[0]
         merged_df[f'Price_{region_display}'] = merged_df[f'Price_{region_display}'].fillna(0)
         merged_df[f'Name_{region_display}'] = merged_df[f'Name_{region_display}'].fillna('')
     
-    # Create final output dataframe with columns in the desired order:
-    # 1. SKU (common for all regions, so no need for region prefix)
-    # 2. Price columns for each region 
-    # 3. Product name from reference region
-    
-    # Prepare the price columns
-    price_columns = []
-    
-    for region_code, region_info in REGIONS.items():
-        region_display = region_info[0]
-        price_columns.append(f'Price_{region_display}')
-    
-    # Create the output dataframe with columns in the specified order
+    price_columns = [f'Price_{info[0]}' for code, info in REGIONS.items()]
     output_columns = ['SKU'] + price_columns + [f'Name_{ref_display}']
     output_df = merged_df[output_columns].copy()
-    
-    # Rename the product name column
     output_df = output_df.rename(columns={f'Name_{ref_display}': 'PRODUCT_NAME'})
     
     return output_df
 
 def main():
-    """Main execution function"""
     print("Starting Apple TV and Home product scraper...")
     print(f"Configured regions: {', '.join([info[0] for info in REGIONS.values()])}")
-    
-    # Get all products from all regions
     all_products = get_all_products()
-    
-    # Merge product data
     merged_data = merge_product_data(all_products)
-    
-    # Display results
     print("\nResults:")
     print(merged_data)
-    
-    # Save to CSV
     output_file = 'tvhome_products_merged.csv'
     merged_data.to_csv(output_file, index=False, encoding='utf-8-sig')
     print(f"\nSaved results to {output_file}")
-    
-    # Display stats
     print(f"\nTotal unique products found: {len(merged_data)}")
-    for region_code, region_info in REGIONS.items():
-        region_display = region_info[0]
-        price_col = f'Price_{region_display}'
-        
-        if price_col in merged_data.columns:
-            non_zero_prices = (merged_data[price_col] > 0).sum()
-            print(f"Products found in {region_display}: {non_zero_prices}")
 
 if __name__ == "__main__":
     main()

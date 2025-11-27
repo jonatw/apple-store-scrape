@@ -16,6 +16,7 @@ import time
 import iphone
 import ipad
 import mac
+import airpods
 import convert_to_json
 
 class TestScraperDataIntegrity(unittest.TestCase):
@@ -45,7 +46,7 @@ class TestScraperDataIntegrity(unittest.TestCase):
     
     def test_scraper_configuration_consistency(self):
         """Test that all scrapers have consistent region configuration"""
-        scrapers = [iphone, ipad, mac]
+        scrapers = [iphone, ipad, mac, airpods]
         
         for scraper in scrapers:
             with self.subTest(scraper=scraper.__name__):
@@ -67,7 +68,7 @@ class TestScraperFunctions(unittest.TestCase):
     
     def test_debug_print_functions(self):
         """Test debug print functions work correctly"""
-        scrapers = [iphone, ipad, mac]
+        scrapers = [iphone, ipad, mac, airpods]
         
         for scraper in scrapers:
             with self.subTest(scraper=scraper.__name__):
@@ -93,7 +94,8 @@ class TestScraperFunctions(unittest.TestCase):
         scrapers_and_defaults = [
             (iphone, ["iphone-16-pro", "iphone-16", "iphone-16e", "iphone-15"]),
             (ipad, ["ipad-pro", "ipad-air", "ipad", "ipad-mini"]),
-            (mac, ["mac-mini", "imac", "mac-studio"])  # Updated to match current default models
+            (mac, ["mac-mini", "imac", "mac-studio"]),
+            (airpods, ["airpods-4", "airpods-pro-2", "airpods-max"])
         ]
         
         for scraper, expected_defaults in scrapers_and_defaults:
@@ -163,10 +165,19 @@ class TestDataValidation(unittest.TestCase):
                 expected_columns = ['SKU', 'Price_US', 'Price_TW', 'PRODUCT_NAME']
                 for col in expected_columns:
                     self.assertIn(col, result.columns)
+        
+        # Test AirPods merger (SKU matching)
+        with patch.object(airpods, 'REGIONS', {"": ["US", "USD", "en-us", "$"], "tw": ["TW", "TWD", "zh-tw", "NT$"]}):
+            result = airpods.merge_product_data(self.sample_product_data)
+            
+            if not result.empty:
+                expected_columns = ['SKU', 'Price_US', 'Price_TW', 'PRODUCT_NAME']
+                for col in expected_columns:
+                    self.assertIn(col, result.columns)
     
     def test_price_data_types(self):
         """Test that prices are numeric and valid"""
-        scrapers = [ipad, mac]  # SKU-based scrapers
+        scrapers = [ipad, mac, airpods]  # SKU-based scrapers
         
         for scraper in scrapers:
             with self.subTest(scraper=scraper.__name__):
@@ -190,7 +201,8 @@ class TestEndToEndIntegration(unittest.TestCase):
         scrapers = [
             (iphone, "iphone-16"),
             (ipad, "ipad"),
-            (mac, "mac-mini")
+            (mac, "mac-mini"),
+            (airpods, "airpods-pro-2")
         ]
         
         for scraper, test_model in scrapers:
@@ -199,6 +211,8 @@ class TestEndToEndIntegration(unittest.TestCase):
                 url = f"https://www.apple.com/shop/buy-{scraper.__name__}/{test_model}"
                 if scraper.__name__ == 'mac':
                     url = f"https://www.apple.com/shop/buy-mac/{test_model}"
+                elif scraper.__name__ == 'airpods':
+                     url = f"https://www.apple.com/shop/buy-airpods/{test_model}"
                 
                 try:
                     products = scraper.extract_product_details(url, "")

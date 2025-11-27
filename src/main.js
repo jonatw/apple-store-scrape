@@ -403,7 +403,21 @@ async function loadProductData(product) {
 // Render product table
 function renderProductTable(products) {
   const tableBody = document.querySelector('#products-table tbody');
+  const tableHead = document.querySelector('#products-table thead tr');
+  
   tableBody.innerHTML = '';
+  
+  // Headers (Unified for all products now)
+  let headersHTML = `
+    <th>Product Name</th>
+    <th>US Price (USD)</th>
+    <th>US+Fee (TWD)</th>
+    <th>Taiwan Price (TWD)</th>
+    <th>Diff. (%)</th>
+    <th>Recommended</th>
+  `;
+  
+  tableHead.innerHTML = headersHTML;
   
   if (!products || products.length === 0) {
     tableBody.innerHTML = `
@@ -441,8 +455,32 @@ function renderProductTable(products) {
       recommendation = '<span class="badge bg-info">Similar</span>';
     }
     
+    // Construct Product Name with Specs (if Mac)
+    let productNameDisplay = product.PRODUCT_NAME;
+    
+    if (currentProduct === 'mac') {
+        const specs = [];
+        if (product.Chip) specs.push(product.Chip);
+        if (product.Memory) specs.push(product.Memory);
+        if (product.Storage) specs.push(product.Storage);
+        
+        // Optional: Add core counts if available
+        if (product.CPU_Cores && product.GPU_Cores) {
+             specs.push(`${product.CPU_Cores}C CPU / ${product.GPU_Cores}C GPU`);
+        }
+        
+        if (specs.length > 0) {
+            productNameDisplay += `<br><small class="text-muted">${specs.join(' • ')}</small>`;
+        }
+    }
+    
+    // Add Available Colors if consolidated
+    if (product.Available_Colors && product.Available_Colors !== 'Single Option') {
+         productNameDisplay += `<br><small class="text-muted"><i class="fas fa-palette me-1"></i>${product.Available_Colors}</small>`;
+    }
+    
     row.innerHTML = `
-      <td>${product.PRODUCT_NAME}</td>
+      <td>${productNameDisplay}</td>
       <td>${formatCurrency(usdPrice, 'USD')}</td>
       <td>${formatCurrency(usdWithFeeTWD, 'TWD')}</td>
       <td>${formatCurrency(twdPrice, 'TWD')}</td>
