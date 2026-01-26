@@ -121,7 +121,8 @@ def extract_core_pattern(product_name: str, debug: bool = False) -> str:
     name = str(product_name).strip()
     
     # Remove color suffixes (most common pattern: " - Color")
-    name = re.sub(r'\s*-\s*(Silver|Space Black|Gold|Rose Gold|Pink|Blue|Green|Purple|Red|Yellow|Orange|Black|White|Gray|Grey|Midnight|Starlight|Natural|Graphite|Product Red|Teal|Ultramarine)(\s|$)', '', name, flags=re.IGNORECASE)
+    color_regex_pattern = r'\s*-\s*(Silver|Space Black|Gold|Rose Gold|Pink|Blue|Green|Purple|Red|Yellow|Orange|Black|White|Gray|Grey|Midnight|Starlight|Natural|Graphite|Product Red|Teal|Ultramarine|Lavender|Mist|Sage|Frost|Dusk|Coral|Amber|Titanium|Bronze|Copper|Chrome|Pearl|Ivory)(\s|$)'
+    name = re.sub(color_regex_pattern, '', name, flags=re.IGNORECASE)
     
     # Remove standalone color words (including at beginning for Mac products)
     color_words = [
@@ -129,7 +130,11 @@ def extract_core_pattern(product_name: str, debug: bool = False) -> str:
         'purple', 'red', 'yellow', 'orange', 'midnight', 'starlight', 'natural', 
         'graphite', 'cosmic orange', 'deep blue', 'light gold', 'cloud white', 
         'space black', 'sky blue', 'rose gold', 'product red', 'jet black',
-        'space gray', 'alpine green', 'sierra blue', 'teal', 'ultramarine'
+        'space gray', 'alpine green', 'sierra blue', 'teal', 'ultramarine',
+        # New iPhone 17 colors and future-proofing
+        'lavender', 'mist', 'sage', 'frost', 'dusk', 'coral', 'amber',
+        'titanium', 'bronze', 'copper', 'chrome', 'pearl', 'ivory',
+        'desert', 'ocean', 'forest', 'sunset', 'neon', 'electric'
     ]
     
     # Sort by length (longest first) to handle "Space Black" before "Black"
@@ -190,43 +195,95 @@ def should_consolidate_group(group: pd.DataFrame,
 
 def select_best_product_name(names: List[str], debug: bool = False) -> str:
     """
-    Select the best representative name from a group
+    Select the best representative name from a group and remove color variants
     
     Criteria:
-    1. Shortest name (least cluttered)
-    2. No color suffixes
-    3. Standard capitalization
+    1. Remove color keywords from all names
+    2. Select the most common cleaned name
+    3. Handle edge cases properly
     """
     if not names:
         return ""
     
     if len(names) == 1:
-        return names[0]
+        # Even single names need color cleaning
+        return remove_color_from_name(names[0])
     
-    # Score each name (lower is better)
-    scored_names = []
+    # Clean all names by removing color keywords
+    cleaned_names = []
     for name in names:
-        score = 0
-        
-        # Prefer shorter names
-        score += len(name)
-        
-        # Penalize names with color indicators
-        color_indicators = ['-', 'silver', 'black', 'gold', 'space', 'midnight']
-        for indicator in color_indicators:
-            if indicator.lower() in name.lower():
-                score += 50
-        
-        scored_names.append((score, name))
+        cleaned = remove_color_from_name(name)
+        cleaned_names.append(cleaned)
     
-    # Sort by score and pick the best
-    scored_names.sort(key=lambda x: x[0])
-    best_name = scored_names[0][1]
+    if debug:
+        print(f"    Original names: {names}")
+        print(f"    Cleaned names: {cleaned_names}")
+    
+    # Pick the most common cleaned name (or first if all unique)
+    from collections import Counter
+    name_counts = Counter(cleaned_names)
+    most_common = name_counts.most_common(1)[0][0]
+    best_name = most_common
     
     if debug:
         print(f"    Best name selected: '{best_name}' from {len(names)} options")
     
     return best_name
+
+
+def remove_color_from_name(name: str) -> str:
+    """
+    Remove color keywords from product name
+    
+    This is the core function that actually cleans color variants
+    """
+    if not name or pd.isna(name):
+        return ""
+    
+    # Comprehensive color keyword list
+    color_keywords = [
+        # Standard colors
+        'pink', 'teal', 'ultramarine', 'silver', 'space black', 'gold', 
+        'midnight', 'starlight', 'blue', 'green', 'purple', 'red', 'white',
+        'black', 'yellow', 'orange', 'natural', 'graphite', 'rose gold',
+        'sky blue', 'cosmic orange', 'deep blue', 'light gold', 'space',
+        'sierra blue', 'alpine green', 'pacific blue', 'product red',
+        # New color variants (found in iPhone 17)
+        'lavender', 'mist', 'sage', 'frost', 'dusk', 'coral', 'amber',
+        'titanium', 'bronze', 'copper', 'chrome', 'pearl', 'ivory',
+        # Apple-specific colors
+        'desert', 'ocean', 'forest', 'sunset', 'rainbow', 'neon',
+        'electric', 'metallic', 'ceramic', 'leather',
+        # Chinese colors (if any)
+        '粉紅色', '藍綠色', '深藍色', '銀色', '太空黑色', '金色', 
+        '午夜色', '星光色', '紫色', '綠色', '紅色', '白色', '黑色',
+        # Special patterns
+        'space black', 'rose gold', 'jet black', 'matte black',
+        # Color adjectives  
+        'dark', 'light', 'deep', 'bright', 'pale', 'soft', 'warm', 'cool'
+    ]
+    
+    # Clean the name
+    clean_name = name.strip()
+    
+    # Remove color keywords (case insensitive)
+    import re
+    for color in color_keywords:
+        # Remove standalone color words (with word boundaries)
+        pattern = r'\b' + re.escape(color) + r'\b'
+        clean_name = re.sub(pattern, '', clean_name, flags=re.IGNORECASE)
+    
+    # Clean up extra spaces and formatting
+    clean_name = re.sub(r'\s+', ' ', clean_name)  # Multiple spaces → single space
+    clean_name = re.sub(r'\s*-\s*$', '', clean_name)  # Trailing dash
+    clean_name = re.sub(r'^\s*-\s*', '', clean_name)  # Leading dash
+    clean_name = clean_name.strip()
+    
+    # If we accidentally removed everything, return original
+    if not clean_name:
+        return name
+        
+    return clean_name
 
 def fix_ipad_consolidation():
     """Apply robust consolidation to current iPad data"""
