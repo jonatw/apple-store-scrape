@@ -27,20 +27,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       
-      - name: Run scrapers
+      - name: Run All Apple Product Scrapers  
         run: |
-          python iphone.py
-          python ipad.py
-          python mac.py
-          python watch.py
-          python airpods.py
+          python apple_scraper_manager.py run-all --parallel --timeout 25
           python tvhome.py
-      
-      - name: Consolidate product data by removing color duplicates
-        run: |
-          python smart_consolidate_colors.py
-          echo "Consolidated files created:"
-          ls -la *_consolidated.csv
       
       - name: Convert data to JSON and fetch exchange rate
         run: |

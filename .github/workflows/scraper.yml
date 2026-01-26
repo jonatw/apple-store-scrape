@@ -25,6 +25,12 @@ jobs:
       - name: Run All Apple Product Scrapers
         run: python apple_scraper_manager.py run-all --parallel --timeout 25
 
+      - name: Convert CSV to JSON for Web Display
+        run: python convert_to_json.py
+
+      - name: List Generated Files (Debug)
+        run: ls -la *.csv *.json *.png || echo "No files generated"
+
       - name: Upload Results
         if: success()
         uses: actions/upload-artifact@v4
@@ -32,4 +38,6 @@ jobs:
           name: apple-products-comparison
           path: |
             *_products_merged.csv
+            *_data.json
             price_diff.png
+            index.json
