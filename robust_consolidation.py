@@ -70,8 +70,11 @@ def robust_consolidate_colors(df: pd.DataFrame,
         
         if len(group) == 1:
             if debug:
-                print(f"  ✅ Single product, keeping as-is")
-            consolidated_rows.extend(group.to_dict('records'))
+                print(f"  ✅ Single product, cleaning name")
+            # Even for single products, clean the name
+            cleaned = group.iloc[0].copy()
+            cleaned[product_name_col] = pattern  # Use the clean pattern as the name
+            consolidated_rows.append(cleaned.to_dict())
         else:
             # Multiple products with same core pattern
             if should_consolidate_group(group, price_tolerance, debug):
