@@ -337,7 +337,10 @@ def consolidate_similar_colors(df, price_tolerance=0.02):
             name_lower = re.sub(pattern, ' ', name_lower, flags=re.IGNORECASE)
         
         # Clean up base name
-        base_name = re.sub(r'\s+', ' ', name_lower).strip().title()
+        base_name = re.sub(r"\s+", " ", name_lower).strip()  # Normalize spaces
+        base_name = re.sub(r"\s*-\s*$", "", base_name)       # Remove trailing " - " or " -" or "- "
+        base_name = re.sub(r"\s*-\s+$", "", base_name)       # Remove trailing "- "
+        base_name = base_name.strip().title()               # Final cleanup and title case
         return base_name, list(set(found_colors))
     
     # Add base name and color extraction
