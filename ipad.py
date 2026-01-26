@@ -374,6 +374,9 @@ def merge_product_data(product_data):
 # ==================== MAIN EXECUTION ====================
 
 def consolidate_similar_colors(df, price_tolerance=0.02):
+    """ROBUST color consolidation - bulletproof version"""
+    from robust_consolidation import robust_consolidate_colors
+    return robust_consolidate_colors(df, price_tolerance, debug=False)
     """
     Consolidate iPad products with same specs but different colors
     Removes color information completely for clean model-only output
