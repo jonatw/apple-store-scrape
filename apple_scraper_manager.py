@@ -58,14 +58,26 @@ class AppleScraperManager:
         """Check if all required dependencies are installed"""
         try:
             import pandas as pd
-            import matplotlib.pyplot as plt
-            import seaborn as sns
             import requests
             from bs4 import BeautifulSoup
-            print("✅ All dependencies available")
+            print("✅ Core dependencies available")
+            
+            # Optional dependencies for plotting (not required for core functionality)
+            optional_deps = []
+            try:
+                import matplotlib.pyplot as plt
+                import seaborn as sns
+                optional_deps.append("plotting")
+            except ImportError:
+                pass
+            
+            if optional_deps:
+                print(f"✅ Optional dependencies: {', '.join(optional_deps)}")
+            
             return True
         except ImportError as e:
-            print(f"❌ Missing dependency: {e}")
+            print(f"❌ Missing required dependency: {e}")
+            print("❌ Please install: pip install requests beautifulsoup4 pandas")
             return False
     
     def run_single_scraper(self, product_line, timeout_minutes=30):
