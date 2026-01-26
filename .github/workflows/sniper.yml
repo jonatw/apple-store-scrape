@@ -24,7 +24,7 @@ jobs:
           pip install playwright pytest-playwright
 
       - name: Install Playwright Browsers
-        run: playwright install chromium
+        run: playwright install firefox
 
       - name: Run Sniper
         run: python sniper.py
