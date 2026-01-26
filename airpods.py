@@ -397,6 +397,108 @@ def merge_product_data(product_data):
     
     return output_df
 
+def consolidate_similar_colors(df, price_tolerance=0.02):
+    """
+    Consolidate AirPods products with same specs but different colors when prices are similar
+    Removes color information completely for clean model-only output
+    """
+    if df.empty:
+        return df
+    
+    # Find the product name column (could be different naming)
+    product_name_col = None
+    for col in df.columns:
+        if 'Name_' in col or col == 'PRODUCT_NAME':
+            product_name_col = col
+            break
+    
+    if not product_name_col:
+        debug_print("No product name column found, skipping consolidation")
+        return df
+    
+    # AirPods-specific color patterns
+    color_patterns = [
+        r'\b(space\s+gray|rose\s+gold|sky\s+blue|pink|blue|green|midnight|starlight)\b',
+        r'\b(black|white|silver|gold|gray|grey|red|purple|orange)\b',
+        r'\b(natural|graphite|jet\s+black|product\s+red)\b'
+    ]
+    
+    def extract_base_name_and_colors(product_name):
+        """Extract base model name and colors separately"""
+        if not product_name:
+            return product_name, []
+        
+        name_lower = product_name.lower()
+        found_colors = []
+        
+        # Extract colors (longest patterns first)
+        for pattern in color_patterns:
+            matches = re.findall(pattern, name_lower, re.IGNORECASE)
+            found_colors.extend([m.strip().title() if isinstance(m, str) else ' '.join(m).strip().title() for m in matches])
+            # Remove found colors from name
+            name_lower = re.sub(pattern, ' ', name_lower, flags=re.IGNORECASE)
+        
+        # Clean up base name
+        base_name = re.sub(r'\s+', ' ', name_lower).strip().title()
+        return base_name, list(set(found_colors))
+    
+    # Add base name and color extraction
+    df_copy = df.copy()
+    df_copy['Base_Name'] = ''
+    df_copy['Colors'] = None  # Use None instead of empty string for lists
+    
+    base_names = []
+    colors_list = []
+    
+    for idx, row in df_copy.iterrows():
+        base_name, colors = extract_base_name_and_colors(row[product_name_col])
+        base_names.append(base_name)
+        colors_list.append(colors)
+    
+    df_copy['Base_Name'] = base_names
+    df_copy['Colors'] = colors_list
+    
+    # Group by base name and check if consolidation is appropriate
+    consolidated_rows = []
+    
+    for base_name, group in df_copy.groupby('Base_Name'):
+        if len(group) <= 1:
+            # Single variant, keep as is
+            for _, row in group.iterrows():
+                consolidated_rows.append(row)
+        else:
+            # Multiple variants - check if prices are similar
+            price_cols = [col for col in group.columns if col.startswith('Price_')]
+            
+            should_consolidate = True
+            for price_col in price_cols:
+                prices = group[price_col].dropna()
+                if len(prices) > 1:
+                    price_range = max(prices) - min(prices)
+                    avg_price = sum(prices) / len(prices)
+                    if avg_price > 0 and price_range / avg_price > price_tolerance:
+                        should_consolidate = False
+                        break
+            
+            if should_consolidate and len(group) > 1:
+                # Consolidate: use first row as template, update name
+                consolidated = group.iloc[0].copy()
+                consolidated[product_name_col] = base_name
+                debug_print(f"Consolidated {len(group)} color variants into single entry: '{base_name}'")
+                consolidated_rows.append(consolidated)
+            else:
+                # Don't consolidate - keep separate (prices differ significantly)
+                for _, row in group.iterrows():
+                    consolidated_rows.append(row)
+    
+    # Create result DataFrame
+    result_df = pd.DataFrame(consolidated_rows)
+    
+    # Remove helper columns
+    result_df = result_df.drop(['Base_Name', 'Colors'], axis=1, errors='ignore')
+    
+    return result_df
+
 def main():
     """Main execution function"""
     print("Starting AirPods product scraper...")
@@ -408,14 +510,17 @@ def main():
     # Merge product data
     merged_data = merge_product_data(all_products)
     
+    # Apply color consolidation (remove color information)
+    merged_data = consolidate_similar_colors(merged_data)
+    
     # Display results
     print("\nResults:")
     print(merged_data)
     
-    # Save to CSV
+    # Save consolidated results to CSV
     output_file = 'airpods_products_merged.csv'
     merged_data.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print(f"\nSaved results to {output_file}")
+    print(f"\nSaved consolidated results to {output_file}")
     
     # Display stats
     print(f"\nTotal unique products found: {len(merged_data)}")
