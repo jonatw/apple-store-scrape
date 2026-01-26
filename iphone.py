@@ -46,41 +46,78 @@ def debug_print(message):
 
 def standardize_product_name(name):
     """
-    Standardize product name for matching across regions
+    Enhanced standardize product name for matching across regions (Future-Adaptive)
     
     Parameters:
-    name (str): Original product name, e.g., "iPhone 16 Pro 256GB Black Titanium"
+    name (str): Original product name, e.g., "iPhone 17 Pro 1TB Cosmic Orange"
     
     Returns:
-    str: Standardized name key, e.g., "iphone16pro_256gb_blacktitanium"
+    str: Standardized name key, e.g., "iphone17pro_1tb_cosmicorange"
     """
     if not name:
         return ""
 
-    # Convert to lowercase
+    # Convert to lowercase for processing
     name = name.lower()
+    debug_print(f"Standardizing: '{name}'")
 
-    # Extract capacity part first to help boundary detection
-    storage_match = re.search(r'(\d+)\s*(gb|tb)', name)
+    # Enhanced capacity detection (supports future units like PB, EB)
+    storage_match = re.search(r'(\d+)\s*(gb|tb|pb|eb)', name, re.IGNORECASE)
     
-    # Extract model part
-    # Updated regex: match iphone, then a number, then optionally any text words until we hit a digit (capacity) or end of string
-    # We use a lookahead (?=...) to stop before the storage if present
-    model_match = re.search(r'iphone\s*(\d+)(?:\s+([a-z\s]+?))?(?=\s*\d+\s*(?:gb|tb)|$)', name)
+    # Enhanced model detection (supports iPhone Air, Ultra, Fold, etc.)
+    # Priority order: specific patterns first, then fallback
+    model_match = None
     
-    # If strict match failed, try a simpler fallback (old behavior but slightly relaxed)
+    # Special iPhone variants (Air, Ultra, Fold, etc.)
+    special_variants = ['air', 'ultra', 'fold', 'mini', 'plus']
+    for variant in special_variants:
+        pattern = rf'iphone\s+({variant})(?:\s+(\d+(?:gb|tb|pb|eb)))?'
+        match = re.search(pattern, name)
+        if match:
+            model_match = match
+            break
+    
+    # iPhone with edition suffix (e.g., iPhone 16e)
     if not model_match:
-         model_match = re.search(r'iphone\s*(\d+)\s*([a-z\s]+)?', name)
+        model_match = re.search(r'iphone\s*(\d+[a-z])(?:\s+([a-z\s]+?))?(?=\s*\d+\s*(?:gb|tb|pb|eb)|$)', name)
+    
+    # Standard iPhone pattern (iPhone 17, iPhone 17 Pro, iPhone 17 Pro Max)
+    if not model_match:
+        model_match = re.search(r'iphone\s*(\d+)(?:\s+([a-z\s]+?))?(?=\s*\d+\s*(?:gb|tb|pb|eb)|$)', name)
+    
+    # Fallback: any iPhone pattern
+    if not model_match:
+        model_match = re.search(r'iphone\s*([0-9a-z]+)(?:\s+([a-z\s]+))?', name)
 
-    # Extract color by removing model and capacity parts
+    # Enhanced color extraction with expanded palette
+    color_patterns = [
+        # Basic colors
+        'black', 'white', 'blue', 'pink', 'yellow', 'green', 'purple', 'red', 
+        'silver', 'gold', 'orange', 'gray', 'grey',
+        # Apple-specific colors
+        'cosmic orange', 'deep blue', 'light gold', 'cloud white', 'space black', 
+        'sky blue', 'midnight', 'starlight', 'alpine green', 'sierra blue',
+        'product red', 'natural titanium', 'blue titanium', 'white titanium',
+        'black titanium', 'desert titanium', 'natural', 'graphite'
+    ]
+    
+    # Extract color by process of elimination
     name_copy = name
     if model_match:
-        name_copy = name_copy.replace(model_match.group(0), "")
+        name_copy = name_copy.replace(model_match.group(0), "", 1)
     if storage_match:
-        name_copy = name_copy.replace(storage_match.group(0), "")
+        name_copy = name_copy.replace(storage_match.group(0), "", 1)
     
-    # Clean up the remaining text to get the color
-    color = name_copy.strip().replace(" ", "")
+    # Find matching color (longest match first for compound colors)
+    color = ""
+    for color_pattern in sorted(color_patterns, key=len, reverse=True):
+        if color_pattern in name_copy:
+            color = color_pattern.replace(" ", "")
+            break
+    
+    if not color:
+        # Fallback: use whatever's left after removing model and storage
+        color = name_copy.strip().replace(" ", "")
     
     # Create standardized key parts
     key_parts = []
@@ -91,13 +128,63 @@ def standardize_product_name(name):
         key_parts.append(f"iphone{model_num}{model_variant}")
 
     if storage_match:
-        key_parts.append(f"{storage_match.group(1)}{storage_match.group(2)}")
+        key_parts.append(f"{storage_match.group(1)}{storage_match.group(2).lower()}")
 
     if color:
         key_parts.append(color)
 
-    # Join key parts with underscore
-    return "_".join(key_parts) if key_parts else name.replace(" ", "")
+    result = "_".join(key_parts) if key_parts else name.replace(" ", "")
+    debug_print(f"Standardized result: '{result}'")
+    return result
+
+def is_valid_iphone_model(model_id):
+    """
+    Validate if a discovered model ID is a real iPhone model (Future-Adaptive)
+    
+    Parameters:
+    model_id (str): Model identifier like "iphone-17-pro" or just "17-pro"
+    
+    Returns:
+    bool: True if it's a valid iPhone model
+    """
+    if not model_id or model_id == "":
+        return False
+    
+    # Filter out known non-iPhone pages
+    invalid_patterns = [
+        'accessories', 'cases', 'chargers', 'airpods', 'watch', 
+        'ipad', 'mac', 'compare', 'trade-in', 'carrier-offers',
+        'gift-card', 'financing', 'support'
+    ]
+    
+    model_lower = model_id.lower()
+    for pattern in invalid_patterns:
+        if pattern in model_lower:
+            return False
+    
+    # Add iphone- prefix if missing for pattern matching
+    if not model_id.startswith('iphone-'):
+        model_id = f"iphone-{model_id}"
+    
+    model_part = model_id.replace('iphone-', '')
+    
+    # Valid model patterns (adaptive to future models)
+    valid_patterns = [
+        r'^\d+$',                    # iPhone 17
+        r'^\d+[a-z]+$',             # iPhone 16e, 17c
+        r'^\d+-pro$',               # iPhone 17-pro
+        r'^\d+-pro-max$',           # iPhone 17-pro-max
+        r'^\d+-plus$',              # iPhone 17-plus
+        r'^(air|ultra|fold|mini)$', # iPhone Air, Ultra, etc.
+        r'^(air|ultra|fold|mini)-\d+$',  # iPhone Air-2 (if they version them)
+    ]
+    
+    for pattern in valid_patterns:
+        if re.match(pattern, model_part, re.IGNORECASE):
+            return True
+    
+    debug_print(f"Unknown model pattern: {model_id}")
+    return False
 
 def get_available_models(region_code=""):
     """
@@ -137,14 +224,16 @@ def get_available_models(region_code=""):
                     if model and model != "":
                         iphone_links.append(model)
 
-        # Remove duplicates and return
+        # Filter and validate models
         unique_models = list(set(iphone_links))
+        valid_models = [model for model in unique_models if is_valid_iphone_model(model)]
 
-        if not unique_models:
-            debug_print(f"Could not find iPhone models at {url}, using default model list")
+        if not valid_models:
+            debug_print(f"Could not find valid iPhone models at {url}, using default model list")
             return default_models
 
-        return unique_models
+        debug_print(f"Discovered valid models: {', '.join(valid_models)}")
+        return valid_models
 
     except Exception as e:
         debug_print(f"Error getting iPhone models: {e}, using default model list")
@@ -235,82 +324,137 @@ def extract_product_details(url, region_code=""):
     
     if script_content:
         try:
-            # Locate productSelectionData
-            key_index = script_content.find('productSelectionData:')
-            if key_index != -1:
-                # Find start of the JSON object (first '{' after key)
-                start_index = script_content.find('{', key_index)
-                if start_index != -1:
-                    # Extract JSON object by balancing braces
-                    brace_count = 0
-                    json_str = ""
-                    for i in range(start_index, len(script_content)):
-                        char = script_content[i]
-                        if char == '{':
-                            brace_count += 1
-                        elif char == '}':
-                            brace_count -= 1
+            # Multi-strategy JSON extraction (Future-Adaptive)
+            json_str = ""
+            extraction_method = "unknown"
+            
+            # Strategy 2a: Enhanced regex patterns (try multiple patterns)
+            regex_patterns = [
+                # Pattern 1: productSelectionData: {...}, displayValues
+                r'productSelectionData:\s*(\{.*?\})\s*,\s*displayValues',
+                # Pattern 2: productSelectionData: {...} (without displayValues)
+                r'productSelectionData:\s*(\{[^}]*(?:\{[^}]*\}[^}]*)*\})',
+                # Pattern 3: More flexible whitespace handling
+                r'productSelectionData\s*:\s*(\{.*?\})\s*[,;}]',
+            ]
+            
+            for i, pattern in enumerate(regex_patterns):
+                match = re.search(pattern, script_content, re.DOTALL)
+                if match:
+                    json_str = match.group(1)
+                    extraction_method = f"regex_pattern_{i+1}"
+                    debug_print(f"JSON extracted using {extraction_method}")
+                    break
+            
+            # Strategy 2b: Enhanced brace counting fallback
+            if not json_str:
+                debug_print("Regex patterns failed, trying enhanced brace counting")
+                key_index = script_content.find('productSelectionData:')
+                if key_index != -1:
+                    # Look for opening brace after the key
+                    start_index = script_content.find('{', key_index)
+                    if start_index != -1:
+                        brace_count = 0
+                        quote_count = 0
+                        in_string = False
+                        escape_next = False
                         
-                        json_str += char
+                        for i in range(start_index, len(script_content)):
+                            char = script_content[i]
+                            
+                            # Handle string escapes
+                            if escape_next:
+                                escape_next = False
+                                json_str += char
+                                continue
+                            
+                            if char == '\\' and in_string:
+                                escape_next = True
+                                json_str += char
+                                continue
+                            
+                            # Track string boundaries
+                            if char == '"':
+                                in_string = not in_string
+                            
+                            # Only count braces outside of strings
+                            if not in_string:
+                                if char == '{':
+                                    brace_count += 1
+                                elif char == '}':
+                                    brace_count -= 1
+                            
+                            json_str += char
+                            
+                            # Break when braces are balanced
+                            if brace_count == 0:
+                                extraction_method = "enhanced_brace_counting"
+                                debug_print(f"JSON extracted using {extraction_method}")
+                                break
+            
+            # Strategy 2c: Validate and parse JSON
+            if json_str:
+                try:
+                    bootstrap_data = json.loads(json_str)
+                    debug_print(f"JSON parsing successful (method: {extraction_method})")
+                except json.JSONDecodeError as e:
+                    debug_print(f"JSON parsing failed (method: {extraction_method}): {e}")
+                    debug_print(f"JSON snippet (first 200 chars): {json_str[:200]}...")
+                    return []
+                
+                # Process the bootstrap data
+                products = bootstrap_data.get('products', [])
+                display_values = bootstrap_data.get('displayValues', {})
+                prices_map = display_values.get('prices', {})
+                
+                if products:
+                    debug_print(f"Found {len(products)} products via bootstrap for region {region_display}")
+                    for product in products:
+                        part_number = product.get('partNumber')
+                        base_part_number = product.get('basePartNumber')
                         
-                        if brace_count == 0:
-                            break
-                    
-                    if json_str:
-                        bootstrap_data = json.loads(json_str)
+                        # Try to find price info using 'fullPrice' OR 'price' key
+                        price_key = product.get('fullPrice')
+                        if not price_key:
+                            price_key = product.get('price')
+                            
+                        price_info = prices_map.get(price_key, {})
                         
-                        products = bootstrap_data.get('products', [])
-                        display_values = bootstrap_data.get('displayValues', {})
-                        prices_map = display_values.get('prices', {})
+                        # Extract numeric price
+                        price_val = None
+                        curr_price = price_info.get('currentPrice', {})
+                        if curr_price:
+                            raw_amount = curr_price.get('raw_amount')
+                            if raw_amount:
+                                try:
+                                    price_val = float(raw_amount.replace(',', ''))
+                                except:
+                                    pass
                         
-                        if products:
-                                debug_print(f"Found {len(products)} products via bootstrap for region {region_display}")
-                                for product in products:
-                                    part_number = product.get('partNumber')
-                                    base_part_number = product.get('basePartNumber')
-                                    
-                                    # Try to find price info using 'fullPrice' OR 'price' key
-                                    price_key = product.get('fullPrice')
-                                    if not price_key:
-                                        price_key = product.get('price')
-                                        
-                                    price_info = prices_map.get(price_key, {})
-                                    
-                                    # Extract numeric price
-                                    price_val = None
-                                    curr_price = price_info.get('currentPrice', {})
-                                    if curr_price:
-                                        raw_amount = curr_price.get('raw_amount')
-                                        if raw_amount:
-                                            try:
-                                                price_val = float(raw_amount.replace(',', ''))
-                                            except:
-                                                pass
-                                    
-                                    # Name extraction
-                                    name = product.get('familyType', '')
-                                    if not name:
-                                        name = soup.find('title').text.split('-')[0].strip() if soup.find('title') else "Unknown Product"
-                                    
-                                    # Use basePartNumber as SKU if available, else derive
-                                    base_sku = base_part_number
-                                    if not base_sku and part_number:
-                                            base_sku = re.sub(r'[A-Z]{2}/[A-Z]$', '', part_number)
-                                            base_sku = re.sub(r'/[A-Z]$', '', base_sku)
-                                    
-                                    std_name = standardize_product_name(name)
-                                    
-                                    product_details.append({
-                                        "SKU": part_number,
-                                        "BaseSKU": base_sku,
-                                        "Name": name,
-                                        "Price": price_val,
-                                        "Region": region_display,
-                                        "Region_Code": region_code,
-                                        "PartNumber": part_number,
-                                        "Standardized_Name": std_name
-                                    })
-                                return product_details
+                        # Name extraction
+                        name = product.get('familyType', '')
+                        if not name:
+                            name = soup.find('title').text.split('-')[0].strip() if soup.find('title') else "Unknown Product"
+                        
+                        # Use basePartNumber as SKU if available, else derive
+                        base_sku = base_part_number
+                        if not base_sku and part_number:
+                                base_sku = re.sub(r'[A-Z]{2}/[A-Z]$', '', part_number)
+                                base_sku = re.sub(r'/[A-Z]$', '', base_sku)
+                        
+                        std_name = standardize_product_name(name)
+                        
+                        product_details.append({
+                            "SKU": part_number,
+                            "BaseSKU": base_sku,
+                            "Name": name,
+                            "Price": price_val,
+                            "Region": region_display,
+                            "Region_Code": region_code,
+                            "PartNumber": part_number,
+                            "Standardized_Name": std_name
+                        })
+                    return product_details
         except Exception as e:
             debug_print(f"Error parsing bootstrap JSON: {e}")
 
@@ -437,6 +581,49 @@ def merge_product_data(product_data):
     
     return output_df
 
+def generate_plot(df, filename='price_diff.png'):
+    """Generate price difference chart"""
+    try:
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+        
+        # Filter valid data
+        plot_df = df[(df['Price_US'] > 0) & (df['Price_TW'] > 0)].copy()
+        
+        if plot_df.empty:
+            debug_print("No data available for plotting")
+            return
+
+        # Approx exchange rate (can be fetched dynamically later)
+        EXCHANGE_RATE = 32.0 
+        plot_df['Diff_USD'] = (plot_df['Price_TW'] / EXCHANGE_RATE) - plot_df['Price_US']
+        
+        # Sort and take top 15
+        plot_df = plot_df.sort_values('Diff_USD', ascending=False).head(15)
+        
+        plt.figure(figsize=(14, 10))
+        sns.set_style("whitegrid")
+        
+        # Bar chart
+        ax = sns.barplot(x='Diff_USD', y='PRODUCT_NAME', data=plot_df, hue='PRODUCT_NAME', legend=False, palette='viridis')
+        
+        plt.title(f'TW vs US Price Difference (USD) - Rate: {EXCHANGE_RATE}', fontsize=16)
+        plt.xlabel('Difference (USD) - Positive = TW is more expensive', fontsize=12)
+        plt.ylabel('')
+        
+        # Labels
+        for i, v in enumerate(plot_df['Diff_USD']):
+            ax.text(v + 5, i, f"+${v:.0f}", va='center')
+            
+        plt.tight_layout()
+        plt.savefig(filename)
+        print(f"\nChart saved to {filename}")
+        
+    except ImportError:
+        print("\n[WARN] matplotlib/seaborn not installed, skipping plot.")
+    except Exception as e:
+        print(f"\n[WARN] Plotting failed: {e}")
+
 # ==================== MAIN EXECUTION ====================
 
 def main():
@@ -458,6 +645,9 @@ def main():
     output_file = 'iphone_products_merged.csv'
     merged_data.to_csv(output_file, index=False, encoding='utf-8-sig')
     print(f"\nSaved results to {output_file}")
+    
+    # Generate Plot
+    generate_plot(merged_data)
     
     # Display stats
     print(f"\nTotal unique products found: {len(merged_data)}")
