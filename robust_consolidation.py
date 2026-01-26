@@ -113,6 +113,7 @@ def extract_core_pattern(product_name: str, debug: bool = False) -> str:
       → "11-inch iPad Pro Wi‑Fi 1TB with nano-texture glass"
     - "iPhone 17 Pro 256GB Cosmic Orange" 
       → "iPhone 17 Pro 256GB"
+    - "Blue iMac" → "iMac"
     """
     if not product_name or pd.isna(product_name):
         return ""
@@ -120,19 +121,23 @@ def extract_core_pattern(product_name: str, debug: bool = False) -> str:
     name = str(product_name).strip()
     
     # Remove color suffixes (most common pattern: " - Color")
-    name = re.sub(r'\s*-\s*(Silver|Space Black|Gold|Rose Gold|Pink|Blue|Green|Purple|Red|Yellow|Orange|Black|White|Gray|Grey|Midnight|Starlight|Natural|Graphite|Product Red)(\s|$)', '', name, flags=re.IGNORECASE)
+    name = re.sub(r'\s*-\s*(Silver|Space Black|Gold|Rose Gold|Pink|Blue|Green|Purple|Red|Yellow|Orange|Black|White|Gray|Grey|Midnight|Starlight|Natural|Graphite|Product Red|Teal|Ultramarine)(\s|$)', '', name, flags=re.IGNORECASE)
     
-    # Remove standalone color words at the end
+    # Remove standalone color words (including at beginning for Mac products)
     color_words = [
         'silver', 'gold', 'black', 'white', 'gray', 'grey', 'pink', 'blue', 'green', 
         'purple', 'red', 'yellow', 'orange', 'midnight', 'starlight', 'natural', 
         'graphite', 'cosmic orange', 'deep blue', 'light gold', 'cloud white', 
         'space black', 'sky blue', 'rose gold', 'product red', 'jet black',
-        'space gray', 'alpine green', 'sierra blue'
+        'space gray', 'alpine green', 'sierra blue', 'teal', 'ultramarine'
     ]
     
     # Sort by length (longest first) to handle "Space Black" before "Black"
     for color in sorted(color_words, key=len, reverse=True):
+        # Remove color at the beginning of the string (for Mac products)
+        pattern = rf'^{re.escape(color)}\s+'
+        name = re.sub(pattern, '', name, flags=re.IGNORECASE)
+        
         # Remove color at the end of the string
         pattern = rf'\s+{re.escape(color)}\s*$'
         name = re.sub(pattern, '', name, flags=re.IGNORECASE)
