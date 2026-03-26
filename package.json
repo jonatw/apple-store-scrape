@@ -17,5 +17,10 @@
     "bootstrap": "^5.3.6",
     "sass": "^1.87.0",
     "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0"
   }
 }
