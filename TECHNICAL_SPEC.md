@@ -6,8 +6,8 @@ Apple Store Scraper is a Python tool for scraping product information from the A
 
 ## System Requirements
 
-- **Python**: 3.10+
-- **Node.js**: 20.x+ (for web interface and build)
+- **Python**: 3.13+
+- **Node.js**: 24.x+ (for web interface and build)
 - **OS**: Cross-platform (Windows, macOS, Linux)
 
 ## Dependencies
@@ -28,7 +28,6 @@ Apple Store Scraper is a Python tool for scraping product information from the A
 | @popperjs/core | 2.11.8 | Positioning engine for UI components |
 | vite | 6.3.5 | Build tool and development server |
 | sass | 1.87.0 | SCSS compilation |
-| @playwright/test | 1.52.0 | E2E testing |
 
 ## Architecture
 
@@ -190,14 +189,17 @@ iPhone 17 Pro 256GB,999.0,34900.0,"Silver, Deep Blue, Cosmic Orange",3,"MG7K4, M
 
 - **Settings Panel**: Exchange rate, foreign transaction fee, local storage persistence
 - **Price Summary Cards**: Product count, average price difference, last updated
-- **Product Table**: Responsive, searchable, sortable, color-coded price differences
+- **Product Table**: Responsive table with Bootstrap `d-none d-md-table-cell` for mobile
+  - Mobile (< 768px): 4 columns — Product, US (USD), TW (TWD), Diff
+  - Desktop (≥ 768px): 6 columns — adds US+Fee (TWD) and Recommendation
+  - Color variants not displayed (colors don't affect price)
+  - Mac products show spec info (Chip, Memory, Storage) under product name
 - **Theme System**: Light/dark mode with system preference detection
 
 ### Key Files
 - `src/index.html` — Single-page app structure
 - `src/js/main.js` — All client-side logic
-- `src/scss/` — Custom Bootstrap theming
-- `src/data/` — Generated JSON data (not committed)
+- `src/data/` — Generated JSON data (not committed), loaded from `data/` path
 - `manifest.json` — PWA support
 
 ## Testing
@@ -221,15 +223,17 @@ iPhone 17 Pro 256GB,999.0,34900.0,"Silver, Deep Blue, Cosmic Orange",3,"MG7K4, M
 **Network tests use dynamic model discovery** — no hardcoded product URLs.
 Tests remain valid when Apple refreshes the product lineup.
 
-### E2E Tests (`e2e/`)
-- Playwright: Chromium, Firefox, WebKit, Mobile Chrome (Pixel 5)
-- 15s timeout, 2 retries, screenshots/video on failure
+### Debug Mode
+
+Set `SCRAPER_DEBUG=1` environment variable to enable verbose logging from scrapers.
+Debug is off by default for clean CI output.
 
 ## CI/CD Pipeline
 
 `.github/workflows/scrape-and-deploy.yml`:
 - **Triggers**: daily at midnight UTC, push to main, manual dispatch
-- **Steps**: checkout → Python setup → pip install → run all scrapers → consolidate colors → convert to JSON → Node setup → npm ci → Vite build → deploy to GitHub Pages
+- **Runtime**: Python 3.13, Node.js 24, `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true`
+- **Steps**: checkout → Python setup → pip install → `python run_pipeline.py` (parallel scrape + consolidation + JSON) → Node setup → npm ci → Vite build → deploy via `peaceiris/actions-gh-pages@v4`
 - **Build env**: `VITE_APP_BASE_URL=/apple-store-scrape/`
 
 ## Extensibility
