@@ -215,187 +215,16 @@ async function loadProductData(product) {
     
     return data;
   } catch (error) {
-    console.error(error);
-    // Simulated data for testing (if unable to load real data)
-    const sampleProducts = {
-      iphone: [
-        {
-          PRODUCT_NAME: 'iPhone 16 Pro 256GB Black Titanium',
-          Price_US: 1199,
-          Price_TW: 41900,
-          price_difference_percent: 1.5,
-          price_difference_with_fee_percent: 0.2,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'iPhone 16 128GB Pink',
-          Price_US: 999,
-          Price_TW: 31900,
-          price_difference_percent: 2.1,
-          price_difference_with_fee_percent: 0.5,
-          recommended_purchase: 'TW'
-        }
-      ],
-      ipad: [
-        {
-          PRODUCT_NAME: 'iPad Pro 13-inch Wi-Fi 256GB Space Black',
-          Price_US: 1299,
-          Price_TW: 44900,
-          price_difference_percent: 1.2,
-          price_difference_with_fee_percent: -0.3,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'iPad Air Wi-Fi 128GB Blue',
-          Price_US: 599,
-          Price_TW: 19900,
-          price_difference_percent: 1.8,
-          price_difference_with_fee_percent: 0.1,
-          recommended_purchase: 'TW'
-        }
-      ],
-      mac: [
-        {
-          PRODUCT_NAME: 'Mac Studio M2 Max',
-          Price_US: 1999,
-          Price_TW: 67900,
-          price_difference_percent: 2.3,
-          price_difference_with_fee_percent: 0.8,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'MacBook Pro 14-inch M3 Pro 512GB',
-          Price_US: 2399,
-          Price_TW: 79900,
-          price_difference_percent: 1.7,
-          price_difference_with_fee_percent: 0.2,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'iMac 24-inch M3 8-core CPU 256GB Silver',
-          Price_US: 1299,
-          Price_TW: 44900,
-          price_difference_percent: 1.2,
-          price_difference_with_fee_percent: -0.3,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'Mac mini M2 256GB',
-          Price_US: 599,
-          Price_TW: 19900,
-          price_difference_percent: 1.8,
-          price_difference_with_fee_percent: 0.1,
-          recommended_purchase: 'TW'
-        }
-      ],
-      watch: [
-        {
-          PRODUCT_NAME: 'Apple Watch Series 10 GPS 42mm Aluminum',
-          Price_US: 399,
-          Price_TW: 12900,
-          price_difference_percent: 2.1,
-          price_difference_with_fee_percent: 0.5,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'Apple Watch Ultra 2 GPS + Cellular 49mm Titanium',
-          Price_US: 799,
-          Price_TW: 26900,
-          price_difference_percent: 1.8,
-          price_difference_with_fee_percent: 0.2,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'Apple Watch SE GPS 40mm Aluminum',
-          Price_US: 249,
-          Price_TW: 8900,
-          price_difference_percent: 2.5,
-          price_difference_with_fee_percent: 0.9,
-          recommended_purchase: 'TW'
-        }
-      ],
-      airpods: [
-        {
-          PRODUCT_NAME: 'AirPods (4th generation)',
-          Price_US: 129,
-          Price_TW: 4290,
-          price_difference_percent: 1.5,
-          price_difference_with_fee_percent: -0.1,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'AirPods Pro (2nd generation) with USB-C',
-          Price_US: 249,
-          Price_TW: 7990,
-          price_difference_percent: 1.8,
-          price_difference_with_fee_percent: 0.2,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'AirPods Max',
-          Price_US: 549,
-          Price_TW: 18900,
-          price_difference_percent: 2.2,
-          price_difference_with_fee_percent: 0.6,
-          recommended_purchase: 'TW'
-        }
-      ],
-      tvhome: [
-        {
-          PRODUCT_NAME: 'Apple TV 4K Wi-Fi 64GB (3rd generation)',
-          Price_US: 129,
-          Price_TW: 4590,
-          price_difference_percent: 2.8,
-          price_difference_with_fee_percent: 1.2,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'Apple TV 4K Wi-Fi + Ethernet 128GB (3rd generation)',
-          Price_US: 149,
-          Price_TW: 5290,
-          price_difference_percent: 2.5,
-          price_difference_with_fee_percent: 0.9,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'HomePod (2nd generation)',
-          Price_US: 299,
-          Price_TW: 9900,
-          price_difference_percent: 1.5,
-          price_difference_with_fee_percent: -0.1,
-          recommended_purchase: 'TW'
-        },
-        {
-          PRODUCT_NAME: 'HomePod mini',
-          Price_US: 99,
-          Price_TW: 3290,
-          price_difference_percent: 1.2,
-          price_difference_with_fee_percent: -0.4,
-          recommended_purchase: 'TW'
-        }
-      ]
-    };
-
+    console.error('Failed to load product data:', error);
     return {
       metadata: {
-        lastUpdated: new Date().toISOString(),
+        lastUpdated: null,
         regions: ['US', 'TW'],
         productType: product,
-        totalProducts: sampleProducts[product]?.length || 2,
-        exchangeRates: {
-          TWD: 31.5
-        }
+        totalProducts: 0,
+        exchangeRates: { TWD: exchangeRate }
       },
-      products: sampleProducts[product] || [
-        {
-          PRODUCT_NAME: `${product.toUpperCase()} Sample Product`,
-          Price_US: 999,
-          Price_TW: 31000,
-          price_difference_percent: 1.5,
-          price_difference_with_fee_percent: 0.2,
-          recommended_purchase: 'TW'
-        }
-      ]
+      products: []
     };
   }
 }
@@ -408,12 +237,12 @@ function renderProductTable(products) {
   tableBody.innerHTML = '';
   
   tableHead.innerHTML = `
-    <th>Product</th>
-    <th>US (USD)</th>
-    <th class="d-none d-md-table-cell">US+Fee (TWD)</th>
-    <th>TW (TWD)</th>
-    <th>Diff</th>
-    <th class="d-none d-md-table-cell">Rec.</th>
+    <th scope="col">Product</th>
+    <th scope="col">US (USD)</th>
+    <th scope="col" class="d-none d-md-table-cell">US+Fee (TWD)</th>
+    <th scope="col">TW (TWD)</th>
+    <th scope="col">Diff</th>
+    <th scope="col" class="d-none d-md-table-cell">Rec.</th>
   `;
   
   if (!products || products.length === 0) {
@@ -608,36 +437,44 @@ function setupSearch() {
   });
 }
 
+// Navigate to a product category
+async function navigateTo(product) {
+  currentProduct = product;
+
+  // Update nav active state
+  document.querySelectorAll('.nav-link').forEach(l => {
+    l.classList.toggle('active', l.dataset.product === product);
+  });
+
+  // Update page title
+  document.getElementById('page-title').textContent = `Apple ${product.toUpperCase()} Price Comparison`;
+
+  // Load and render
+  productData = await loadProductData(product);
+  updateSummaryStats(productData);
+  renderProductTable(productData.products);
+
+  // Clear search
+  const searchInput = document.getElementById('product-search');
+  if (searchInput) searchInput.value = '';
+}
+
 // Set up event listeners
 function setupEventListeners() {
-  // Product switching
+  // Nav clicks update hash — hashchange handler does the actual navigation
   document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', async (e) => {
+    link.addEventListener('click', (e) => {
       e.preventDefault();
-      
-      // Update navigation state
-      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-      e.target.classList.add('active');
-      
-      // Switch product type
-      currentProduct = e.target.dataset.product;
-      
-      // Update page title
-      document.getElementById('page-title').textContent = `Apple ${currentProduct.toUpperCase()} Price Comparison`;
-      
-      // Reload data
-      productData = await loadProductData(currentProduct);
-      
-      // Update statistics summary
-      updateSummaryStats(productData);
-      
-      // Update UI
-      renderProductTable(productData.products);
-      
-      // Clear search box
-      const searchInput = document.getElementById('product-search');
-      if (searchInput) searchInput.value = '';
+      window.location.hash = e.target.dataset.product;
     });
+  });
+
+  // Hash change drives navigation (supports back/forward in PWA standalone)
+  window.addEventListener('hashchange', () => {
+    const product = window.location.hash.slice(1) || 'iphone';
+    if (product !== currentProduct) {
+      navigateTo(product);
+    }
   });
 }
 
@@ -678,31 +515,28 @@ function detectIOSSafari() {
 
 // Initialize page
 async function init() {
-  // Initialize theme
   initTheme();
-  
-  // Initialize settings
   initSettings();
-  
-  // Update page title
-  document.getElementById('page-title').textContent = `Apple ${currentProduct.toUpperCase()} Price Comparison`;
-  
-  // Load data
-  productData = await loadProductData(currentProduct);
-  
-  // Update statistics summary
-  updateSummaryStats(productData);
-  
-  // Render table
-  renderProductTable(productData.products);
-  
-  // Set up search functionality
+
+  // Read product from URL hash (e.g. #ipad), default to iphone
+  const validProducts = ['iphone', 'ipad', 'mac', 'watch', 'airpods', 'tvhome'];
+  const hashProduct = window.location.hash.slice(1);
+  if (hashProduct && validProducts.includes(hashProduct)) {
+    currentProduct = hashProduct;
+  }
+
+  // Set up event listeners (before navigateTo so hashchange works)
   setupSearch();
-  
-  // Set up event listeners
   setupEventListeners();
-  
-  // Detect iOS Safari and show prompt
+
+  // Load and render initial product
+  await navigateTo(currentProduct);
+
+  // Register service worker for offline PWA support
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
+
   detectIOSSafari();
 }
 

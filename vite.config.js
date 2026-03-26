@@ -59,5 +59,15 @@ export default defineConfig({
     open: true,
   },
   
-  plugins: [copyJsonFilesPlugin()]
+  plugins: [copyJsonFilesPlugin(), {
+    // Copy sw.js to dist root (must not be bundled by Vite)
+    name: 'copy-service-worker',
+    closeBundle() {
+      const src = path.resolve(__dirname, 'src/sw.js');
+      const dest = path.resolve(__dirname, 'dist/sw.js');
+      if (fs.existsSync(src)) {
+        fs.copyFileSync(src, dest);
+      }
+    }
+  }]
 });

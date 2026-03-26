@@ -12,7 +12,7 @@
   
   <!-- Ensure all paths are relative -->
   <link rel="manifest" href="./manifest.json">
-  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.svg">
   
   <!-- Import Bootstrap CSS -->
   <script type="module">
@@ -127,9 +127,9 @@
       
       <div class="d-flex align-items-center">
         <!-- 深色模式切換 -->
-        <div class="theme-toggle me-3" id="theme-toggle">
-          <i class="fas fa-sun fs-5"></i>
-        </div>
+        <button class="btn btn-link theme-toggle me-3 p-0 border-0" id="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-sun fs-5" aria-hidden="true"></i>
+        </button>
         
         <!-- 漢堡選單 -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -163,7 +163,7 @@
   </nav>
   
   <!-- 主要內容 -->
-  <div class="container my-4">
+  <main class="container my-4">
     <!-- 標題和說明 -->
     <div class="row mb-3">
       <div class="col-12">
@@ -259,6 +259,7 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Product Details</h5>
             <div>
+              <label for="product-search" class="visually-hidden">Search products</label>
               <input type="text" class="form-control form-control-sm" id="product-search" placeholder="Search products...">
             </div>
           </div>
@@ -267,12 +268,12 @@
               <table class="table table-striped table-hover mb-0" id="products-table">
                 <thead>
                   <tr>
-                    <th>Product</th>
-                    <th>US (USD)</th>
-                    <th class="d-none d-md-table-cell">US+Fee (TWD)</th>
-                    <th>TW (TWD)</th>
-                    <th>Diff</th>
-                    <th class="d-none d-md-table-cell">Rec.</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">US (USD)</th>
+                    <th scope="col" class="d-none d-md-table-cell">US+Fee (TWD)</th>
+                    <th scope="col">TW (TWD)</th>
+                    <th scope="col">Diff</th>
+                    <th scope="col" class="d-none d-md-table-cell">Rec.</th>
                   </tr>
                 </thead>
                 <tbody>
