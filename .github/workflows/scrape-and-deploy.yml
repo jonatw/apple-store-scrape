@@ -30,23 +30,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run scrapers
-        run: |
-          python iphone.py
-          python ipad.py
-          python mac.py
-          python watch.py
-          python airpods.py
-          python tvhome.py
-
-      - name: Consolidate color variants
-        run: python smart_consolidate_colors.py
-
-      - name: Convert data to JSON and fetch exchange rate
-        run: |
-          python convert_to_json.py
-          echo "Files in src/data directory:"
-          ls -la src/data/
+      - name: Run scrapers, consolidate, and convert to JSON
+        run: python run_pipeline.py
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
