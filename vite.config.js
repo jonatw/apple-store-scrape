@@ -60,6 +60,26 @@ export default defineConfig({
   },
   
   plugins: [copyJsonFilesPlugin(), {
+    // Move CSS <link> before <script> and add preload hint to reduce render-blocking
+    name: 'css-preload',
+    transformIndexHtml(html) {
+      // Extract the CSS link tag
+      const cssMatch = html.match(/<link rel="stylesheet"[^>]+>/);
+      if (!cssMatch) return html;
+      const cssTag = cssMatch[0];
+      const href = cssTag.match(/href="([^"]+)"/)?.[1];
+      if (!href) return html;
+
+      // Remove original CSS link
+      html = html.replace(cssTag, '');
+
+      // Insert preload + stylesheet before </head> (before any scripts)
+      const preload = `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">\n  <noscript>${cssTag}</noscript>`;
+      html = html.replace('</head>', `  ${preload}\n</head>`);
+
+      return html;
+    }
+  }, {
     // Copy sw.js to dist root (must not be bundled by Vite)
     name: 'copy-service-worker',
     closeBundle() {

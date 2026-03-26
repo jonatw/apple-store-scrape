@@ -14,13 +14,8 @@
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.svg">
   
-  <!-- Import Bootstrap CSS -->
-  <script type="module">
-    import './scss/custom-bootstrap.scss'
-    import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-    import './icons.js'
-    import './main.js'
-  </script>
+  <!-- App entry point — Vite extracts CSS and adds preload hints in production -->
+  <script type="module" src="./main.js"></script>
   
   
   <style>
@@ -131,7 +126,7 @@
         </button>
         
         <!-- 漢堡選單 -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation" aria-controls="navbarNav" aria-expanded="false">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
@@ -181,7 +176,7 @@
       <div class="col-12">
         <div class="card settings-panel">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">
+            <h2 class="h5 mb-0">
               <i class="fas fa-cog me-2"></i>Settings
               <span class="badge bg-primary settings-badge" id="settings-changed" style="display: none;">Updated</span>
             </h5>
@@ -220,7 +215,7 @@
       <div class="col-md-3 col-6 mb-3 mb-md-0">
         <div class="card h-100">
           <div class="card-body text-center p-2 p-md-3">
-            <h5 class="card-title">Products</h5>
+            <h3 class="card-title h5">Products</h3>
             <p class="card-text display-4" id="total-products">-</p>
           </div>
         </div>
@@ -228,7 +223,7 @@
       <div class="col-md-3 col-6 mb-3 mb-md-0">
         <div class="card h-100">
           <div class="card-body text-center p-2 p-md-3">
-            <h5 class="card-title">Avg. Difference</h5>
+            <h3 class="card-title h5">Avg. Difference</h3>
             <p class="card-text display-4" id="avg-diff">-</p>
           </div>
         </div>
@@ -236,7 +231,7 @@
       <div class="col-md-3 col-6">
         <div class="card h-100">
           <div class="card-body text-center p-2 p-md-3">
-            <h5 class="card-title">With Fee</h5>
+            <h3 class="card-title h5">With Fee</h3>
             <p class="card-text display-4" id="avg-diff-with-fee">-</p>
           </div>
         </div>
@@ -244,7 +239,7 @@
       <div class="col-md-3 col-6">
         <div class="card h-100">
           <div class="card-body text-center p-2 p-md-3">
-            <h5 class="card-title">Last Updated</h5>
+            <h3 class="card-title h5">Last Updated</h3>
             <p class="card-text display-6" id="last-updated">-</p>
           </div>
         </div>
@@ -256,7 +251,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Product Details</h5>
+            <h2 class="h5 mb-0">Product Details</h2>
             <div>
               <label for="product-search" class="visually-hidden">Search products</label>
               <input type="text" class="form-control form-control-sm" id="product-search" placeholder="Search products...">

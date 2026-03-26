@@ -28,7 +28,70 @@
 @import "bootstrap/scss/close";
 @import "bootstrap/scss/spinners";
 
-// Helpers & Utilities
-@import "bootstrap/scss/helpers";
+// Helpers (only visually-hidden for sr-only labels)
+@import "bootstrap/scss/helpers/visually-hidden";
+@import "bootstrap/scss/helpers/color-bg";
+
+// Utilities — only generate the ones we use
 @import "bootstrap/scss/utilities";
+
+// Trim unused utilities before generating
+$utilities: map-merge(
+  $utilities,
+  (
+    // Remove utilities we don't use
+    "opacity": null,
+    "overflow": null,
+    "position": null,
+    "top": null,
+    "bottom": null,
+    "start": null,
+    "end": null,
+    "translate-middle": null,
+    "border": null,
+    "border-top": null,
+    "border-end": null,
+    "border-bottom": null,
+    "border-start": null,
+    "border-color": null,
+    "border-width": null,
+    "border-opacity": null,
+    "border-radius": null,
+    "border-radius-top": null,
+    "border-radius-end": null,
+    "border-radius-bottom": null,
+    "border-radius-start": null,
+    "width": null,
+    "max-width": null,
+    "viewport-width": null,
+    "min-viewport-width": null,
+    "max-height": null,
+    "viewport-height": null,
+    "min-viewport-height": null,
+    "float": null,
+    "object-fit": null,
+    "object-position": null,
+    "shadow": null,
+    "focus-ring": null,
+    "link-opacity": null,
+    "link-offset": null,
+    "link-underline": null,
+    "link-underline-opacity": null,
+    "text-opacity": null,
+    "text-decoration": null,
+    "text-transform": null,
+    "white-space": null,
+    "word-wrap": null,
+    "letter-spacing": null,
+    "line-height": null,
+    "bg-opacity": null,
+    "gradient": null,
+    "user-select": null,
+    "pointer-events": null,
+    "rounded": null,
+    "visibility": null,
+    "z-index": null,
+  )
+);
+
 @import "bootstrap/scss/utilities/api";

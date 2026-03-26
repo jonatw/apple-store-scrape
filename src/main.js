@@ -1,3 +1,8 @@
+// CSS and Bootstrap (Vite extracts CSS to separate file in production)
+import './scss/custom-bootstrap.scss';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './icons.js';
+
 // Global variables
 let currentProduct = 'iphone';
 let productData = null;
