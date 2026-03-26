@@ -3,8 +3,7 @@ AirPods scraper — fetches AirPods product data from Apple Store across regions
 """
 
 from scraper_base import (
-    AppleStoreScraper, REGIONS, REFERENCE_REGION,
-    discover_models_from_goto, debug_print,
+    AppleStoreScraper, REGIONS, discover_models_from_goto,
 )
 
 

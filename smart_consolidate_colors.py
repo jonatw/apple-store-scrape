@@ -202,7 +202,7 @@ def process_product_file(input_file, output_file, product_type):
     result = consolidate(df, product_type)
 
     if result.empty:
-        print(f"Warning: No data after consolidation")
+        print("Warning: No data after consolidation")
         return False
 
     reduction = len(df) - len(result)

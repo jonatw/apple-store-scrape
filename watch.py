@@ -7,13 +7,8 @@ dimension data when available.
 """
 
 from scraper_base import (
-    AppleStoreScraper, REGIONS, REFERENCE_REGION,
-    discover_models_from_goto, extract_products_from_metrics,
-    extract_products_from_bootstrap, debug_print, REQUEST_DELAY,
+    AppleStoreScraper, REGIONS, discover_models_from_goto,
 )
-import requests
-from bs4 import BeautifulSoup
-import time
 
 
 class WatchScraper(AppleStoreScraper):
@@ -21,7 +16,8 @@ class WatchScraper(AppleStoreScraper):
     output_file = "watch_products_merged.csv"
 
     # Last-resort fallback — only used if Apple's website is completely unreachable.
-    DEFAULT_MODELS = ["apple-watch-series-11", "apple-watch-se", "apple-watch-ultra-3"]
+    # Apple's buy URLs don't include version numbers (apple-watch, not apple-watch-series-11).
+    DEFAULT_MODELS = ["apple-watch", "apple-watch-se", "apple-watch-ultra"]
 
     def get_models(self):
         all_models = set()
@@ -33,8 +29,21 @@ class WatchScraper(AppleStoreScraper):
                 goto_pattern='/shop/goto/buy_watch/',
                 default_models=self.DEFAULT_MODELS,
             )
-            # Keep discovered names as-is (e.g. apple-watch-series-11, apple-watch-ultra-3)
-            all_models.update(models)
+            # Normalize: Apple's goto links use versioned slugs (apple-watch-series-11,
+            # apple-watch-ultra-3) but the buy URLs use unversioned slugs.
+            for m in models:
+                m_lower = m.lower()
+                # Match by keyword, but avoid 'se' matching 'series'
+                if 'ultra' in m_lower:
+                    all_models.add('apple-watch-ultra')
+                elif 'hermes' in m_lower:
+                    all_models.add('apple-watch-hermes')
+                elif '-se-' in m_lower or m_lower.endswith('-se'):
+                    all_models.add('apple-watch-se')
+                elif 'series' in m_lower or m_lower == 'apple-watch':
+                    all_models.add('apple-watch')
+                else:
+                    all_models.add('apple-watch')
         return list(all_models)
 
     def build_product_url(self, model, region_code):

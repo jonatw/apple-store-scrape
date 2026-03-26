@@ -7,8 +7,7 @@ extracted from HTML dimension elements on the product page.
 
 import re
 from scraper_base import (
-    AppleStoreScraper, REGIONS, REFERENCE_REGION,
-    discover_models, debug_print,
+    AppleStoreScraper, discover_models, debug_print,
 )
 
 
@@ -231,11 +230,21 @@ class MacScraper(AppleStoreScraper):
             if storage_match and not p.get('Storage'):
                 p['Storage'] = f"{storage_match.group(1)}{storage_match.group(2).upper()}"
 
-        # Build descriptive names: "Mac mini M4 Pro" or "MacBook Air 13-inch"
-        # The bootstrap Name is generic ("Mac mini") — chip/size make it unique
+        # Extract screen size from ConfigKey (e.g. "13inch", "14inch", "15inch", "16inch")
+        for p in products:
+            ck = p.get('ConfigKey', '')
+            size_match = re.search(r'(\d+)inch', ck)
+            if size_match:
+                p['_screen_size'] = f'{size_match.group(1)}"'
+
+        # Build descriptive names: "MacBook Air 13\" M4" or "Mac mini M4 Pro"
         for p in products:
             base = p.get('Name', '')
             parts = [base]
+
+            # Add screen size if available
+            if p.get('_screen_size'):
+                parts.append(p['_screen_size'])
 
             # Add chip info
             if p.get('Chip'):

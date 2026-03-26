@@ -6,8 +6,7 @@ under different buy URLs but are combined into a single output file.
 """
 
 from scraper_base import (
-    AppleStoreScraper, REGIONS, REFERENCE_REGION,
-    discover_models_from_goto, debug_print, REQUEST_DELAY,
+    AppleStoreScraper, REGIONS, debug_print, REQUEST_DELAY,
     extract_products_from_metrics, extract_products_from_bootstrap,
 )
 import requests

@@ -43,7 +43,7 @@ def run_script(name, script):
                 break
         return name, True, summary
     except subprocess.TimeoutExpired:
-        return name, False, f"timed out after 300s"
+        return name, False, "timed out after 300s"
     except Exception as e:
         return name, False, str(e)
 
@@ -76,7 +76,7 @@ def main():
         print("Continuing with available data...\n")
 
     # Phase 2: Post-processing (sequential — each step depends on previous)
-    print(f"\nPhase 2: Post-processing...")
+    print("\nPhase 2: Post-processing...")
     for name, script in POST_STEPS:
         name, success, output = run_script(name, script)
         if not success:

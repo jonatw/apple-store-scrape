@@ -3,8 +3,7 @@ iPhone scraper — fetches iPhone product data from Apple Store across regions.
 """
 
 from scraper_base import (
-    AppleStoreScraper, REGIONS, REFERENCE_REGION,
-    discover_models, debug_print,
+    AppleStoreScraper, REGIONS, discover_models,
 )
 
 

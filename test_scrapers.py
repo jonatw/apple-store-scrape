@@ -11,7 +11,7 @@ import pandas as pd
 import json
 import os
 import sys
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 # Import shared framework
 import scraper_base
@@ -306,7 +306,7 @@ class TestAlignmentReport(unittest.TestCase):
             "": [{"SKU": "A1"}],
             "tw": [],
         }
-        with patch('builtins.print') as mock_print:
+        with patch('builtins.print'):
             results = scraper_base.validate_completeness(products_by_region)
         self.assertIsNotNone(results['TW']['warning'])
 
@@ -316,7 +316,7 @@ class TestAlignmentReport(unittest.TestCase):
             "": [{"SKU": f"A{i}"} for i in range(20)],  # 20 US products
             "tw": [{"SKU": f"A{i}"} for i in range(5)],  # only 5 TW products
         }
-        with patch('builtins.print') as mock_print:
+        with patch('builtins.print'):
             results = scraper_base.validate_completeness(products_by_region)
         self.assertIsNotNone(results['TW']['warning'])
 
@@ -622,7 +622,7 @@ def run_scraper_tests():
     runner = unittest.TextTestRunner(verbosity=2)
     result = runner.run(suite)
 
-    print(f"\nTest Summary:")
+    print("\nTest Summary:")
     print(f"Tests run: {result.testsRun}")
     print(f"Failures: {len(result.failures)}")
     print(f"Errors: {len(result.errors)}")
