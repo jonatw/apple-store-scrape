@@ -196,6 +196,64 @@ class MacScraper(AppleStoreScraper):
             for old, new in key_map.items():
                 if old in p:
                     p[new] = p.pop(old)
+
+        # If HTML spec extraction failed, parse specs from ConfigKey as fallback.
+        # ConfigKey formats vary by product:
+        #   Mac mini:    "m4-10-10", "m4pro-14-20"
+        #   MacBook Pro: "14inch-silver-standard-m5pro-18-20"
+        #   Mac Studio:  "m3ultra-28-60", "m4max-16-40"
+        #   MacBook Air: "13inch-midnight-10-8" (no chip name, just cores)
+        #   iMac:        "green-10-10" (color + cores)
+        #   MacBook Neo: "citrus-6-5-256gb" (color + cores + storage)
+        for p in products:
+            if p.get('Chip'):
+                continue
+            ck = p.get('ConfigKey', '')
+            if not ck:
+                continue
+
+            # Try to find chip name (m4, m5pro, m3ultra, etc.)
+            chip_match = re.search(r'(m\d+(?:pro|max|ultra)?)', ck, re.IGNORECASE)
+            if chip_match:
+                raw = chip_match.group(1).upper()
+                # "M4PRO" -> "M4 Pro", "M3ULTRA" -> "M3 Ultra"
+                chip = re.sub(r'(M\d+)(PRO|MAX|ULTRA)', lambda m: f"{m.group(1)} {m.group(2).title()}", raw)
+                p['Chip'] = chip
+
+            # Try to extract CPU/GPU core counts (two numbers like -18-20 or -10-10)
+            core_match = re.search(r'(\d+)-(\d+)(?:$|-)', ck)
+            if core_match and not p.get('CPU_Cores'):
+                p['CPU_Cores'] = core_match.group(1)
+                p['GPU_Cores'] = core_match.group(2)
+
+            # Try to extract storage from ConfigKey (e.g. "256gb", "512gb")
+            storage_match = re.search(r'(\d+)(gb|tb)', ck, re.IGNORECASE)
+            if storage_match and not p.get('Storage'):
+                p['Storage'] = f"{storage_match.group(1)}{storage_match.group(2).upper()}"
+
+        # Build descriptive names: "Mac mini M4 Pro" or "MacBook Air 13-inch"
+        # The bootstrap Name is generic ("Mac mini") — chip/size make it unique
+        for p in products:
+            base = p.get('Name', '')
+            parts = [base]
+
+            # Add chip info
+            if p.get('Chip'):
+                parts.append(p['Chip'])
+
+            # Add core counts if no chip name (for products like iMac, MacBook Air)
+            elif p.get('CPU_Cores') and p.get('GPU_Cores'):
+                parts.append(f"{p['CPU_Cores']}/{p['GPU_Cores']}-core")
+
+            # Add memory and storage if available
+            if p.get('Memory'):
+                parts.append(p['Memory'])
+            if p.get('Storage'):
+                parts.append(p['Storage'])
+
+            if len(parts) > 1:
+                p['Name'] = ' '.join(parts)
+
         return products
 
 

@@ -11,8 +11,8 @@ function copyJsonFilesPlugin() {
       // Source directory for JSON files (now only using src/data)
       const sourceDir = path.resolve(__dirname, 'src/data');
       
-      // Destination directory (the build output)
-      const destDir = path.resolve(__dirname, 'dist');
+      // Destination directory (the build output, matching fetch path data/)
+      const destDir = path.resolve(__dirname, 'dist/data');
       
       // Ensure destination directory exists
       if (!fs.existsSync(destDir)) {

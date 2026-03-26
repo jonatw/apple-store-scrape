@@ -190,23 +190,28 @@ def extract_products_from_bootstrap(soup, region_code):
             base_sku = base_part_number if base_part_number else strip_region_suffix(part_number)
 
             # Price lookup — Apple uses different key names across pages
+            # Price and config key
             price_key = (product.get('priceKey')
                          or product.get('fullPrice')
                          or product.get('price'))
             price_val = _parse_bootstrap_price(prices_map, price_key)
 
+            # priceKey is a configuration identifier shared across regions
+            # (e.g. "m4-10-10", "13inch-midnight-10-10") — used as merge key
+            config_key = price_key or ''
+
             # Name extraction
-            name = product.get('familyType', '')
-            if not name or name.islower():
+            # familyType is often generic ("MacBook Pro") or empty for bootstrap.
+            # Subclasses can improve names via post_process_products().
+            family = product.get('familyType', '')
+            if family and not family.islower():
+                name = family
+            else:
                 name = fallback_name or "Unknown Product"
 
             # Skip products with no usable identifier at all
             if not base_sku and not part_number and not name:
                 continue
-
-            # priceKey is a configuration identifier shared across regions
-            # (e.g. "m4-10-10", "13inch-midnight-10-10") — used as merge key
-            config_key = price_key or ''
 
             result.append({
                 "SKU": base_sku or part_number or f"unknown-{len(result)}",

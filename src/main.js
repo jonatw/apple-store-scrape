@@ -163,7 +163,7 @@ function calculatePriceStats(products) {
 async function loadProductData(product) {
   try {
     // Direct load from root directory
-    const response = await fetch(`${product}_data.json`);
+    const response = await fetch(`data/${product}_data.json`);
     if (!response.ok) {
       throw new Error(`Failed to load ${product} data: ${response.status}`);
     }
@@ -407,17 +407,14 @@ function renderProductTable(products) {
   
   tableBody.innerHTML = '';
   
-  // Headers (Unified for all products now)
-  let headersHTML = `
-    <th>Product Name</th>
-    <th>US Price (USD)</th>
-    <th>US+Fee (TWD)</th>
-    <th>Taiwan Price (TWD)</th>
-    <th>Diff. (%)</th>
-    <th>Recommended</th>
+  tableHead.innerHTML = `
+    <th>Product</th>
+    <th>US (USD)</th>
+    <th class="d-none d-md-table-cell">US+Fee (TWD)</th>
+    <th>TW (TWD)</th>
+    <th>Diff</th>
+    <th class="d-none d-md-table-cell">Rec.</th>
   `;
-  
-  tableHead.innerHTML = headersHTML;
   
   if (!products || products.length === 0) {
     tableBody.innerHTML = `
@@ -474,18 +471,15 @@ function renderProductTable(products) {
         }
     }
     
-    // Add Available Colors if consolidated
-    if (product.Available_Colors && product.Available_Colors !== 'Single Option') {
-         productNameDisplay += `<br><small class="text-muted"><i class="fas fa-palette me-1"></i>${product.Available_Colors}</small>`;
-    }
+    // Colors omitted from display — they don't affect price
     
     row.innerHTML = `
       <td>${productNameDisplay}</td>
       <td>${formatCurrency(usdPrice, 'USD')}</td>
-      <td>${formatCurrency(usdWithFeeTWD, 'TWD')}</td>
+      <td class="d-none d-md-table-cell">${formatCurrency(usdWithFeeTWD, 'TWD')}</td>
       <td>${formatCurrency(twdPrice, 'TWD')}</td>
       <td class="${diffClass}">${formatPercentage(differenceWithFee.toFixed(1))}</td>
-      <td>${recommendation}</td>
+      <td class="d-none d-md-table-cell">${recommendation}</td>
     `;
     
     tableBody.appendChild(row);
