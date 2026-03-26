@@ -133,7 +133,10 @@ def consolidate(df, product_type):
             all_colors.extend(extract_colors(item.get('PRODUCT_NAME', '')))
         unique_colors = sorted(set(c.title() for c in all_colors if len(c) > 1))
 
-        base['PRODUCT_NAME'] = clean_product_name(base.get('PRODUCT_NAME', ''))
+        # Mac names are already clean (built from specs in post_process_products),
+        # so skip color cleaning which would damage terms like "Nano-texture".
+        if product_type.lower() != 'mac':
+            base['PRODUCT_NAME'] = clean_product_name(base.get('PRODUCT_NAME', ''))
         base['Available_Colors'] = ', '.join(unique_colors) if unique_colors else 'Single Option'
         base['Color_Variants'] = len(items)
 

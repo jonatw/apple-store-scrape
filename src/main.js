@@ -440,47 +440,63 @@ function renderProductTable(products) {
     // Price difference style
     const diffClass = differenceWithFee > 0 ? 'price-higher' : differenceWithFee < 0 ? 'price-lower' : '';
     
-    // Purchase recommendation
-    let recommendation = '';
-    if (usdPrice <= 0 || twdPrice <= 0) {
-      recommendation = '<span class="badge bg-secondary">No Data</span>';
-    } else if (differenceWithFee > 2) {
-      recommendation = '<span class="badge bg-danger">Buy in US</span>';
-    } else if (differenceWithFee < -2) {
-      recommendation = '<span class="badge bg-success">Buy in Taiwan</span>';
-    } else {
-      recommendation = '<span class="badge bg-info">Similar</span>';
-    }
-    
-    // Construct Product Name with Specs (if Mac)
-    let productNameDisplay = product.PRODUCT_NAME;
-    
+    // Build product name cell safely (no innerHTML for user data)
+    const nameCell = document.createElement('td');
+    nameCell.textContent = product.PRODUCT_NAME;
+
     if (currentProduct === 'mac') {
         const specs = [];
         if (product.Chip) specs.push(product.Chip);
         if (product.Memory) specs.push(product.Memory);
         if (product.Storage) specs.push(product.Storage);
-        
-        // Optional: Add core counts if available
         if (product.CPU_Cores && product.GPU_Cores) {
-             specs.push(`${product.CPU_Cores}C CPU / ${product.GPU_Cores}C GPU`);
+            specs.push(`${product.CPU_Cores}C CPU / ${product.GPU_Cores}C GPU`);
         }
-        
         if (specs.length > 0) {
-            productNameDisplay += `<br><small class="text-muted">${specs.join(' • ')}</small>`;
+            const specEl = document.createElement('small');
+            specEl.className = 'text-muted d-block';
+            specEl.textContent = specs.join(' \u2022 ');
+            nameCell.appendChild(specEl);
         }
     }
-    
-    // Colors omitted from display — they don't affect price
-    
-    row.innerHTML = `
-      <td>${productNameDisplay}</td>
-      <td>${formatCurrency(usdPrice, 'USD')}</td>
-      <td class="d-none d-md-table-cell">${formatCurrency(usdWithFeeTWD, 'TWD')}</td>
-      <td>${formatCurrency(twdPrice, 'TWD')}</td>
-      <td class="${diffClass}">${formatPercentage(differenceWithFee.toFixed(1))}</td>
-      <td class="d-none d-md-table-cell">${recommendation}</td>
-    `;
+
+    // Build recommendation badge
+    let recBadge = 'No Data';
+    let recClass = 'bg-secondary';
+    if (usdPrice > 0 && twdPrice > 0) {
+      if (differenceWithFee > 2) { recBadge = 'Buy in US'; recClass = 'bg-danger'; }
+      else if (differenceWithFee < -2) { recBadge = 'Buy in Taiwan'; recClass = 'bg-success'; }
+      else { recBadge = 'Similar'; recClass = 'bg-info'; }
+    }
+
+    // Build cells using DOM API (safe against XSS)
+    const usPriceCell = document.createElement('td');
+    usPriceCell.textContent = formatCurrency(usdPrice, 'USD');
+
+    const usFeeCell = document.createElement('td');
+    usFeeCell.className = 'd-none d-md-table-cell';
+    usFeeCell.textContent = formatCurrency(usdWithFeeTWD, 'TWD');
+
+    const twPriceCell = document.createElement('td');
+    twPriceCell.textContent = formatCurrency(twdPrice, 'TWD');
+
+    const diffCell = document.createElement('td');
+    diffCell.className = diffClass;
+    diffCell.textContent = formatPercentage(differenceWithFee.toFixed(1));
+
+    const recCell = document.createElement('td');
+    recCell.className = 'd-none d-md-table-cell';
+    const badge = document.createElement('span');
+    badge.className = `badge ${recClass}`;
+    badge.textContent = recBadge;
+    recCell.appendChild(badge);
+
+    row.appendChild(nameCell);
+    row.appendChild(usPriceCell);
+    row.appendChild(usFeeCell);
+    row.appendChild(twPriceCell);
+    row.appendChild(diffCell);
+    row.appendChild(recCell);
     
     tableBody.appendChild(row);
   });

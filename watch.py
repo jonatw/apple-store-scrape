@@ -51,7 +51,7 @@ class WatchScraper(AppleStoreScraper):
         return f"https://www.apple.com{region_prefix}/shop/buy-watch/{model}"
 
     def post_process_products(self, products, soup):
-        """Enrich Watch product names with case size and material from bootstrap dimensions."""
+        """Enrich Watch product names with case size, material, and connectivity."""
         for p in products:
             bp = p.get('_bootstrap_product')
             if not bp:
@@ -62,6 +62,13 @@ class WatchScraper(AppleStoreScraper):
             if case_size or case_material:
                 name = p.get('Name', '')
                 p['Name'] = f"{name} {case_size} {case_material}".strip()
+
+            # Add GPS vs GPS+Cellular from ConfigKey
+            ck = p.get('ConfigKey', '')
+            if 'gpscell' in ck:
+                p['Name'] = p.get('Name', '') + ' GPS+Cellular'
+            elif '-gps' in ck and 'gpscell' not in ck:
+                p['Name'] = p.get('Name', '') + ' GPS'
         return products
 
 

@@ -230,14 +230,26 @@ class MacScraper(AppleStoreScraper):
             if storage_match and not p.get('Storage'):
                 p['Storage'] = f"{storage_match.group(1)}{storage_match.group(2).upper()}"
 
-        # Extract screen size from ConfigKey (e.g. "13inch", "14inch", "15inch", "16inch")
+        # Extract additional attributes from ConfigKey for name building
         for p in products:
             ck = p.get('ConfigKey', '')
+
+            # Screen size: "13inch", "14inch", "15inch", "16inch"
             size_match = re.search(r'(\d+)inch', ck)
             if size_match:
                 p['_screen_size'] = f'{size_match.group(1)}"'
 
-        # Build descriptive names: "MacBook Air 13\" M4" or "Mac mini M4 Pro"
+            # Finish type: nano_texture vs standard (affects price on MacBook Pro)
+            if 'nano_texture' in ck or 'nano-texture' in ck:
+                p['_finish'] = 'Nano-texture'
+
+            # Form factor for Mac Pro: desktop-feet, desktop-wheels, rackmount
+            if 'rackmount' in ck:
+                p['_form'] = 'Rack'
+            elif 'wheels' in ck:
+                p['_form'] = 'Wheels'
+
+        # Build descriptive names that uniquely identify each configuration
         for p in products:
             base = p.get('Name', '')
             parts = [base]
@@ -246,12 +258,15 @@ class MacScraper(AppleStoreScraper):
             if p.get('_screen_size'):
                 parts.append(p['_screen_size'])
 
-            # Add chip info
+            # Add chip and core info
             if p.get('Chip'):
-                parts.append(p['Chip'])
-
-            # Add core counts if no chip name (for products like iMac, MacBook Air)
+                chip_str = p['Chip']
+                # Append core counts to disambiguate configs (e.g. M5 Pro 15/16 vs M5 Pro 18/20)
+                if p.get('CPU_Cores') and p.get('GPU_Cores'):
+                    chip_str += f" {p['CPU_Cores']}/{p['GPU_Cores']}-core"
+                parts.append(chip_str)
             elif p.get('CPU_Cores') and p.get('GPU_Cores'):
+                # No chip name available (iMac, MacBook Air) — just show cores
                 parts.append(f"{p['CPU_Cores']}/{p['GPU_Cores']}-core")
 
             # Add memory and storage if available
@@ -259,6 +274,14 @@ class MacScraper(AppleStoreScraper):
                 parts.append(p['Memory'])
             if p.get('Storage'):
                 parts.append(p['Storage'])
+
+            # Add finish type (nano-texture costs more)
+            if p.get('_finish'):
+                parts.append(p['_finish'])
+
+            # Add form factor for Mac Pro
+            if p.get('_form'):
+                parts.append(p['_form'])
 
             if len(parts) > 1:
                 p['Name'] = ' '.join(parts)
