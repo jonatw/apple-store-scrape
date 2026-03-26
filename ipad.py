@@ -1,515 +1,68 @@
-import requests
-from bs4 import BeautifulSoup
-import json
-import pandas as pd
-import time
-import re
-
-# Disclaimer
 """
-This tool is for personal research and comparison only. Please respect Apple's terms of service.
-Do not run this script too frequently to avoid overloading Apple's servers.
+iPad scraper — fetches iPad product data from Apple Store across regions.
 """
 
-# ==================== CONFIGURATION ====================
+from scraper_base import (
+    AppleStoreScraper, REGIONS, REFERENCE_REGION,
+    discover_models, debug_print,
+)
 
-# Define regions to scrape
-# Format: region_code: [display_name, currency_code, locale, currency_symbol]
-# Use empty string "" for US as it has no region prefix in URL
-REGIONS = {
-    "": ["US", "USD", "en-us", "$"],       # United States
-    "tw": ["TW", "TWD", "zh-tw", "NT$"],   # Taiwan
-    # Uncomment or add more regions as needed:
-    # "jp": ["JP", "JPY", "ja-jp", "¥"],      # Japan
-    # "uk": ["UK", "GBP", "en-gb", "£"],      # United Kingdom
-    # "au": ["AU", "AUD", "en-au", "A$"],     # Australia
-    # "ca": ["CA", "CAD", "en-ca", "C$"],     # Canada
-    # "de": ["DE", "EUR", "de-de", "€"],      # Germany
-    # "fr": ["FR", "EUR", "fr-fr", "€"],      # France
-}
 
-# Reference region for product naming (first one will be used as reference)
-REFERENCE_REGION = list(REGIONS.keys())[0]
+class IPadScraper(AppleStoreScraper):
+    product_name = "iPad"
+    output_file = "ipad_products_merged.csv"
 
-# Request delay to avoid overloading servers (seconds)
-REQUEST_DELAY = 1
+    # Last-resort fallback — only used if Apple's website is completely unreachable.
+    DEFAULT_MODELS = ["ipad-pro", "ipad-air", "ipad", "ipad-mini"]
 
-# Set to True to print debug information
-DEBUG = True
+    def get_models(self):
+        all_models = set()
+        for region_code in REGIONS:
+            region_prefix = f"/{region_code}" if region_code else ""
+            url = f"https://www.apple.com{region_prefix}/shop/buy-ipad"
+            models = discover_models(
+                region_code, url,
+                link_pattern='/shop/buy-ipad/',
+                default_models=self.DEFAULT_MODELS,
+            )
+            # Filter to valid iPad models
+            for m in models:
+                if m.startswith('ipad-') or m == 'ipad':
+                    all_models.add(m)
+        return list(all_models)
 
-# ==================== FUNCTIONS ====================
+    def build_product_url(self, model, region_code):
+        region_prefix = f"/{region_code}" if region_code else ""
+        return f"https://www.apple.com{region_prefix}/shop/buy-ipad/{model}"
 
-def debug_print(message):
-    """Print debug message if DEBUG is enabled"""
-    if DEBUG:
-        print(f"[DEBUG] {message}")
 
 def get_available_models(region_code=""):
-    """
-    Get available iPad models from Apple store page
-    
-    Parameters:
-    region_code (str): Region code, e.g., "tw" for Taiwan, "" for US
-    
-    Returns:
-    list: List of available iPad models, e.g., ["ipad-pro", "ipad-air", ...]
-    """
+    """Backward-compatible function for tests."""
     region_prefix = f"/{region_code}" if region_code else ""
     url = f"https://www.apple.com{region_prefix}/shop/buy-ipad"
-    
-    default_models = ["ipad-pro", "ipad-air", "ipad", "ipad-mini"]
-    
-    try:
-        response = requests.get(url)
-        if response.status_code != 200:
-            debug_print(f"Cannot access {url}, using default model list")
-            return default_models
+    return discover_models(
+        region_code, url,
+        link_pattern='/shop/buy-ipad/',
+        default_models=IPadScraper.DEFAULT_MODELS,
+    )
 
-        # Parse HTML
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        # Find all links to buy-ipad pages
-        ipad_links = []
-        for link in soup.find_all('a', href=True):
-            href = link.get('href')
-            if '/shop/buy-ipad/' in href:
-                # Extract model part (e.g., extract ipad-pro from /tw/shop/buy-ipad/ipad-pro)
-                parts = href.split('/shop/buy-ipad/')
-                if len(parts) > 1:
-                    model = parts[1].split('?')[0].split('#')[0]
-                    # Ensure it's a valid iPad model
-                    if model.startswith('ipad-') or model == 'ipad':
-                        ipad_links.append(model)
-
-        # Remove duplicates and return
-        unique_models = list(set(ipad_links))
-
-        if not unique_models:
-            debug_print(f"Could not find iPad models at {url}, using default model list")
-            return default_models
-
-        return unique_models
-
-    except Exception as e:
-        debug_print(f"Error getting iPad models: {e}, using default model list")
-        return default_models
 
 def extract_product_details(url, region_code=""):
-    """
-    Extract product details from Apple store page
-    
-    Parameters:
-    url (str): URL of the Apple store product page
-    region_code (str): Region code to identify the region
-    
-    Returns:
-    list: List of dictionaries containing product details
-    """
-    # Rate limiting
-    time.sleep(REQUEST_DELAY)
-    
-    # Get region display name
-    region_display = REGIONS.get(region_code, ["Unknown"])[0]
-    
-    debug_print(f"Fetching products from {url} for region {region_display}")
-    
-    try:
-        response = requests.get(url)
-        if response.status_code != 200:
-            debug_print(f"Failed to retrieve {url}. Status code: {response.status_code}")
-            return []
-        
-        # Parse the HTML content
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        product_details = []
-        
-        # Strategy 1: Try "metrics" script (standard for most pages)
-        json_script = soup.find('script', {'type': 'application/json', 'id': 'metrics'})
-        if json_script:
-            try:
-                json_data = json.loads(json_script.string)
-                data = json_data.get('data', {})
-                products = data.get('products', [])
-                
-                if products:
-                    debug_print(f"Found {len(products)} products via metrics for region {region_display}")
-                    for product in products:
-                        sku = product.get("sku")
-                        name = product.get("name", "")
-                        price = product.get("price", {}).get("fullPrice")
-                        part_number = product.get("partNumber", "")
-                        
-                        # Derive BaseSKU
-                        base_sku = sku 
-                        if part_number:
-                             # Remove region suffix like /A, LL/A, TA/A
-                             base_sku = re.sub(r'[A-Z]{2}/[A-Z]$', '', part_number)
-                             base_sku = re.sub(r'/[A-Z]$', '', base_sku)
-                        
-                        product_details.append({
-                            "SKU": base_sku,
-                            "OriginalSKU": sku or part_number,
-                            "Name": name,
-                            "Price": price,
-                            "Region": region_display,
-                            "Region_Code": region_code,
-                            "PartNumber": part_number
-                        })
-                    return product_details
-            except Exception as e:
-                debug_print(f"Error parsing metrics JSON: {e}")
+    """Backward-compatible function for tests."""
+    from scraper_base import fetch_product_page
+    return fetch_product_page(url, region_code)
 
-        # Strategy 2: Try "PRODUCT_SELECTION_BOOTSTRAP" (fallback for selection pages)
-        debug_print("Metrics strategy failed or found no products, trying PRODUCT_SELECTION_BOOTSTRAP")
-        
-        # Find script containing the bootstrap variable
-        script_content = None
-        for script in soup.find_all('script'):
-            if script.string and 'window.PRODUCT_SELECTION_BOOTSTRAP' in script.string:
-                script_content = script.string
-                break
-        
-        if script_content:
-            try:
-                # Locate productSelectionData
-                key_index = script_content.find('productSelectionData:')
-                if key_index != -1:
-                    # Find start of the JSON object (first '{' after key)
-                    start_index = script_content.find('{', key_index)
-                    if start_index != -1:
-                        # Extract JSON object by balancing braces
-                        brace_count = 0
-                        json_str = ""
-                        for i in range(start_index, len(script_content)):
-                            char = script_content[i]
-                            if char == '{':
-                                brace_count += 1
-                            elif char == '}':
-                                brace_count -= 1
-                            
-                            json_str += char
-                            
-                            if brace_count == 0:
-                                break
-                        
-                        if json_str:
-                            bootstrap_data = json.loads(json_str)
-                            
-                            products = bootstrap_data.get('products', [])
-                            display_values = bootstrap_data.get('displayValues', {})
-                            prices_map = display_values.get('prices', {})
-                            
-                            if products:
-                                 debug_print(f"Found {len(products)} products via bootstrap for region {region_display}")
-                                 for product in products:
-                                    part_number = product.get('partNumber')
-                                    base_part_number = product.get('basePartNumber')
-                                    
-                                    # Try to find price info using 'fullPrice' OR 'price' key
-                                    price_key = product.get('fullPrice')
-                                    if not price_key:
-                                        price_key = product.get('price')
-                                        
-                                    price_info = prices_map.get(price_key, {})
-                                    
-                                    # Extract numeric price
-                                    price_val = None
-                                    curr_price = price_info.get('currentPrice', {})
-                                    if curr_price:
-                                        raw_amount = curr_price.get('raw_amount')
-                                        if raw_amount:
-                                            try:
-                                                price_val = float(raw_amount.replace(',', ''))
-                                            except:
-                                                pass
-                                    
-                                    # Name extraction
-                                    name = product.get('familyType', '')
-                                    if not name:
-                                        name = soup.find('title').text.split('-')[0].strip() if soup.find('title') else "Unknown Product"
-                                    
-                                    # Use basePartNumber as SKU for merging if available, else derive from partNumber
-                                    base_sku = base_part_number
-                                    if not base_sku and part_number:
-                                         base_sku = re.sub(r'[A-Z]{2}/[A-Z]$', '', part_number)
-                                         base_sku = re.sub(r'/[A-Z]$', '', base_sku)
-                                    
-                                    product_details.append({
-                                        "SKU": base_sku,
-                                        "OriginalSKU": part_number,
-                                        "Name": name,
-                                        "Price": price_val,
-                                        "Region": region_display,
-                                        "Region_Code": region_code,
-                                        "PartNumber": part_number
-                                    })
-                                 return product_details
-            except Exception as e:
-                debug_print(f"Error parsing bootstrap JSON: {e}")
-
-        return product_details
-
-    except Exception as e:
-        debug_print(f"Error extracting products from {url}: {e}")
-        return []
-
-def get_all_products():
-    """
-    Get all products from all configured regions
-    
-    Returns:
-    list: Combined list of all product details from all regions
-    """
-    # Get all unique models from all regions
-    all_models = set()
-    for region_code in REGIONS.keys():
-        models = get_available_models(region_code)
-        all_models.update(models)
-    
-    debug_print(f"Found models across all regions: {', '.join(all_models)}")
-    
-    # Fetch products for each model from each region
-    all_products = []
-    for model in all_models:
-        for region_code in REGIONS.keys():
-            region_prefix = f"/{region_code}" if region_code else ""
-            url = f"https://www.apple.com{region_prefix}/shop/buy-ipad/{model}"
-            products = extract_product_details(url, region_code)
-            all_products.extend(products)
-    
-    return all_products
 
 def merge_product_data(product_data):
-    """
-    Merge product data from all regions
-    
-    Parameters:
-    product_data (list): List of product dictionaries
-    
-    Returns:
-    DataFrame: Merged product data with columns for each region
-    """
-    # Convert to DataFrame
-    df = pd.DataFrame(product_data)
-    
-    if df.empty:
-        debug_print("No product data to merge!")
-        return pd.DataFrame()
-    
-    # Create separate DataFrames for each region
-    region_dfs = {}
-    for region_code, region_info in REGIONS.items():
-        region_display = region_info[0]
-        region_data = df[df['Region_Code'] == region_code].copy()
-        
-        # Ensure uniqueness of SKUs
-        region_data = region_data.drop_duplicates(subset='SKU')
-        
-        # Rename columns to include region
-        region_data.rename(columns={
-            'Price': f'Price_{region_display}',
-            'Name': f'Name_{region_display}',
-            'PartNumber': f'PartNumber_{region_display}'
-        }, inplace=True)
-        
-        # Store for merging
-        region_dfs[region_code] = region_data
-    
-    # Start with the reference region
-    ref_region = REFERENCE_REGION
-    ref_display = REGIONS[ref_region][0]
-    
-    if ref_region not in region_dfs:
-        debug_print(f"Reference region {ref_display} not found in data!")
-        return pd.DataFrame()
-    
-    # Get the base dataframe
-    merged_df = region_dfs[ref_region][['SKU', f'Price_{ref_display}', f'Name_{ref_display}']].copy()
-    
-    # Merge with other regions using SKU as the key
-    for region_code, region_df in region_dfs.items():
-        if region_code == ref_region:
-            continue
-        
-        region_display = REGIONS[region_code][0]
-        
-        # Select columns to merge
-        columns_to_merge = ['SKU', f'Price_{region_display}', f'Name_{region_display}']
-            
-        merged_df = pd.merge(
-            merged_df, 
-            region_df[columns_to_merge], 
-            on='SKU', 
-            how='outer'
-        )
-    
-    # Fill missing values
-    for region_code, region_info in REGIONS.items():
-        region_display = region_info[0]
-        merged_df[f'Price_{region_display}'] = merged_df[f'Price_{region_display}'].fillna(0)
-        merged_df[f'Name_{region_display}'] = merged_df[f'Name_{region_display}'].fillna('')
-    
-    # Create final output dataframe with columns in the desired order:
-    # 1. SKU (common for all regions, so no need for region prefix)
-    # 2. Price columns for each region 
-    # 3. Product name from reference region
-    
-    # Prepare the price columns
-    price_columns = []
-    
-    for region_code, region_info in REGIONS.items():
-        region_display = region_info[0]
-        price_columns.append(f'Price_{region_display}')
-    
-    # Create the output dataframe with columns in the specified order
-    output_columns = ['SKU'] + price_columns + [f'Name_{ref_display}']
-    output_df = merged_df[output_columns].copy()
-    
-    # Rename the product name column
-    output_df = output_df.rename(columns={f'Name_{ref_display}': 'PRODUCT_NAME'})
-    
-    return output_df
+    """Backward-compatible function for tests."""
+    from scraper_base import merge_product_data as _merge
+    return _merge(product_data)
 
-# ==================== MAIN EXECUTION ====================
-
-def consolidate_similar_colors(df, price_tolerance=0.02):
-    """ROBUST color consolidation - bulletproof version"""
-    from robust_consolidation import robust_consolidate_colors
-    return robust_consolidate_colors(df, price_tolerance, debug=False)
-    """
-    Consolidate iPad products with same specs but different colors
-    Removes color information completely for clean model-only output
-    """
-    if df.empty:
-        return df
-    
-    # Find the product name column
-    product_name_col = None
-    for col in df.columns:
-        if 'Name_' in col or col == 'PRODUCT_NAME':
-            product_name_col = col
-            break
-    
-    if not product_name_col:
-        debug_print("No product name column found, skipping consolidation")
-        return df
-    
-    # iPad-specific color patterns
-    color_patterns = [
-        r'\b(space\s+gray|rose\s+gold|sky\s+blue|pink|blue|green|purple)\b',
-        r'\b(black|white|silver|gold|gray|grey|red|yellow|orange)\b',
-        r'\b(midnight|starlight|natural|graphite|jet\s+black|product\s+red)\b'
-    ]
-    
-    def extract_base_name_and_colors(product_name):
-        """Extract base model name and colors separately"""
-        if not product_name:
-            return product_name, []
-        
-        name_lower = product_name.lower()
-        found_colors = []
-        
-        # Extract colors (longest patterns first)
-        for pattern in color_patterns:
-            matches = re.findall(pattern, name_lower, re.IGNORECASE)
-            found_colors.extend([m.strip().title() if isinstance(m, str) else ' '.join(m).strip().title() for m in matches])
-            # Remove found colors from name
-            name_lower = re.sub(pattern, ' ', name_lower, flags=re.IGNORECASE)
-        
-        # Clean up base name - remove trailing dashes and extra spaces
-        base_name = re.sub(r'\s+', ' ', name_lower).strip()  # Normalize spaces
-        base_name = re.sub(r'\s*-\s*$', '', base_name)       # Remove trailing " - " or " -" or "- "
-        base_name = re.sub(r'\s*-\s+$', '', base_name)       # Remove trailing "- "
-        base_name = base_name.strip().title()               # Final cleanup and title case
-        return base_name, list(set(found_colors))
-    
-    # Add base name and color extraction
-    df_copy = df.copy()
-    base_names = []
-    colors_list = []
-    
-    for idx, row in df_copy.iterrows():
-        base_name, colors = extract_base_name_and_colors(row[product_name_col])
-        base_names.append(base_name)
-        colors_list.append(colors)
-    
-    df_copy['Base_Name'] = base_names
-    df_copy['Colors'] = colors_list
-    
-    # Group by base name and check if consolidation is appropriate
-    consolidated_rows = []
-    
-    for base_name, group in df_copy.groupby('Base_Name'):
-        if len(group) <= 1:
-            # Single variant, keep as is
-            for _, row in group.iterrows():
-                consolidated_rows.append(row)
-        else:
-            # Multiple variants - check if prices are similar
-            price_cols = [col for col in group.columns if col.startswith('Price_')]
-            
-            should_consolidate = True
-            for price_col in price_cols:
-                prices = group[price_col].dropna()
-                if len(prices) > 1:
-                    price_range = max(prices) - min(prices)
-                    avg_price = sum(prices) / len(prices)
-                    if avg_price > 0 and price_range / avg_price > price_tolerance:
-                        should_consolidate = False
-                        break
-            
-            if should_consolidate and len(group) > 1:
-                # Consolidate: use first row as template, update name
-                consolidated = group.iloc[0].copy()
-                consolidated[product_name_col] = base_name
-                debug_print(f"Consolidated {len(group)} color variants into single entry: '{base_name}'")
-                consolidated_rows.append(consolidated)
-            else:
-                # Don't consolidate - keep separate (prices differ significantly)
-                for _, row in group.iterrows():
-                    consolidated_rows.append(row)
-    
-    # Create result DataFrame
-    result_df = pd.DataFrame(consolidated_rows)
-    
-    # Remove helper columns
-    result_df = result_df.drop(['Base_Name', 'Colors'], axis=1, errors='ignore')
-    
-    return result_df
 
 def main():
-    """Main execution function"""
-    print("Starting iPad product scraper...")
-    print(f"Configured regions: {', '.join([info[0] for info in REGIONS.values()])}")
-    
-    # Get all products from all regions
-    all_products = get_all_products()
-    
-    # Merge product data
-    merged_data = merge_product_data(all_products)
-    
-    # Apply color consolidation (remove color information)
-    merged_data = consolidate_similar_colors(merged_data)
-    
-    # Display results
-    print("\nResults:")
-    print(merged_data)
-    
-    # Save consolidated results to CSV
-    output_file = 'ipad_products_merged.csv'
-    merged_data.to_csv(output_file, index=False, encoding='utf-8-sig')
-    print(f"\nSaved consolidated results to {output_file}")
-    
-    # Display stats
-    print(f"\nTotal unique products found: {len(merged_data)}")
-    for region_code, region_info in REGIONS.items():
-        region_display = region_info[0]
-        price_col = f'Price_{region_display}'
-        
-        if price_col in merged_data.columns:
-            non_zero_prices = (merged_data[price_col] > 0).sum()
-            print(f"Products found in {region_display}: {non_zero_prices}")
+    scraper = IPadScraper()
+    scraper.run()
+
 
 if __name__ == "__main__":
     main()

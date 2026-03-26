@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(python3:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run test*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run scrape:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(SKIP_NETWORK_TESTS=1 python3 test_scrapers.py:*)",
+      "Bash(python3 -m unittest:*)",
+      "Bash(pip install:*)",
+      "Bash(npm install:*)",
+      "Bash(npm ci:*)",
+      "WebFetch(domain:www.apple.com)",
+      "WebFetch(domain:www.apple.com.tw)"
+    ],
+    "deny": []
+  }
+}

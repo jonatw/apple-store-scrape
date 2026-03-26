@@ -1,329 +1,130 @@
 # Apple Store Scraper
 
-Apple Store Scraper is a tool for scraping iPhone and iPad product pricing information from the Apple online store. This tool allows for comparison of Apple product prices across multiple regions (currently configured for the United States and Taiwan), helping consumers understand price differences across different markets.
+A tool for comparing Apple product prices across regions (US and Taiwan). Scrapes all major Apple product categories, consolidates color variants, and serves a responsive comparison website.
 
 **Live Demo**: [https://jonatw.github.io/apple-store-scrape/](https://jonatw.github.io/apple-store-scrape/)
 
 ## Features
 
-- Scrapes the latest iPhone and iPad product information from Apple's online store
-- Dynamically detects available iPhone and iPad models from Apple's website
-- Supports multi-region comparison (configurable through REGIONS dictionary)
-- Dynamically extracts colors from product names rather than using hardcoded lists
-- Uses standardized product names for accurate product matching across regions
-- Automatically organizes data into CSV format with region-specific columns
-- Intelligent product matching system that works across different regions
-- Automatically fetches the latest exchange rates from Cathay Bank
-- Daily automated updates through GitHub Actions
-- Responsive web interface with dark mode support
-- Interactive exchange rate and foreign transaction fee settings
-- Search functionality for finding specific products
+- Scrapes **all Apple product categories**: iPhone, iPad, Mac, Apple Watch, AirPods, Apple TV, HomePod
+- Dynamic model discovery — automatically detects current products from Apple's website
+- Cross-region price matching with dual-strategy extraction (metrics JSON + bootstrap JS)
+- Smart color variant consolidation — merges identical products differing only by color
+- Automatic USD/TWD exchange rate fetching from Cathay Bank
+- Daily automated updates via GitHub Actions
+- Responsive web interface with dark mode, search, and interactive settings
 
 ## Requirements
 
-- Python 3.6+
-- Required Python packages:
-  - requests==2.32.3
-  - beautifulsoup4==4.12.3
-  - pandas==2.2.3
-- Node.js and npm for web interface
+- Python 3.10+
+- Node.js 20+
 
-## Installation
+## Quick Start
 
-1. Clone this repository:
 ```bash
-git clone https://github.com/jonatw/apple-store-scrape.git
-cd apple-store-scrape
-```
-
-2. Create a virtual environment and install Python dependencies:
-```bash
-python -m venv .venv
-source .venv/bin/activate  # On Linux/macOS
-# or
-.venv\Scripts\activate     # On Windows
-
+# Setup
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-```
-
-3. Install Node.js dependencies:
-```bash
 npm install
-```
 
-## Usage
-
-### Local Development
-
-1. Run the scraper to gather the latest product data:
-```bash
+# Scrape all products, consolidate, convert to JSON
 npm run scrape
-```
-This command executes both iPhone and iPad scrapers, fetches the latest exchange rate, and converts the data to JSON format.
 
-2. Start the development server:
-```bash
+# Start dev server
 npm run dev
-```
-This will start the Vite development server and open the web interface in your default browser.
-
-3. Build for production:
-```bash
-npm run build
-```
-This will generate optimized static files in the `dist` directory.
-
-4. Preview the production build locally:
-```bash
-npm run preview
-```
-
-### Automated Workflows with GitHub Actions
-
-This project includes a GitHub Actions workflow that automatically:
-
-1. Runs the scrapers daily to fetch the latest Apple product prices
-2. Fetches the latest USD/TWD exchange rate
-3. Converts the data to JSON format
-4. Builds the web interface
-5. Deploys to GitHub Pages
-
-You can also manually trigger the workflow from the Actions tab in your GitHub repository.
-
-## Configuration
-
-### Scraper Configuration
-
-Both scraper scripts (`iphone.py` and `ipad.py`) have a configuration section at the top where you can:
-
-- Modify the `REGIONS` dictionary to add or remove regions
-- Change the `REFERENCE_REGION` for product naming
-- Adjust the `REQUEST_DELAY` to control the rate of requests
-- Toggle `DEBUG` mode for verbose output
-
-Example to add Japan as a region:
-```python
-REGIONS = {
-    "": ["US", "USD", "en-us", "$"],       # United States
-    "tw": ["TW", "TWD", "zh-tw", "NT$"],   # Taiwan
-    "jp": ["JP", "JPY", "ja-jp", "¥"],      # Japan
-}
-```
-
-### Web Interface Configuration
-
-You can customize the exchange rate and foreign transaction fee in the web interface. These settings are saved in the browser's local storage for future visits. The web interface includes:
-
-- Dark/light theme toggle that respects system preferences
-- Responsive design for mobile and desktop
-- Search functionality for filtering products
-- Interactive settings panel for adjusting exchange rates and fees
-- Price difference calculations with and without foreign transaction fees
-- Product recommendation based on price comparison
-
-## Data Format
-
-### Scraped CSV Data
-
-#### iPhone CSV Format
-The iPhone CSV file contains the following structure:
-- Region-specific SKU columns (e.g., `SKU_US`, `SKU_TW`)
-- Region-specific price columns (e.g., `Price_US`, `Price_TW`)
-- `PRODUCT_NAME` - The product name from the reference region
-
-#### iPad CSV Format
-The iPad CSV file contains the following structure:
-- `SKU` - Common identifier across regions
-- Region-specific price columns (e.g., `Price_US`, `Price_TW`)
-- `PRODUCT_NAME` - The product name from the reference region
-
-### Converted JSON Data
-
-The CSV data is converted to a structured JSON format for use by the web interface:
-
-```json
-{
-  "metadata": {
-    "lastUpdated": "2025-03-29T12:00:00.000Z",
-    "exchangeRates": { "USD": 1.0, "TWD": 31.5 },
-    "regions": ["US", "TW"],
-    "productType": "iphone",
-    "totalProducts": 40
-  },
-  "products": [
-    {
-      "SKU_US": "ABCD1234",
-      "SKU_TW": "EFGH5678",
-      "Price_US": 999,
-      "Price_TW": 31900,
-      "PRODUCT_NAME": "iPhone 16 Pro 128GB Black Titanium",
-      "price_difference_percent": 0.8,
-      "product_type": "iphone"
-    },
-    // Additional products...
-  ]
-}
 ```
 
 ## Project Structure
 
 ```
 apple-store-scrape/
-│
-├── .github/workflows/         # GitHub Actions workflow definitions
-│   └── scrape-and-deploy.yml  # Daily scraping and deployment workflow
-│
-├── src/                       # Web interface source files and data
-│   ├── data/                  # JSON data for web interface
-│   │   ├── index.json         # Data index file
-│   │   ├── iphone_data.json   # iPhone price data
-│   │   ├── ipad_data.json     # iPad price data
-│   │   └── exchange_rate.json # Current exchange rate data
-│   ├── icons/                 # App icons
-│   ├── index.html             # Main HTML template
-│   ├── main.js                # JavaScript functionality
-│   └── manifest.json          # PWA manifest
-│
-├── .venv/                     # Python virtual environment
-├── dist/                      # Compiled output (generated by build)
-│
-├── iphone.py                  # iPhone data scraping script
-├── iphone_products_merged.csv # iPhone data output (CSV)
-├── ipad.py                    # iPad data scraping script
-├── ipad_products_merged.csv   # iPad data output (CSV)
-├── convert_to_json.py         # Script to convert CSV to JSON and fetch exchange rates
-│
-├── package.json               # Node.js dependencies and scripts
-├── vite.config.js             # Vite configuration
-├── README.md                  # Project documentation
-├── TECHNICAL_SPEC.md          # Technical specifications
-└── requirements.txt           # Python dependencies
+├── scraper_base.py              # Shared scraping framework (REGIONS, extraction, merge)
+├── iphone.py                    # iPhone scraper
+├── ipad.py                      # iPad scraper
+├── mac.py                       # Mac scraper (with spec extraction)
+├── watch.py                     # Apple Watch scraper
+├── airpods.py                   # AirPods scraper
+├── tvhome.py                    # Apple TV & HomePod scraper
+├── smart_consolidate_colors.py  # Color variant consolidation
+├── convert_to_json.py           # CSV → JSON + exchange rate
+├── test_scrapers.py             # Test suite
+├── src/                         # Frontend source
+│   ├── index.html
+│   ├── js/main.js
+│   ├── scss/
+│   └── data/                    # Generated JSON (not committed)
+├── .github/workflows/           # GitHub Actions CI/CD
+├── e2e/                         # Playwright E2E tests
+├── CLAUDE.md                    # AI development guide
+└── TECHNICAL_SPEC.md            # Detailed technical specification
 ```
 
 ## How It Works
 
-### Data Collection Pipeline
+### Architecture
 
-1. **Model Detection**:
-   - Dynamically identify available models from Apple's website
-   - Fallback to default model list if website structure changes
+All 6 scrapers inherit from a shared framework (`scraper_base.py`) that handles:
+- Region configuration, rate limiting, and error handling
+- Dual-strategy product extraction (metrics JSON + bootstrap JS)
+- Cross-region merge with automatic alignment reporting
+- Dynamic model discovery from Apple's landing pages
 
-2. **Data Scraping**:
-   - Iterate through detected models for each configured region
-   - Use `requests` to access Apple's official product pages
-   - Parse HTML content using `BeautifulSoup`
-   - Extract JSON data containing product information
+### Data Pipeline
 
-3. **Data Processing**:
-   - For iPhone: Use standardized product names for matching across regions
-   - For iPad: Use SKU for matching products
-   - Process data for each region separately
-   - Handle color and model variations across regions
+```
+Apple Store pages (US/TW)
+  ↓  python3 iphone.py / ipad.py / mac.py / watch.py / airpods.py / tvhome.py
+Per-product CSV files (*_products_merged.csv)
+  ↓  python3 smart_consolidate_colors.py
+Consolidated CSVs (*_products_consolidated.csv)
+  ↓  python3 convert_to_json.py
+JSON files in src/data/
+  ↓  npm run build
+Static site in dist/ → GitHub Pages
+```
 
-4. **Data Merging**:
-   - Merge products from different regions based on matching strategy
-   - Create region-specific columns for SKUs and prices
-   - Handle missing values and duplicate data
-   - Organize columns in a consistent format
+### Cross-Region Matching
 
-5. **Exchange Rate Fetching**:
-   - Automatically fetch the latest USD/TWD exchange rate from Cathay Bank
-   - Fall back to previous rates if fetching fails
-   - Store exchange rate data in JSON format
+Apple uses **different part numbers per region** for the same product, so SKU matching doesn't work. Instead:
 
-6. **CSV to JSON Conversion**:
-   - Convert CSV data to structured JSON format
-   - Add metadata like exchange rates and update timestamps
-   - Calculate price difference percentages
+- **Metrics products** (iPhone, iPad, TV/Home): matched by product `Name` (identical across regions)
+- **Bootstrap products** (Mac, Watch, AirPods): matched by `ConfigKey` — a configuration identifier (e.g. `m4-10-10`) shared across regions
 
-7. **Web Interface**:
-   - Dynamic rendering of product data
-   - Interactive settings for exchange rates and fees
-   - Search and filtering capabilities
-   - Responsive design for all device sizes
-   - Theme switching (dark/light mode)
+## Commands
 
-8. **Automated Updates**:
-   - GitHub Actions workflow runs the pipeline daily
-   - Automatic deployment to GitHub Pages
+| Command | Description |
+|---------|-------------|
+| `npm run scrape` | Full pipeline: scrape → consolidate → convert |
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Production build |
+| `npm run test` | Full Python test suite |
+| `SKIP_NETWORK_TESTS=1 python3 test_scrapers.py` | Quick tests (no network) |
+| `npm run test:e2e` | Playwright E2E tests |
 
-## Extending the Project
+## Configuration
 
-You can extend this project in the following ways:
+All scrapers share the region config in `scraper_base.py`:
 
-1. **Add More Regions**:
-   - Add new entries to the `REGIONS` dictionary in the scripts
-   - The format is: `"region_code": ["Display_Name", "Currency_Code", "Locale", "Currency_Symbol"]`
-   - Example: `"uk": ["UK", "GBP", "en-gb", "£"]`
+```python
+REGIONS = {
+    "": ["US", "USD", "en-us", "$"],
+    "tw": ["TW", "TWD", "zh-tw", "NT$"],
+}
+```
 
-2. **Add More Product Categories**:
-   - Create new scripts following the pattern of `iphone.py` or `ipad.py`
-   - Update the URL patterns and adjust the product detection logic as needed
-   - Modify `convert_to_json.py` to handle the new category
-   - Update the web interface to display the new category
+To add a region, update this single dict — all scrapers pick it up automatically.
 
-3. **Enhance the Web Interface**:
-   - Add data visualization features like charts and graphs
-   - Implement persistent comparison features
-   - Add export functionality for users to download data
-   - Improve the mobile experience further
+## Extending
 
-4. **Add Additional Analysis**:
-   - Implement historical price tracking
-   - Add notifications for price changes
-   - Calculate price trends over time
-   - Compare with other electronics retailers
+### Add a new product category
 
-## Technical Details
+1. Create a scraper class inheriting from `AppleStoreScraper`
+2. Implement `get_models()` and `build_product_url()`
+3. Add to `smart_consolidate_colors.py`, `convert_to_json.py`, and the GitHub Actions workflow
+4. Add tests
 
-### Data Sources
-
-Data is sourced from Apple's official product pages:
-- Apple Store Base URLs: 
-  - US: `https://www.apple.com/shop/buy-{product}/`
-  - Taiwan: `https://www.apple.com/tw/shop/buy-{product}/`
-  - Other regions follow the same pattern
-
-The scripts specifically look for a `<script>` tag with `id="metrics"` in the page, which contains complete product information, including SKU, price, and configuration details.
-
-Exchange rate data is sourced from Cathay Bank's exchange rate page.
-
-### Web Technologies
-
-- **Vite**: Modern build tool and development server
-- **Bootstrap 5**: Responsive UI framework
-- **GitHub Actions**: CI/CD automation
-- **GitHub Pages**: Static site hosting
-
-### Error Handling
-
-The scripts include several error handling mechanisms:
-- Dynamic model detection with fallback to default lists
-- HTTP response status code validation
-- JSON data structure validation
-- Debugging output when `DEBUG = True`
-- Fill strategies for missing data
-- Failsafe defaults for web interface when data is unavailable
-- Fallback options for exchange rate fetching
-
-## Notes and Limitations
-
-- Apple may change its website structure; if scripts stop working, the HTML parsing logic may need to be updated
-- This tool is for personal research and comparison only, please respect Apple's terms of service
-- The scripts implement rate limiting (1 second delay between requests) to be respectful to Apple's servers
-- Exchange rates are updated from Cathay Bank but can be manually overridden in the web interface
-- The tool currently doesn't track historical price data
-- Price comparisons don't account for tax differences between regions
-
-## Ethical Considerations
-
-This tool is designed for educational and personal use only. When using this scraper, please:
-
-1. Be respectful of Apple's servers by not making excessive requests
-2. Do not use this tool for commercial purposes without proper authorization
-3. Respect Apple's terms of service
-4. Be aware that website scraping may be against the terms of service of some websites
+See `TECHNICAL_SPEC.md` for detailed architecture documentation.
 
 ## Disclaimer
 
-This project is not affiliated with, authorized by, or endorsed by Apple Inc. All product names, logos, and brands are the property of their respective owners.
+This project is for personal research and comparison only. It is not affiliated with Apple Inc. Please respect Apple's terms of service and avoid excessive requests. The scrapers enforce a 1-second delay between requests.
