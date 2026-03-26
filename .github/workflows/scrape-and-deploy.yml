@@ -6,58 +6,62 @@ on:
   workflow_dispatch:  # Allow manual trigger
   push:
     branches:
-      - main  # Run when pushing to the main branch
+      - main
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   scrape-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.13'
           cache: 'pip'
-      
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      
-      - name: Run All Apple Product Scrapers  
+
+      - name: Run scrapers
         run: |
-          python apple_scraper_manager.py run-all --parallel --timeout 25
+          python iphone.py
+          python ipad.py
+          python mac.py
+          python watch.py
+          python airpods.py
           python tvhome.py
-      
+
+      - name: Consolidate color variants
+        run: python smart_consolidate_colors.py
+
       - name: Convert data to JSON and fetch exchange rate
         run: |
           python convert_to_json.py
-          # Debug listing of created files
           echo "Files in src/data directory:"
           ls -la src/data/
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
-      
+
       - name: Install Node.js dependencies
         run: npm ci
-      
+
       - name: Build website
         run: VITE_APP_BASE_URL=/apple-store-scrape/ npm run build
-      
-      - name: Debug build output
-        run: |
-          echo "Files in dist directory:"
-          ls -la dist/
-      
+
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
