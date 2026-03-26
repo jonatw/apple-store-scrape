@@ -35,11 +35,17 @@ def run_script(name, script):
         output = result.stdout + result.stderr
         if result.returncode != 0:
             return name, False, output
-        return name, True, output
+        # Extract the summary line (last non-empty line from stdout)
+        summary = ''
+        for line in reversed(result.stdout.strip().splitlines()):
+            if line.strip():
+                summary = line.strip()
+                break
+        return name, True, summary
     except subprocess.TimeoutExpired:
-        return name, False, f"{name}: timed out after 300s"
+        return name, False, f"timed out after 300s"
     except Exception as e:
-        return name, False, f"{name}: {e}"
+        return name, False, str(e)
 
 
 def main():
@@ -58,11 +64,12 @@ def main():
         }
         for future in as_completed(futures):
             name, success, output = future.result()
-            status = "OK" if success else "FAIL"
-            print(f"  [{status}] {name}")
-            if not success:
+            if success:
+                print(f"  [OK]   {output}")
+            else:
+                print(f"  [FAIL] {name}")
+                print(f"         {output[:200]}")
                 failures.append(name)
-                print(f"    {output[:200]}")
 
     if failures:
         print(f"\nWARNING: {len(failures)} scraper(s) failed: {', '.join(failures)}")
@@ -71,13 +78,11 @@ def main():
     # Phase 2: Post-processing (sequential — each step depends on previous)
     print(f"\nPhase 2: Post-processing...")
     for name, script in POST_STEPS:
-        print(f"  Running {name}...")
         name, success, output = run_script(name, script)
         if not success:
-            print(f"  [FAIL] {name}")
-            print(f"    {output[:500]}")
+            print(f"  [FAIL] {name}: {output[:300]}")
             sys.exit(1)
-        print(f"  [OK] {name}")
+        print(f"  [OK]   {name}")
 
     print("\n" + "=" * 60)
     print("Pipeline complete!")

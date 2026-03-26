@@ -29,7 +29,7 @@ REGIONS = {
 
 REFERENCE_REGION = list(REGIONS.keys())[0]
 REQUEST_DELAY = 1
-DEBUG = True
+DEBUG = os.environ.get('SCRAPER_DEBUG', '').lower() in ('1', 'true', 'yes')
 
 
 def debug_print(message):
@@ -532,7 +532,7 @@ def merge_product_data(product_data, extra_columns=None):
 
 
 def _report_alignment(df):
-    """Report cross-region alignment stats and warn about orphan products."""
+    """Report cross-region alignment stats. Only prints details when there are orphans."""
     if df.empty:
         return
 
@@ -541,39 +541,20 @@ def _report_alignment(df):
         return
 
     total = len(df)
-    region_stats = {}
-    for col in price_cols:
-        region = col.replace('Price_', '')
-        has_price = (df[col] > 0).sum()
-        missing = total - has_price
-        region_stats[region] = {'has_price': has_price, 'missing': missing}
-
-    # Products that have all region prices
     all_aligned = df[(df[price_cols] > 0).all(axis=1)]
     aligned_count = len(all_aligned)
 
-    print(f"\n--- Alignment Report ---")
-    print(f"Total unique products: {total}")
-    print(f"Fully aligned (all regions): {aligned_count}/{total} ({aligned_count/total*100:.0f}%)")
-
-    for region, stats in region_stats.items():
-        if stats['missing'] > 0:
-            print(f"WARNING: {stats['missing']} product(s) missing {region} price")
-
-    # Show orphan details
-    for col in price_cols:
-        region = col.replace('Price_', '')
-        orphans = df[df[col] == 0]
-        if not orphans.empty:
-            print(f"\n  Orphans missing {region} price:")
-            for _, row in orphans.head(10).iterrows():
-                sku = row.get('SKU', '?')
-                name = row.get('PRODUCT_NAME', '?')
-                print(f"    SKU={sku}  Name={name}")
-            if len(orphans) > 10:
-                print(f"    ... and {len(orphans) - 10} more")
-
-    print(f"--- End Alignment Report ---\n")
+    # Only print details if there are orphans
+    if aligned_count < total:
+        print(f"  WARNING: {total - aligned_count} orphan(s) out of {total} products")
+        for col in price_cols:
+            region = col.replace('Price_', '')
+            orphans = df[df[col] == 0]
+            if not orphans.empty:
+                for _, row in orphans.head(5).iterrows():
+                    print(f"    Missing {region}: {row.get('PRODUCT_NAME', '?')}")
+                if len(orphans) > 5:
+                    print(f"    ... and {len(orphans) - 5} more")
 
 
 def validate_completeness(products_by_region):
@@ -693,39 +674,28 @@ class AppleStoreScraper:
 
     def run(self):
         """Execute the full scraping pipeline: fetch, merge, save."""
-        print(f"Starting {self.product_name} product scraper...")
-        print(f"Configured regions: {', '.join([info[0] for info in REGIONS.values()])}")
-
         all_products = self.fetch_all_products()
 
-        # Completeness check: compare product counts across regions
+        # Completeness check
         products_by_region = {}
         for p in all_products:
             rc = p.get('Region_Code', '')
             products_by_region.setdefault(rc, []).append(p)
-
-        print(f"\n--- Per-Region Product Counts ---")
-        for rc, prods in products_by_region.items():
-            region_name = REGIONS.get(rc, ["Unknown"])[0]
-            unique_skus = len(set(p.get('SKU', '') for p in prods))
-            print(f"  {region_name}: {len(prods)} raw products, {unique_skus} unique SKUs")
-
         validate_completeness(products_by_region)
 
         # Merge (includes alignment report)
         merged_data = self.merge(all_products)
 
-        print(f"\nResults:")
-        print(merged_data)
-
         merged_data.to_csv(self.output_file, index=False, encoding='utf-8-sig')
-        print(f"\nSaved results to {self.output_file}")
 
-        print(f"\nTotal unique products found: {len(merged_data)}")
-        for region_code, region_info in REGIONS.items():
-            price_col = f'Price_{region_info[0]}'
-            if price_col in merged_data.columns:
-                count = (merged_data[price_col] > 0).sum()
-                print(f"Products found in {region_info[0]}: {count}")
+        # Summary line
+        total = len(merged_data)
+        price_cols = [c for c in merged_data.columns if c.startswith('Price_')]
+        aligned = len(merged_data[(merged_data[price_cols] > 0).all(axis=1)]) if price_cols else total
+        region_counts = ', '.join(
+            f"{REGIONS[rc][0]}={int((merged_data[f'Price_{REGIONS[rc][0]}'] > 0).sum())}"
+            for rc in REGIONS if f'Price_{REGIONS[rc][0]}' in merged_data.columns
+        )
+        print(f"{self.product_name}: {total} products, {aligned}/{total} aligned ({region_counts}) -> {self.output_file}")
 
         return merged_data
