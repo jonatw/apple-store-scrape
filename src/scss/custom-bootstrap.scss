@@ -18,8 +18,7 @@
 @import "bootstrap/scss/forms";
 @import "bootstrap/scss/buttons";
 @import "bootstrap/scss/transitions";
-@import "bootstrap/scss/dropdown";
-@import "bootstrap/scss/button-group";
+// dropdown and button-group not used
 @import "bootstrap/scss/nav";
 @import "bootstrap/scss/navbar";
 @import "bootstrap/scss/card";
@@ -91,6 +90,22 @@ $utilities: map-merge(
     "rounded": null,
     "visibility": null,
     "z-index": null,
+    // Additional unused utilities
+    "flex-direction": null,
+    "flex-wrap": null,
+    "flex-fill": null,
+    "flex-grow": null,
+    "flex-shrink": null,
+    "order": null,
+    "align-content": null,
+    "align-self": null,
+    "gap": null,
+    "font-weight": null,
+    "font-style": null,
+    "vertical-align": null,
+    "min-width": null,
+    "min-height": null,
+    "interaction": null,
   )
 );
 

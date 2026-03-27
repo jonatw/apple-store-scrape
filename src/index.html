@@ -19,102 +19,74 @@
   
   
   <style>
-    /* 基本樣式 */
+    /* Critical CSS — inlined to prevent CLS from async stylesheet loading */
+
+    /* Navbar: prevent collapse from hiding nav items on desktop before Bootstrap CSS loads */
+    @media (min-width: 992px) {
+      .navbar-expand-lg .navbar-collapse { display: flex !important; }
+      .navbar-expand-lg .navbar-toggler { display: none; }
+    }
+    /* On mobile, ensure collapse starts hidden (Bootstrap default) */
+    .collapse:not(.show) { display: none; }
+
+    /* Basic layout — prevents body-level shifts */
+    *, *::before, *::after { box-sizing: border-box; }
     body {
+      margin: 0;
       padding-bottom: 2rem;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
       transition: background-color 0.3s, color 0.3s;
     }
-    
-    /* 價格差異顏色 */
-    .price-higher {
-      color: #dc3545;
-    }
-    
-    .price-lower {
-      color: #198754;
-    }
-    
-    [data-bs-theme="dark"] .price-higher {
-      color: #f07781;
-    }
-    
-    [data-bs-theme="dark"] .price-lower {
-      color: #75c687;
-    }
-    
-    /* 載入動畫 */
-    .loading {
-      display: flex;
-      justify-content: center;
-      padding: 2rem;
-    }
-    
-    /* 頁腳樣式 */
-    footer {
-      margin-top: 3rem;
-      padding: 1rem 0;
-      font-size: 0.85rem;
-      color: #6c757d;
-      border-top: 1px solid #dee2e6;
-    }
-    
-    /* 深色模式按鈕 */
-    .theme-toggle {
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-    
-    .theme-toggle:hover {
-      transform: rotate(15deg);
-    }
-    
-    /* 匯率與手續費設定面板 */
-    .settings-panel {
-      z-index: 100;
-      transition: all 0.3s;
-      margin-bottom: 1.5rem;
-    }
-    
-    .settings-badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      font-size: 0.7rem;
-    }
-    
-    /* Table container — min-height prevents layout shift when data loads */
-    .table-fixed-header {
-      max-height: 600px;
-      min-height: 400px;
-      overflow-y: auto;
-    }
-    
-    .table-fixed-header thead th {
-      position: sticky;
-      top: 0;
-      background-color: var(--bs-body-bg);
-      z-index: 1;
-    }
-    
-    /* Summary cards — fixed height prevents CLS when values load */
-    .card-text.display-4,
-    .card-text.display-6 {
-      min-height: 2.5rem;
-    }
 
-    /* 響應式調整 */
+    /* Container — match Bootstrap .container max-widths to prevent reflow */
+    .container { width: 100%; padding-right: .75rem; padding-left: .75rem; margin-right: auto; margin-left: auto; }
+    @media (min-width: 576px) { .container { max-width: 540px; } }
+    @media (min-width: 768px) { .container { max-width: 720px; } }
+    @media (min-width: 992px) { .container { max-width: 960px; } }
+    @media (min-width: 1200px) { .container { max-width: 1140px; } }
+    @media (min-width: 1400px) { .container { max-width: 1320px; } }
+
+    /* Navbar — reserve correct space to prevent shift */
+    .navbar { padding: .5rem 0; }
+    .sticky-top { position: sticky; top: 0; z-index: 1020; }
+    .navbar-brand { font-size: 1.25rem; text-decoration: none; color: rgba(255,255,255,.9); white-space: nowrap; }
+    .navbar-nav { display: flex; list-style: none; margin: 0; padding: 0; }
+    .nav-link { display: block; padding: .5rem 1rem; text-decoration: none; color: rgba(255,255,255,.55); }
+    .nav-link.active { color: rgba(255,255,255,.9); }
+
+    /* Price colors */
+    .price-higher { color: #dc3545; }
+    .price-lower { color: #198754; }
+    [data-bs-theme="dark"] .price-higher { color: #f07781; }
+    [data-bs-theme="dark"] .price-lower { color: #75c687; }
+
+    /* Loading spinner */
+    .loading { display: flex; justify-content: center; padding: 2rem; }
+
+    /* Footer */
+    footer { margin-top: 3rem; padding: 1rem 0; font-size: 0.85rem; color: #6c757d; border-top: 1px solid #dee2e6; }
+
+    /* Theme toggle */
+    .theme-toggle { cursor: pointer; transition: transform 0.3s; }
+    .theme-toggle:hover { transform: rotate(15deg); }
+
+    /* Settings panel */
+    .settings-panel { z-index: 100; transition: all 0.3s; margin-bottom: 1.5rem; }
+    .settings-badge { position: absolute; top: -8px; right: -8px; font-size: 0.7rem; }
+
+    /* Table container — min-height prevents layout shift when data loads */
+    .table-fixed-header { max-height: 600px; min-height: 400px; overflow-y: auto; }
+    .table-fixed-header thead th { position: sticky; top: 0; background-color: var(--bs-body-bg); z-index: 1; }
+
+    /* Summary cards — fixed height prevents CLS when values load */
+    .card-text.display-4, .card-text.display-6 { min-height: 2.5rem; }
+
+    /* Responsive */
     @media (max-width: 768px) {
-      .card-title {
-        font-size: 0.9rem;
-      }
-      
-      .card-text.display-4 {
-        font-size: 1.8rem;
-      }
-      
-      .display-6 {
-        font-size: 1.2rem;
-      }
+      .card-title { font-size: 0.9rem; }
+      .card-text.display-4 { font-size: 1.8rem; }
+      .display-6 { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -186,8 +158,8 @@
             <h2 class="h5 mb-0">
               <i class="fas fa-cog me-2"></i>Settings
               <span class="badge bg-primary settings-badge" id="settings-changed" style="display: none;">Updated</span>
-            </h5>
-            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#settingsCollapse">
+            </h2>
+            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#settingsCollapse" aria-label="Toggle settings" aria-controls="settingsCollapse" aria-expanded="true">
               <i class="fas fa-chevron-down"></i>
             </button>
           </div>

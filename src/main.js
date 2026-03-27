@@ -1,6 +1,8 @@
 // CSS and Bootstrap (Vite extracts CSS to separate file in production)
 import './scss/custom-bootstrap.scss';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+// Only import Bootstrap JS components we actually use (saves ~25 KiB vs full bundle)
+import 'bootstrap/js/dist/collapse';
+import 'bootstrap/js/dist/alert';
 import './icons.js';
 
 // Global variables
