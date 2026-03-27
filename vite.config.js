@@ -60,22 +60,28 @@ export default defineConfig({
   },
   
   plugins: [copyJsonFilesPlugin(), {
-    // Move CSS <link> before <script> and add preload hint to reduce render-blocking
-    name: 'css-preload',
+    // Optimize resource loading in production HTML:
+    // 1. CSS: preload + async load (eliminates render-blocking)
+    // 2. JSON: preload default dataset (starts fetch in parallel with JS)
+    name: 'optimize-resource-loading',
     transformIndexHtml(html) {
-      // Extract the CSS link tag
+      const base = process.env.VITE_APP_BASE_URL || '/';
+
+      // CSS: convert blocking <link rel="stylesheet"> to async preload
       const cssMatch = html.match(/<link rel="stylesheet"[^>]+>/);
-      if (!cssMatch) return html;
-      const cssTag = cssMatch[0];
-      const href = cssTag.match(/href="([^"]+)"/)?.[1];
-      if (!href) return html;
+      if (cssMatch) {
+        const cssTag = cssMatch[0];
+        const href = cssTag.match(/href="([^"]+)"/)?.[1];
+        if (href) {
+          html = html.replace(cssTag, '');
+          const preload = `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">\n  <noscript>${cssTag}</noscript>`;
+          html = html.replace('</head>', `  ${preload}\n</head>`);
+        }
+      }
 
-      // Remove original CSS link
-      html = html.replace(cssTag, '');
-
-      // Insert preload + stylesheet before </head> (before any scripts)
-      const preload = `<link rel="preload" href="${href}" as="style" onload="this.onload=null;this.rel='stylesheet'">\n  <noscript>${cssTag}</noscript>`;
-      html = html.replace('</head>', `  ${preload}\n</head>`);
+      // JSON: preload default product data (cuts dependency chain)
+      const jsonPreload = `<link rel="preload" href="${base}data/iphone_data.json" as="fetch" crossorigin>`;
+      html = html.replace('</head>', `  ${jsonPreload}\n</head>`);
 
       return html;
     }

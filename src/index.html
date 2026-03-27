@@ -82,9 +82,10 @@
       font-size: 0.7rem;
     }
     
-    /* 表頭固定 */
+    /* Table container — min-height prevents layout shift when data loads */
     .table-fixed-header {
       max-height: 600px;
+      min-height: 400px;
       overflow-y: auto;
     }
     
@@ -95,6 +96,12 @@
       z-index: 1;
     }
     
+    /* Summary cards — fixed height prevents CLS when values load */
+    .card-text.display-4,
+    .card-text.display-6 {
+      min-height: 2.5rem;
+    }
+
     /* 響應式調整 */
     @media (max-width: 768px) {
       .card-title {
