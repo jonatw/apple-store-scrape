@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "lastUpdated": "2026-03-28T00:25:16.927935",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 31.5
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "airpods",
+    "totalProducts": 4,
+    "lastExchangeRateUpdate": "2026-03-28T00:25:16.443626",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "AirPods 4",
+      "Price_TW": 4490.0,
+      "Price_US": 129.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MXP63",
+      "SKU": "MXP63",
+      "product_type": "airpods",
+      "price_difference_percent": 10.5
+    },
+    {
+      "PRODUCT_NAME": "AirPods 4 with Active Noise Cancellation",
+      "Price_TW": 5990.0,
+      "Price_US": 179.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MXP93",
+      "SKU": "MXP93",
+      "product_type": "airpods",
+      "price_difference_percent": 6.2
+    },
+    {
+      "PRODUCT_NAME": "AirPods Max 2",
+      "Price_TW": 17990.0,
+      "Price_US": 549.0,
+      "Available_Colors": "Blue, Midnight, Orange, Purple, Starlight",
+      "Color_Variants": 5,
+      "SKU_Variants": "MHWK4, MHWL4, MHWM4, MHWN4, MHWP4",
+      "SKU": "MHWM4",
+      "product_type": "airpods",
+      "price_difference_percent": 4.0
+    },
+    {
+      "PRODUCT_NAME": "AirPods Pro 3",
+      "Price_TW": 7490.0,
+      "Price_US": 249.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MFHP4",
+      "SKU": "MFHP4",
+      "product_type": "airpods",
+      "price_difference_percent": -4.5
+    }
+  ]
+}

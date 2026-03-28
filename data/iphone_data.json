@@ -1,0 +1,228 @@
+{
+  "metadata": {
+    "lastUpdated": "2026-03-28T00:25:16.918020",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 31.5
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "iphone",
+    "totalProducts": 19,
+    "lastExchangeRateUpdate": "2026-03-28T00:25:16.443626",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "iPhone 16 128GB",
+      "Price_TW": 25900.0,
+      "Price_US": 729.0,
+      "Available_Colors": "Black, Pink, Teal, Ultramarine, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MYAP3, MYAQ3, MYAR3, MYAT3, MYAW3",
+      "SKU": "MYAP3",
+      "product_type": "iphone",
+      "price_difference_percent": 12.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone 16 Plus 128GB",
+      "Price_TW": 29900.0,
+      "Price_US": 829.0,
+      "Available_Colors": "Black, Pink, Teal, Ultramarine, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MXUT3, MXUU3, MXUV3, MXUW3, MXUX3",
+      "SKU": "MXUT3",
+      "product_type": "iphone",
+      "price_difference_percent": 14.5
+    },
+    {
+      "PRODUCT_NAME": "iPhone 16 Plus 256GB",
+      "Price_TW": 33400.0,
+      "Price_US": 929.0,
+      "Available_Colors": "Black, Pink, Teal, Ultramarine, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MXUY3, MXV03, MXV13, MXV33, MXV43",
+      "SKU": "MXUY3",
+      "product_type": "iphone",
+      "price_difference_percent": 14.1
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 256GB",
+      "Price_TW": 29900.0,
+      "Price_US": 829.0,
+      "Available_Colors": "Black, Lavender, Mist Blue, Sage, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MG464, MG474, MG484, MG494, MG4A4",
+      "SKU": "MG464",
+      "product_type": "iphone",
+      "price_difference_percent": 14.5
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 512GB",
+      "Price_TW": 36900.0,
+      "Price_US": 1029.0,
+      "Available_Colors": "Black, Lavender, Mist Blue, Sage, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MG4E4, MG4F4, MG4H4, MG4J4, MG4Q4",
+      "SKU": "MG4E4",
+      "product_type": "iphone",
+      "price_difference_percent": 13.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 Pro 1TB",
+      "Price_TW": 53900.0,
+      "Price_US": 1499.0,
+      "Available_Colors": "Cosmic Orange, Deep Blue, Silver",
+      "Color_Variants": 3,
+      "SKU_Variants": "MG7R4, MG7T4, MG7U4",
+      "SKU": "MG7T4",
+      "product_type": "iphone",
+      "price_difference_percent": 14.2
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 Pro 256GB",
+      "Price_TW": 39900.0,
+      "Price_US": 1099.0,
+      "Available_Colors": "Cosmic Orange, Deep Blue, Silver",
+      "Color_Variants": 3,
+      "SKU_Variants": "MG7K4, MG7L4, MG7M4",
+      "SKU": "MG7L4",
+      "product_type": "iphone",
+      "price_difference_percent": 15.3
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 Pro 512GB",
+      "Price_TW": 46900.0,
+      "Price_US": 1299.0,
+      "Available_Colors": "Cosmic Orange, Deep Blue, Silver",
+      "Color_Variants": 3,
+      "SKU_Variants": "MG7N4, MG7P4, MG7Q4",
+      "SKU": "MG7P4",
+      "product_type": "iphone",
+      "price_difference_percent": 14.6
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 Pro Max 1TB",
+      "Price_TW": 58900.0,
+      "Price_US": 1599.0,
+      "Available_Colors": "Cosmic Orange, Deep Blue, Silver",
+      "Color_Variants": 3,
+      "SKU_Variants": "MFXN4, MFXP4, MFXQ4",
+      "SKU": "MFXP4",
+      "product_type": "iphone",
+      "price_difference_percent": 16.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 Pro Max 256GB",
+      "Price_TW": 44900.0,
+      "Price_US": 1199.0,
+      "Available_Colors": "Cosmic Orange, Deep Blue, Silver",
+      "Color_Variants": 3,
+      "SKU_Variants": "MFXG4, MFXH4, MFXJ4",
+      "SKU": "MFXH4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 Pro Max 2TB",
+      "Price_TW": 72900.0,
+      "Price_US": 1999.0,
+      "Available_Colors": "Cosmic Orange, Deep Blue, Silver",
+      "Color_Variants": 3,
+      "SKU_Variants": "MFXR4, MFXT4, MFXU4",
+      "SKU": "MFXT4",
+      "product_type": "iphone",
+      "price_difference_percent": 15.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 Pro Max 512GB",
+      "Price_TW": 51900.0,
+      "Price_US": 1399.0,
+      "Available_Colors": "Cosmic Orange, Deep Blue, Silver",
+      "Color_Variants": 3,
+      "SKU_Variants": "MFXK4, MFXL4, MFXM4",
+      "SKU": "MFXL4",
+      "product_type": "iphone",
+      "price_difference_percent": 17.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17e 256GB",
+      "Price_TW": 21900.0,
+      "Price_US": 599.0,
+      "Available_Colors": "Black, White",
+      "Color_Variants": 2,
+      "SKU_Variants": "MHRN4, MHRP4",
+      "SKU": "MHRN4",
+      "product_type": "iphone",
+      "price_difference_percent": 16.1
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17e 256GB Soft",
+      "Price_TW": 21900.0,
+      "Price_US": 599.0,
+      "Available_Colors": "Pink",
+      "Color_Variants": 1,
+      "SKU_Variants": "MHRQ4",
+      "SKU": "MHRQ4",
+      "product_type": "iphone",
+      "price_difference_percent": 16.1
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17e 512GB",
+      "Price_TW": 28900.0,
+      "Price_US": 799.0,
+      "Available_Colors": "Black, White",
+      "Color_Variants": 2,
+      "SKU_Variants": "MHRR4, MHRT4",
+      "SKU": "MHRR4",
+      "product_type": "iphone",
+      "price_difference_percent": 14.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17e 512GB Soft",
+      "Price_TW": 28900.0,
+      "Price_US": 799.0,
+      "Available_Colors": "Pink",
+      "Color_Variants": 1,
+      "SKU_Variants": "MHRU4",
+      "SKU": "MHRU4",
+      "product_type": "iphone",
+      "price_difference_percent": 14.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone Air 1TB",
+      "Price_TW": 50900.0,
+      "Price_US": 1399.0,
+      "Available_Colors": "Cloud White, Light Gold, Sky Blue, Space Black",
+      "Color_Variants": 4,
+      "SKU_Variants": "MG1L4, MG1N4, MG1P4, MG1Q4",
+      "SKU": "MG1N4",
+      "product_type": "iphone",
+      "price_difference_percent": 15.5
+    },
+    {
+      "PRODUCT_NAME": "iPhone Air 256GB",
+      "Price_TW": 36900.0,
+      "Price_US": 999.0,
+      "Available_Colors": "Cloud White, Light Gold, Sky Blue, Space Black",
+      "Color_Variants": 4,
+      "SKU_Variants": "MG184, MG194, MG1A4, MG1D4",
+      "SKU": "MG194",
+      "product_type": "iphone",
+      "price_difference_percent": 17.3
+    },
+    {
+      "PRODUCT_NAME": "iPhone Air 512GB",
+      "Price_TW": 43900.0,
+      "Price_US": 1199.0,
+      "Available_Colors": "Cloud White, Light Gold, Sky Blue, Space Black",
+      "Color_Variants": 4,
+      "SKU_Variants": "MG1E4, MG1G4, MG1H4, MG1J4",
+      "SKU": "MG1G4",
+      "product_type": "iphone",
+      "price_difference_percent": 16.2
+    }
+  ]
+}
