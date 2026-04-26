@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "lastUpdated": "2026-04-26T00:33:56.215678",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 31.5
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "watch",
+    "totalProducts": 11,
+    "lastExchangeRateUpdate": "2026-04-26T00:33:55.672491",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "Apple Watch Ultra 3 49mm",
+      "Price_TW": 26900.0,
+      "Price_US": 799.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MF1V4",
+      "SKU": "MF1V4",
+      "product_type": "watch",
+      "price_difference_percent": 6.9
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE 3 40mm aluminum GPS",
+      "Price_TW": 7900.0,
+      "Price_US": 249.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEHX4",
+      "SKU": "MEHX4",
+      "product_type": "watch",
+      "price_difference_percent": 0.7
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE 3 40mm aluminum GPS+Cellular",
+      "Price_TW": 9400.0,
+      "Price_US": 299.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEQ24",
+      "SKU": "MEQ24",
+      "product_type": "watch",
+      "price_difference_percent": -0.2
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 11 42mm aluminum GPS",
+      "Price_TW": 12900.0,
+      "Price_US": 399.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEW14",
+      "SKU": "MEW14",
+      "product_type": "watch",
+      "price_difference_percent": 2.6
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 11 42mm aluminum GPS+Cellular",
+      "Price_TW": 15900.0,
+      "Price_US": 499.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MF994",
+      "SKU": "MF994",
+      "product_type": "watch",
+      "price_difference_percent": 1.2
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE 3 44mm aluminum GPS",
+      "Price_TW": 8900.0,
+      "Price_US": 279.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEP34",
+      "SKU": "MEP34",
+      "product_type": "watch",
+      "price_difference_percent": 1.3
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE 3 44mm aluminum GPS+Cellular",
+      "Price_TW": 10400.0,
+      "Price_US": 329.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEQ44",
+      "SKU": "MEQ44",
+      "product_type": "watch",
+      "price_difference_percent": 0.4
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 11 46mm aluminum GPS",
+      "Price_TW": 13900.0,
+      "Price_US": 429.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEWC4",
+      "SKU": "MEWC4",
+      "product_type": "watch",
+      "price_difference_percent": 2.9
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 11 46mm aluminum GPS+Cellular",
+      "Price_TW": 16900.0,
+      "Price_US": 529.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MFAE4",
+      "SKU": "MFAE4",
+      "product_type": "watch",
+      "price_difference_percent": 1.4
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 11 42mm titanium GPS+Cellular",
+      "Price_TW": 22900.0,
+      "Price_US": 699.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MF9H4",
+      "SKU": "MF9H4",
+      "product_type": "watch",
+      "price_difference_percent": 4.0
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch Series 11 46mm titanium GPS+Cellular",
+      "Price_TW": 24400.0,
+      "Price_US": 749.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MFC34",
+      "SKU": "MFC34",
+      "product_type": "watch",
+      "price_difference_percent": 3.4
+    }
+  ]
+}
