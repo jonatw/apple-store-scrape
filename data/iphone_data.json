@@ -1,0 +1,481 @@
+{
+  "metadata": {
+    "lastUpdated": "2026-09-13T02:57:53.093286",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 31.5
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "iphone",
+    "totalProducts": 42,
+    "lastExchangeRateUpdate": "2026-09-13T02:57:52.573087",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "iPhone 16 128GB",
+      "Price_TW": 29900.0,
+      "Price_US": 829.0,
+      "Available_Colors": "Black, Pink, Teal, Ultramarine, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MYAP3, MYAQ3, MYAR3, MYAT3, MYAW3",
+      "SKU": "MYAP3",
+      "product_type": "iphone",
+      "price_difference_percent": 14.5
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 256GB",
+      "Price_TW": 32900.0,
+      "Price_US": 929.0,
+      "Available_Colors": "Black, Lavender, Mist Blue, Sage, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MG464, MG474, MG484, MG494, MG4A4",
+      "SKU": "MG464",
+      "product_type": "iphone",
+      "price_difference_percent": 12.4
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17 512GB",
+      "Price_TW": 39900.0,
+      "Price_US": 1129.0,
+      "Available_Colors": "Black, Lavender, Mist Blue, Sage, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MG4E4, MG4F4, MG4H4, MG4J4, MG4Q4",
+      "SKU": "MG4E4",
+      "product_type": "iphone",
+      "price_difference_percent": 12.2
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17e 256GB",
+      "Price_TW": 25900.0,
+      "Price_US": 699.0,
+      "Available_Colors": "Black, White",
+      "Color_Variants": 2,
+      "SKU_Variants": "MHRN4, MHRP4",
+      "SKU": "MHRN4",
+      "product_type": "iphone",
+      "price_difference_percent": 17.6
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17e 256GB Soft",
+      "Price_TW": 25900.0,
+      "Price_US": 699.0,
+      "Available_Colors": "Pink",
+      "Color_Variants": 1,
+      "SKU_Variants": "MHRQ4",
+      "SKU": "MHRQ4",
+      "product_type": "iphone",
+      "price_difference_percent": 17.6
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17e 512GB",
+      "Price_TW": 32900.0,
+      "Price_US": 899.0,
+      "Available_Colors": "Black, White",
+      "Color_Variants": 2,
+      "SKU_Variants": "MHRR4, MHRT4",
+      "SKU": "MHRR4",
+      "product_type": "iphone",
+      "price_difference_percent": 16.2
+    },
+    {
+      "PRODUCT_NAME": "iPhone 17e 512GB Soft",
+      "Price_TW": 32900.0,
+      "Price_US": 899.0,
+      "Available_Colors": "Pink",
+      "Color_Variants": 1,
+      "SKU_Variants": "MHRU4",
+      "SKU": "MHRU4",
+      "product_type": "iphone",
+      "price_difference_percent": 16.2
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 1TB",
+      "Price_TW": 66900.0,
+      "Price_US": 1799.0,
+      "Available_Colors": "Black, Silver",
+      "Color_Variants": 2,
+      "SKU_Variants": "MJQC4, MJQD4",
+      "SKU": "MJQC4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.1
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 1TB Burgundy",
+      "Price_TW": 66900.0,
+      "Price_US": 1799.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJQE4",
+      "SKU": "MJQE4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.1
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 1TB Glacier",
+      "Price_TW": 66900.0,
+      "Price_US": 1799.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJQF4",
+      "SKU": "MJQF4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.1
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 256GB",
+      "Price_TW": 44900.0,
+      "Price_US": 1199.0,
+      "Available_Colors": "Black, Silver",
+      "Color_Variants": 2,
+      "SKU_Variants": "MJQ34, MJQ44",
+      "SKU": "MJQ34",
+      "product_type": "iphone",
+      "price_difference_percent": 18.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 256GB Burgundy",
+      "Price_TW": 44900.0,
+      "Price_US": 1199.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJQ54",
+      "SKU": "MJQ54",
+      "product_type": "iphone",
+      "price_difference_percent": 18.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 256GB Glacier",
+      "Price_TW": 44900.0,
+      "Price_US": 1199.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJQ64",
+      "SKU": "MJQ64",
+      "product_type": "iphone",
+      "price_difference_percent": 18.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 2TB",
+      "Price_TW": 88900.0,
+      "Price_US": 2399.0,
+      "Available_Colors": "Black, Silver",
+      "Color_Variants": 2,
+      "SKU_Variants": "MJQG4, MJQH4",
+      "SKU": "MJQG4",
+      "product_type": "iphone",
+      "price_difference_percent": 17.6
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 2TB Burgundy",
+      "Price_TW": 88900.0,
+      "Price_US": 2399.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJQJ4",
+      "SKU": "MJQJ4",
+      "product_type": "iphone",
+      "price_difference_percent": 17.6
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 2TB Glacier",
+      "Price_TW": 88900.0,
+      "Price_US": 2399.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJQK4",
+      "SKU": "MJQK4",
+      "product_type": "iphone",
+      "price_difference_percent": 17.6
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 512GB",
+      "Price_TW": 51900.0,
+      "Price_US": 1399.0,
+      "Available_Colors": "Black, Silver",
+      "Color_Variants": 2,
+      "SKU_Variants": "MJQ74, MJQ84",
+      "SKU": "MJQ74",
+      "product_type": "iphone",
+      "price_difference_percent": 17.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 512GB Burgundy",
+      "Price_TW": 51900.0,
+      "Price_US": 1399.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJQ94",
+      "SKU": "MJQ94",
+      "product_type": "iphone",
+      "price_difference_percent": 17.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro 512GB Glacier",
+      "Price_TW": 51900.0,
+      "Price_US": 1399.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJQA4",
+      "SKU": "MJQA4",
+      "product_type": "iphone",
+      "price_difference_percent": 17.8
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 1TB",
+      "Price_TW": 71900.0,
+      "Price_US": 1899.0,
+      "Available_Colors": "Black, Silver",
+      "Color_Variants": 2,
+      "SKU_Variants": "MJWD4, MJWE4",
+      "SKU": "MJWD4",
+      "product_type": "iphone",
+      "price_difference_percent": 20.2
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 1TB Burgundy",
+      "Price_TW": 71900.0,
+      "Price_US": 1899.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJWF4",
+      "SKU": "MJWF4",
+      "product_type": "iphone",
+      "price_difference_percent": 20.2
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 1TB Glacier",
+      "Price_TW": 71900.0,
+      "Price_US": 1899.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJWG4",
+      "SKU": "MJWG4",
+      "product_type": "iphone",
+      "price_difference_percent": 20.2
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 256GB",
+      "Price_TW": 49900.0,
+      "Price_US": 1299.0,
+      "Available_Colors": "Black, Silver",
+      "Color_Variants": 2,
+      "SKU_Variants": "MJW44, MJW54",
+      "SKU": "MJW44",
+      "product_type": "iphone",
+      "price_difference_percent": 21.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 256GB Burgundy",
+      "Price_TW": 49900.0,
+      "Price_US": 1299.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJW64",
+      "SKU": "MJW64",
+      "product_type": "iphone",
+      "price_difference_percent": 21.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 256GB Glacier",
+      "Price_TW": 49900.0,
+      "Price_US": 1299.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJW74",
+      "SKU": "MJW74",
+      "product_type": "iphone",
+      "price_difference_percent": 21.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 2TB",
+      "Price_TW": 93900.0,
+      "Price_US": 2499.0,
+      "Available_Colors": "Black, Silver",
+      "Color_Variants": 2,
+      "SKU_Variants": "MJWH4, MJWJ4",
+      "SKU": "MJWH4",
+      "product_type": "iphone",
+      "price_difference_percent": 19.3
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 2TB Burgundy",
+      "Price_TW": 93900.0,
+      "Price_US": 2499.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJWK4",
+      "SKU": "MJWK4",
+      "product_type": "iphone",
+      "price_difference_percent": 19.3
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 2TB Glacier",
+      "Price_TW": 93900.0,
+      "Price_US": 2499.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJWL4",
+      "SKU": "MJWL4",
+      "product_type": "iphone",
+      "price_difference_percent": 19.3
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 512GB",
+      "Price_TW": 56900.0,
+      "Price_US": 1499.0,
+      "Available_Colors": "Black, Silver",
+      "Color_Variants": 2,
+      "SKU_Variants": "MJW84, MJW94",
+      "SKU": "MJW84",
+      "product_type": "iphone",
+      "price_difference_percent": 20.5
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 512GB Burgundy",
+      "Price_TW": 56900.0,
+      "Price_US": 1499.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJWA4",
+      "SKU": "MJWA4",
+      "product_type": "iphone",
+      "price_difference_percent": 20.5
+    },
+    {
+      "PRODUCT_NAME": "iPhone 18 Pro Max 512GB Glacier",
+      "Price_TW": 56900.0,
+      "Price_US": 1499.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJWC4",
+      "SKU": "MJWC4",
+      "product_type": "iphone",
+      "price_difference_percent": 20.5
+    },
+    {
+      "PRODUCT_NAME": "iPhone Air 1TB",
+      "Price_TW": 61900.0,
+      "Price_US": 1699.0,
+      "Available_Colors": "Cloud White, Light Gold, Sky Blue, Space Black",
+      "Color_Variants": 4,
+      "SKU_Variants": "MG1L4, MG1N4, MG1P4, MG1Q4",
+      "SKU": "MG1N4",
+      "product_type": "iphone",
+      "price_difference_percent": 15.7
+    },
+    {
+      "PRODUCT_NAME": "iPhone Air 256GB",
+      "Price_TW": 39900.0,
+      "Price_US": 1099.0,
+      "Available_Colors": "Cloud White, Light Gold, Sky Blue, Space Black",
+      "Color_Variants": 4,
+      "SKU_Variants": "MG184, MG194, MG1A4, MG1D4",
+      "SKU": "MG194",
+      "product_type": "iphone",
+      "price_difference_percent": 15.3
+    },
+    {
+      "PRODUCT_NAME": "iPhone Air 512GB",
+      "Price_TW": 46900.0,
+      "Price_US": 1299.0,
+      "Available_Colors": "Cloud White, Light Gold, Sky Blue, Space Black",
+      "Color_Variants": 4,
+      "SKU_Variants": "MG1E4, MG1G4, MG1H4, MG1J4",
+      "SKU": "MG1G4",
+      "product_type": "iphone",
+      "price_difference_percent": 14.6
+    },
+    {
+      "PRODUCT_NAME": "iPhone Duo 1TB Night Sky",
+      "Price_TW": 96900.0,
+      "Price_US": 2599.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MK1L4",
+      "SKU": "MK1L4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.4
+    },
+    {
+      "PRODUCT_NAME": "iPhone Duo 1TB Star",
+      "Price_TW": 96900.0,
+      "Price_US": 2599.0,
+      "Available_Colors": "White",
+      "Color_Variants": 1,
+      "SKU_Variants": "MK1J4",
+      "SKU": "MK1J4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.4
+    },
+    {
+      "PRODUCT_NAME": "iPhone Duo 256GB Night Sky",
+      "Price_TW": 74900.0,
+      "Price_US": 1999.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MK1F4",
+      "SKU": "MK1F4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone Duo 256GB Star",
+      "Price_TW": 74900.0,
+      "Price_US": 1999.0,
+      "Available_Colors": "White",
+      "Color_Variants": 1,
+      "SKU_Variants": "MK1E4",
+      "SKU": "MK1E4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.9
+    },
+    {
+      "PRODUCT_NAME": "iPhone Duo 2TB Night Sky",
+      "Price_TW": 118900.0,
+      "Price_US": 3199.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MK1R4",
+      "SKU": "MK1R4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.0
+    },
+    {
+      "PRODUCT_NAME": "iPhone Duo 2TB Star",
+      "Price_TW": 118900.0,
+      "Price_US": 3199.0,
+      "Available_Colors": "White",
+      "Color_Variants": 1,
+      "SKU_Variants": "MK1Q4",
+      "SKU": "MK1Q4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.0
+    },
+    {
+      "PRODUCT_NAME": "iPhone Duo 512GB Night Sky",
+      "Price_TW": 81900.0,
+      "Price_US": 2199.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MK1H4",
+      "SKU": "MK1H4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.2
+    },
+    {
+      "PRODUCT_NAME": "iPhone Duo 512GB Star",
+      "Price_TW": 81900.0,
+      "Price_US": 2199.0,
+      "Available_Colors": "White",
+      "Color_Variants": 1,
+      "SKU_Variants": "MK1G4",
+      "SKU": "MK1G4",
+      "product_type": "iphone",
+      "price_difference_percent": 18.2
+    }
+  ]
+}

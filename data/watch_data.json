@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "lastUpdated": "2026-09-13T02:57:53.101264",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 31.5
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "watch",
+    "totalProducts": 13,
+    "lastExchangeRateUpdate": "2026-09-13T02:57:52.573087",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Ultra 4 49mm",
+      "Price_TW": 27900.0,
+      "Price_US": 799.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJCR4",
+      "SKU": "MJCR4",
+      "product_type": "watch",
+      "price_difference_percent": 10.9
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE 3 40mm aluminum GPS",
+      "Price_TW": 7900.0,
+      "Price_US": 249.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEHX4",
+      "SKU": "MEHX4",
+      "product_type": "watch",
+      "price_difference_percent": 0.7
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE 3 40mm aluminum GPS+Cellular",
+      "Price_TW": 9400.0,
+      "Price_US": 299.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEQ24",
+      "SKU": "MEQ24",
+      "product_type": "watch",
+      "price_difference_percent": -0.2
+    },
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Series 12 42mm aluminum GPS",
+      "Price_TW": 13900.0,
+      "Price_US": 399.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJFN4",
+      "SKU": "MJFN4",
+      "product_type": "watch",
+      "price_difference_percent": 10.6
+    },
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Series 12 42mm aluminum GPS+Cellular",
+      "Price_TW": 16900.0,
+      "Price_US": 499.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJJE4",
+      "SKU": "MJJE4",
+      "product_type": "watch",
+      "price_difference_percent": 7.5
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE 3 44mm aluminum GPS",
+      "Price_TW": 8900.0,
+      "Price_US": 279.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEP34",
+      "SKU": "MEP34",
+      "product_type": "watch",
+      "price_difference_percent": 1.3
+    },
+    {
+      "PRODUCT_NAME": "Apple Watch SE 3 44mm aluminum GPS+Cellular",
+      "Price_TW": 10400.0,
+      "Price_US": 329.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MEQ44",
+      "SKU": "MEQ44",
+      "product_type": "watch",
+      "price_difference_percent": 0.4
+    },
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Series 12 46mm aluminum GPS",
+      "Price_TW": 15400.0,
+      "Price_US": 449.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJFW4",
+      "SKU": "MJFW4",
+      "product_type": "watch",
+      "price_difference_percent": 8.9
+    },
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Series 12 46mm aluminum GPS+Cellular",
+      "Price_TW": 18400.0,
+      "Price_US": 549.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJJH4",
+      "SKU": "MJJH4",
+      "product_type": "watch",
+      "price_difference_percent": 6.4
+    },
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Series 12 42mm ceramic GPS+Cellular",
+      "Price_TW": 32900.0,
+      "Price_US": 899.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJJU4",
+      "SKU": "MJJU4",
+      "product_type": "watch",
+      "price_difference_percent": 16.2
+    },
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Series 12 46mm ceramic GPS+Cellular",
+      "Price_TW": 34400.0,
+      "Price_US": 949.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJJW4",
+      "SKU": "MJJW4",
+      "product_type": "watch",
+      "price_difference_percent": 15.1
+    },
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Series 12 42mm titanium GPS+Cellular",
+      "Price_TW": 24900.0,
+      "Price_US": 699.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJJM4",
+      "SKU": "MJJM4",
+      "product_type": "watch",
+      "price_difference_percent": 13.1
+    },
+    {
+      "PRODUCT_NAME": "Shop Apple Watch Series 12 46mm titanium GPS+Cellular",
+      "Price_TW": 26400.0,
+      "Price_US": 749.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MJJQ4",
+      "SKU": "MJJQ4",
+      "product_type": "watch",
+      "price_difference_percent": 11.9
+    }
+  ]
+}
