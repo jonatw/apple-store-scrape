@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "lastUpdated": "2026-10-17T02:50:50.638753",
+    "exchangeRates": {
+      "USD": 1.0,
+      "TWD": 31.5
+    },
+    "regions": [
+      "TW",
+      "US"
+    ],
+    "productType": "tvhome",
+    "totalProducts": 3,
+    "lastExchangeRateUpdate": "2026-10-17T02:50:50.130455",
+    "exchangeRateSource": "Cathay Bank"
+  },
+  "products": [
+    {
+      "PRODUCT_NAME": "Apple TV 4K",
+      "Price_TW": 9900.0,
+      "Price_US": 299.0,
+      "Available_Colors": "Single Option",
+      "Color_Variants": 1,
+      "SKU_Variants": "MLFF4",
+      "SKU": "MLFF4",
+      "product_type": "tvhome",
+      "price_difference_percent": 5.1
+    },
+    {
+      "PRODUCT_NAME": "HomePod",
+      "Price_TW": 10990.0,
+      "Price_US": 349.0,
+      "Available_Colors": "Midnight, White",
+      "Color_Variants": 2,
+      "SKU_Variants": "MDEW4, MDEY4",
+      "SKU": "MDEW4",
+      "product_type": "tvhome",
+      "price_difference_percent": -0.0
+    },
+    {
+      "PRODUCT_NAME": "HomePod mini 2",
+      "Price_TW": 4790.0,
+      "Price_US": 149.0,
+      "Available_Colors": "Blue, Green, Midnight, Pink, White",
+      "Color_Variants": 5,
+      "SKU_Variants": "MGHJ4, MGHK4, MGHL4, MGHM4, MGKR4",
+      "SKU": "MGHM4",
+      "product_type": "tvhome",
+      "price_difference_percent": 2.1
+    }
+  ]
+}
